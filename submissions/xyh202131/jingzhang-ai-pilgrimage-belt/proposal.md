@@ -46,13 +46,24 @@ scenarios:
 
 V2 进一步补上一个仍然存在的缺口：方案已经提出验证线、四门制、可逆公共空间和失败公开，但“看起来新”仍不能证明“创新成立”。新增 `visual/assets/innovation-register.json`，把五项核心创新逐一绑定到基线不足、新颖性主张、可证伪假设、最小证据、通过标准、失败信号和退出动作；缺少失败信号或退出动作的主张不得登记为正式创新，尚未发生的运营结果继续保持 `unknown` [data:visual/assets/innovation-register.json#INNOV-001] [data:visual/assets/innovation-register.json#INNOV-005]。这使评审者不仅能问“新在哪里”，还可以直接判断“什么证据会证明它没有成立”。
 
-依据分为四级。第一级是征集公告、智能体任务书和项目场地包 [source:OFFICIAL-ANNOUNCEMENT] [source:AGENT-TASKBOOK] [source:SITE-PACKAGE]；第二级是仓库资料登记、标准索引和处理导航 [source:SOURCE-REGISTRY] [source:PROCESSED-FACT-PACK]；第三级是北京市关于原点社区、百年京张实景测试和“一核多点”创新街区的公开背景，只用于判断协同方向，不代表项目已批准或任何机构承诺参与 [source:BEIJING-AI-ORIGIN-2026] [source:BEIJING-AI-DISTRICTS-2026]；第四级是六个全球案例和国家数据、AI 内容标识政策，仅用于机制启发和治理边界 [source:NATIONAL-DATA-INFRA-2025] [source:AI-CONTENT-LABEL-2025] [source:AI-PLUS-2025]。
+依据分为四级，各级只承担与其权威程度相称的作用：
+
+- 第一级是征集公告、智能体任务书和项目场地包，用于确认任务与提交边界 [source:OFFICIAL-ANNOUNCEMENT] [source:AGENT-TASKBOOK] [source:SITE-PACKAGE]。
+- 第二级是仓库资料登记、标准索引和处理导航，用于定位证据及其用途限制 [source:SOURCE-REGISTRY] [source:PROCESSED-FACT-PACK]。
+- 第三级是北京市关于原点社区、百年京张实景测试和“一核多点”创新街区的公开背景，只用于判断协同方向，不代表项目已批准或任何机构承诺参与 [source:BEIJING-AI-ORIGIN-2026] [source:BEIJING-AI-DISTRICTS-2026]。
+- 第四级是国家数据、AI 内容标识和“人工智能+”政策，与六个全球案例一起用于机制启发和治理边界 [source:NATIONAL-DATA-INFRA-2025] [source:AI-CONTENT-LABEL-2025] [source:AI-PLUS-2025]。
 
 ### 证据不是一次性快照：失效必须向下游传播
 
 `sources.json` 已记录 25 条来源及访问日期，但同一天访问不等于内容永久有效，也不能发现修订、替代、失联或临时边界被正式资料取代。新增 `visual/assets/evidence-freshness-policy.json`，把来源分成项目资料、临时空间数据、城市背景、政策标准和案例参考五类，规定复核触发点、建议最长未核时间、责任角色和失效动作；来源变为 `review_due`、`superseded` 或 `unavailable` 时，受影响主张、矩阵项和场景门级必须同步降级或冻结。当前只确认已有访问日期，尚未形成带内容摘要的刷新审计，因此完成刷新审计数保持为 0，临时空间数据无论多新也仍然只是 `provisional_only` [data:visual/assets/evidence-freshness-policy.json#FRESH-01] [data:visual/assets/evidence-freshness-policy.json#FRESH-02]。
 
-专业响应覆盖 [standard:PROJECT-OFFICIAL-ANNOUNCEMENT]、[standard:PROJECT-AGENT-OPEN-CALL-TASKBOOK]、[standard:MOHURD-URBAN-DESIGN-MEASURES]、[standard:MOHURD-CONTROL-DETAILED-PLANNING]、[standard:MNR-LAND-USE-CLASSIFICATION-GUIDE] 与 [standard:MOHURD-ARCH-DESIGN-DEPTH-2016]。当前精确红线、现状建筑、权属、控规指标、市政、交通工程与文保控制仍未取得；`geometry/site_boundary.geojson` 和三处重点区继续使用仓库临时替代范围，均不得用于审批、征地、精确面积或工程实施 [data:geometry/site_boundary.geojson#SITE-001] [source:BOUNDARY-SOURCE] [source:KEY-AREA-SOURCE] [assumption:A-BOUNDARY-001] [assumption:A-CONTROLS-001]。
+专业响应按问题拆分，而不是把标准编号堆在一个结论后：
+
+- 项目任务与智能体任务由征集公告和任务书约束 [standard:PROJECT-OFFICIAL-ANNOUNCEMENT] [standard:PROJECT-AGENT-OPEN-CALL-TASKBOOK]。
+- 城市设计范围与控规程序边界分别由两项住建领域材料约束 [standard:MOHURD-URBAN-DESIGN-MEASURES] [standard:MOHURD-CONTROL-DETAILED-PLANNING]。
+- 用地术语和建筑设计深度缺口分别登记，不把缺口记录冒充已核条文 [standard:MNR-LAND-USE-CLASSIFICATION-GUIDE] [standard:MOHURD-ARCH-DESIGN-DEPTH-2016]。
+
+当前精确红线、现状建筑、权属、控规指标、市政、交通工程与文保控制仍未取得。`geometry/site_boundary.geojson` 和三处重点区继续使用仓库临时替代范围，只能支撑概念复核 [data:geometry/site_boundary.geojson#SITE-001] [source:BOUNDARY-SOURCE] [source:KEY-AREA-SOURCE]。它们不得用于审批、征地、精确面积或工程实施，边界与控制条件假设保持显式 [assumption:A-BOUNDARY-001] [assumption:A-CONTROLS-001]。
 
 ![二次规划：从不足到任务单](assets/figures/implementation-roadmap.png)
 
@@ -107,7 +118,7 @@ Logo 方向采用两条不闭合轨线构成字母 **JZ**，中间的开放缺�
 
 ## 重点区域详细设计
 
-三处重点区使用同一套回答框架：场地矛盾、空间结构、核心项目、AI 场景、进入门与验收。下述范围仍为临时替代，所有面积和体量覆盖只用于概念复核 [data:geometry/key_areas.geojson#PROV-KEY-001] [data:geometry/key_areas.geojson#PROV-KEY-002] [data:geometry/key_areas.geojson#PROV-KEY-003] [depth:three_key_area_detailed_design]。
+三处重点区使用同一套回答框架：场地矛盾、空间结构、核心项目、AI 场景、进入门与验收，并按重点区详细设计深度组织表达 [depth:three_key_area_detailed_design]。下述范围仍为临时替代，三处面积和体量覆盖只用于概念复核 [data:geometry/key_areas.geojson#PROV-KEY-001] [data:geometry/key_areas.geojson#PROV-KEY-002] [data:geometry/key_areas.geojson#PROV-KEY-003]。
 
 ### 众智园：验证站 / VERIFY
 
@@ -162,7 +173,7 @@ JZ-AIOS 规定任何场景依次经过 G0 概念/离线、G1 影子比对、G2 �
 | SC-09 / `SCENE-007` | 教育体验工坊；原点社区 | 本地教学数据 → 偏差与编程练习 | 教师全程复核；未成年人数据不外传 | 家长/学校规则与本地沙盒齐全；数据外发即停；课程结束销毁临时数据 |
 | SC-10 / `SCENE-003` | 安全事件辅助研判；众智园控制室 | 设备告警和人工报告 → 待核事件摘要 | 授权人员决定；不得自动执法 | 权限、日志、对照基线齐全；越权或误导处置即停；模型变更重审 |
 
-另设两个公共治理节点：`SCENE-004`“失败与修正公开档案”记录暂停、纠错和主动退役；`SCENE-008`“气候与无障碍共同测试”让老年人、儿童和行动不便者在早期成为共同测试者，而非完工后的被动验收对象。十二节点、三服务区、护照和人工兜底覆盖可由机器数据核验 [metric:mapped_scenario_node_count] [metric:ai_service_zone_count] [metric:scenario_passport_coverage_ratio] [metric:manual_fallback_coverage_ratio]。
+另设两个公共治理节点：`SCENE-004`“失败与修正公开档案”记录暂停、纠错和主动退役；`SCENE-008`“气候与无障碍共同测试”让老年人、儿童和行动不便者在早期成为共同测试者，而非完工后的被动验收对象。节点和服务区数量可由机器数据核验 [metric:mapped_scenario_node_count] [metric:ai_service_zone_count]。护照与人工兜底的字段覆盖另行计数，不能被解释为现场效果 [metric:scenario_passport_coverage_ratio] [metric:manual_fallback_coverage_ratio]。
 
 ### 三项先行产业测试协议
 
@@ -184,7 +195,7 @@ JZ-AIOS 规定任何场景依次经过 G0 概念/离线、G1 影子比对、G2 �
 
 ## 交通、轨道、市政与公共服务设施
 
-交通证据分两层：现状道路、铁路和水系来自 OpenStreetMap，只用于方向识别并保留 ODbL 署名，不能建立道路红线、铁路保护区或水系蓝线 [source:OSM-CONTEXT] [assumption:A-OSM-001]；设计中心线是概念慢行、横向缝合、接驳和服务翼建议，可复算路线数量与长度 [metric:design_road_count] [metric:design_road_length_m] [data:geometry/roads.geojson#ROAD-001] [depth:traffic_rail_slow_parking]。
+交通证据分两层。现状道路、铁路和水系来自 OpenStreetMap，只用于方向识别并保留 ODbL 署名，不能建立道路红线、铁路保护区或水系蓝线 [source:OSM-CONTEXT] [assumption:A-OSM-001]。设计中心线是概念慢行、横向缝合、接驳和服务翼建议，可复算路线数量与长度 [metric:design_road_count] [metric:design_road_length_m]。路线图层和专业表达深度分别提供机器证据与人工复核入口 [data:geometry/roads.geojson#ROAD-001] [depth:traffic_rail_slow_parking]。
 
 六门采用同一接口协议：先记录现状断点与绕行，再提出步行和无障碍最低连续线，再叠加骑行与公交接驳，最后才讨论跨路、跨河或轨道工程。每门必须配置日常非 AI 通道、清晰人工联系人、静音与无测试时段；机器人和测试车辆不得占用通勤、夜间安静或高峰公共通行。概念图上的道路宽度、转弯、桥梁、地下连接和站点接驳不能替代勘察与专项设计。
 
@@ -196,9 +207,9 @@ JZ-AIOS 规定任何场景依次经过 G0 概念/离线、G1 影子比对、G2 �
 
 ## 蓝绿空间、公共空间与城市风貌
 
-蓝绿系统从“一条主绿脊加三个口袋公园”升级为“主脊 + 六条海绵横向缝合 + 三个状态站花园”。主脊保证南北连续，六条缝合带把雨洪、遮阴、慢行和城市接口共同组织，状态站花园承担低风险公共学习与共同测试。绿地面积、数量和比例均由设计几何复算，但比例使用临时边界作分母，置信度必须继承为低 [metric:green_space_area_sqm] [metric:green_space_count] [metric:green_ratio] [data:geometry/green_space.geojson#GREEN-001] [depth:blue_green_public_space]。
+蓝绿系统从“一条主绿脊加三个口袋公园”升级为“主脊 + 六条海绵横向缝合 + 三个状态站花园”。主脊保证南北连续，六条缝合带把雨洪、遮阴、慢行和城市接口共同组织，状态站花园承担低风险公共学习与共同测试。绿地面积与数量由设计几何复算 [metric:green_space_area_sqm] [metric:green_space_count]。绿地比例使用临时边界作分母，置信度必须继承为低；图层与专业深度提供复核入口 [metric:green_ratio] [data:geometry/green_space.geojson#GREEN-001] [depth:blue_green_public_space]。
 
-九处公共空间由三个朝圣地标客厅和六门组成，形成线—面—点网络。每处默认日常生活模式，只有在公示、授权、限时和可回滚条件齐全时才进入公共学习或限域 Beta；22:00—07:00 静音，默认设置无屏区，禁止把“高亮大屏、持续播报和密集摄像头”当成科技感。公共节点数量、面积和比例可复算，比例仍是低置信概念值 [metric:public_space_node_count] [metric:public_space_area_sqm] [metric:public_space_ratio] [metric:screen_free_public_node_ratio] [data:geometry/public_space.geojson#PUBLIC-001]。
+九处公共空间由三个朝圣地标客厅和六门组成，形成线—面—点网络。每处默认日常生活模式，只有在公示、授权、限时和可回滚条件齐全时才进入公共学习或限域 Beta；22:00—07:00 静音，默认设置无屏区，禁止把“高亮大屏、持续播报和密集摄像头”当成科技感。公共节点数量与面积可复算 [metric:public_space_node_count] [metric:public_space_area_sqm]。比例仍是低置信概念值，无屏默认与空间图层分别保留独立核验入口 [metric:public_space_ratio] [metric:screen_free_public_node_ratio] [data:geometry/public_space.geojson#PUBLIC-001]。
 
 公共空间组件库包含六类可替换组件：双语/触觉里程标、离线地图与人工呼叫点、可关闭低位导光、移动共测桌、雨水花园与遮阴座椅、带实体急停的限域测试边界。每一组件都必须做到不依赖账户也能使用、失电后保留基本功能、维护责任可识别；桥隧、设备基础和管线条件另行论证。
 
@@ -237,9 +248,24 @@ JZ-AIOS 规定任何场景依次经过 G0 概念/离线、G1 影子比对、G2 �
 
 ## 指标体系、面积复算与合规矩阵
 
-指标分七类。空间类包括临时场地面积、三处重点区数量与面积、用地单元和类别 [metric:site_area_sqm] [metric:key_area_count] [metric:key_area_total_sqm] [metric:land_use_unit_count] [metric:land_use_category_count]；建筑类包括体量原型数量、基底、总体表示比例、重点区原型数量和重点区覆盖 [metric:building_count] [metric:building_footprint_area_sqm] [metric:building_representation_ratio] [metric:key_area_building_count] [metric:key_area_building_footprint_ratio]；蓝绿公共空间类包括绿地面积、数量、比例以及公共空间面积、数量、比例 [metric:green_space_area_sqm] [metric:green_space_count] [metric:green_ratio] [metric:public_space_area_sqm] [metric:public_space_node_count] [metric:public_space_ratio]；交通类包括设计路线数量和长度 [metric:design_road_count] [metric:design_road_length_m]。
+指标仍分七类，但按可读问题拆开呈现：
 
-AI 与公共价值类包括十个服务场景、十二个映射节点、三个服务区、六门、护照覆盖、人工兜底、非 AI 通道和无屏默认 [metric:scenario_count] [metric:mapped_scenario_node_count] [metric:ai_service_zone_count] [metric:gateway_count] [metric:scenario_passport_coverage_ratio] [metric:manual_fallback_coverage_ratio] [metric:non_ai_access_coverage_ratio] [metric:screen_free_public_node_ratio]；实施类记录三个阶段门 [metric:phase_count]。这些指标只证明提交包中“设计了什么”，不证明现实运行效果。
+- 场地与重点区规模：临时场地面积、重点区数量及总面积 [metric:site_area_sqm] [metric:key_area_count] [metric:key_area_total_sqm]。
+- 用地结构：用地单元数量和类别数量 [metric:land_use_unit_count] [metric:land_use_category_count]。
+- 建筑表达：体量原型数量、基底面积和总体表示比例 [metric:building_count] [metric:building_footprint_area_sqm] [metric:building_representation_ratio]。
+- 重点区体量：重点区原型数量和基底覆盖 [metric:key_area_building_count] [metric:key_area_building_footprint_ratio]。
+- 蓝绿系统：绿地面积、数量和比例 [metric:green_space_area_sqm] [metric:green_space_count] [metric:green_ratio]。
+- 公共空间：公共空间面积、节点数量和比例 [metric:public_space_area_sqm] [metric:public_space_node_count] [metric:public_space_ratio]。
+- 交通：设计路线数量和长度 [metric:design_road_count] [metric:design_road_length_m]。
+
+AI 与公共价值指标同样按核验问题拆开：
+
+- 场景规模：服务场景、映射节点和服务区数量 [metric:scenario_count] [metric:mapped_scenario_node_count] [metric:ai_service_zone_count]。
+- 运行接口：六门、护照字段覆盖和人工兜底字段覆盖 [metric:gateway_count] [metric:scenario_passport_coverage_ratio] [metric:manual_fallback_coverage_ratio]。
+- 公共可达：非 AI 通道覆盖与无屏默认覆盖 [metric:non_ai_access_coverage_ratio] [metric:screen_free_public_node_ratio]。
+- 实施：三个阶段门 [metric:phase_count]。
+
+这些指标只证明提交包中“设计了什么”，不证明现实运行效果。
 
 所有使用临时边界作分母的面积比例统一为 `low` 置信度；设计对象的数量和属性完整率可为 `high`；路线长度和体量面积为概念设计的 `medium` 或受边界影响的 `low`。容积率、总建面、平均高度、道路面积、停车供给、实测恢复时间和单位有效服务能耗保持 `unknown`，直到取得法定资料或受控测试证据。证据链固定为“公开来源/明确假设 → GeoJSON → EPSG:4548 复算或属性计数 → `metrics.json` → 正文/图纸/HTML → 机器自检 → 人工专业判断” [depth:metrics_recalculation]。
 
@@ -272,6 +298,6 @@ AI 与公共价值类包括十个服务场景、十二个映射节点、三个�
 
 近期政策与场地背景：[source:BEIJING-AI-ORIGIN-2026] 北京市发展改革委 2026 年原点社区与百年京张公开信息；[source:BEIJING-AI-DISTRICTS-2026] 北京首批 AI 创新街区“一核多点”背景；[source:NATIONAL-DATA-INFRA-2025] 国家数据基础设施建设指引；[source:AI-CONTENT-LABEL-2025] 人工智能生成合成内容标识办法；[source:AI-PLUS-2025] 国务院“人工智能+”意见；[source:JZ-PARK-2023] 京张铁路遗址公园一期公开资料；[source:JZ-COCREATION-2021] 京张遗址公园公众共创与专业连续性资料。它们只支撑方向、方法和治理边界，不产生本项目审批、资金、伙伴或控制值。
 
-全球案例为 [source:CASE-KENDALL]、[source:CASE-ONE-NORTH]、[source:CASE-22AT]、[source:CASE-KINGS-CROSS]、[source:CASE-STATION-F] 与 [source:CASE-MARS]。现状方向背景为 [source:OSM-CONTEXT]，其 ODbL 数据只用于道路、铁路和水系识别，不能作为官方边界或工程依据。
+全球案例对照包括 [source:CASE-KENDALL]、[source:CASE-ONE-NORTH] 与 [source:CASE-22AT]。同一对照集还包括 [source:CASE-KINGS-CROSS]、[source:CASE-STATION-F] 与 [source:CASE-MARS]。现状方向背景为 [source:OSM-CONTEXT]，其 ODbL 数据只用于道路、铁路和水系识别，不能作为官方边界或工程依据。
 
 生成方法：空间设计由公开临时边界、项目枚举、OSM 背景和确定性脚本派生；面积与长度在 EPSG:4548 中复算；场景护照、服务区、公共空间模式和阶段门以 GeoJSON 属性记录；PNG、A3/A0 与离线 HTML 是解释层，`geometry/*.geojson`、`metrics.json`、三类矩阵和 `self_check.json` 是证据层。`COMMUNITY-DISPLAY-ONLY` 仅作为当前许可标签记录，其完整条款未随包提供；逐文件状态、未完成事项与使用限制见 `visual/assets/rights-clearance-ledger.json` 和 `report/copyright_statement.md`。

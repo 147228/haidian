@@ -195,6 +195,13 @@ nav{
 }
 
 .cards-wrapper{max-width:1280px;margin:0 auto;padding:36px 44px 100px}
+.gallery-toolbar{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px;
+  padding:13px 15px;border:1px solid var(--line);background:#080a0e9e;
+}
+.gallery-range{color:#a4abb5;font-size:11px;line-height:1.6}
+.gallery-range strong{color:var(--foreground);font-weight:500}
+.gallery-page-size{color:var(--dim);font:9px var(--mono);letter-spacing:.11em;text-transform:uppercase;white-space:nowrap}
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
 .cards-grid:empty{border:0}
 .card{
@@ -281,6 +288,18 @@ nav{
 .empty-title{font-size:17px;font-weight:500;letter-spacing:-.01em}
 .empty-desc{color:#9299a4;font-size:12px;line-height:1.8;margin-top:10px;max-width:420px}
 .empty-actions{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;justify-content:center}
+.pagination{
+  display:flex;align-items:center;justify-content:center;gap:7px;min-height:38px;margin-top:28px;
+}
+.pagination[hidden],.gallery-toolbar[hidden]{display:none}
+.page-button{
+  min-width:38px;height:38px;padding:0 11px;border:1px solid var(--line);color:var(--muted);
+  font:10px var(--mono);letter-spacing:.04em;transition:border-color .18s,color .18s,background .18s;
+}
+.page-button:hover:not(:disabled){border-color:rgba(var(--accent-rgb),.6);color:var(--accent)}
+.page-button[aria-current="page"]{border-color:var(--accent);background:rgba(var(--accent-rgb),.11);color:var(--accent)}
+.page-button:disabled{cursor:not-allowed;opacity:.28}
+.page-ellipsis{display:grid;place-items:center;min-width:22px;height:38px;color:var(--dim);font:10px var(--mono)}
 .btn-primary{
   border:1px solid rgba(var(--accent-rgb),.55);background:rgba(var(--accent-rgb),.08);
   color:var(--accent);padding:11px 18px;font-size:12px;letter-spacing:.04em;transition:all .18s;
@@ -317,6 +336,9 @@ nav{
   .status-guide,.review-note{padding-left:20px;padding-right:20px}
   .cards-wrapper{padding:28px 20px 80px}
   .cards-grid{gap:14px}
+  .gallery-toolbar{align-items:flex-start;flex-direction:column;gap:5px}
+  .pagination{gap:5px;justify-content:flex-start;overflow-x:auto;padding-bottom:4px}
+  .page-button{min-width:36px;height:36px;padding:0 10px;flex:0 0 auto}
   .hero-inner{flex-direction:column;align-items:flex-start}
   .cover-title{font-size:20px}.cover-copy{left:16px;right:16px;bottom:15px}
 }
@@ -380,7 +402,12 @@ nav{
 <p class="review-note" data-i18n="guide.reviewNote">卡片与分类只统计 GitHub main 中已经公开的方案；右上角“开放 PR”是 GitHub 实时返回的全部未关闭 PR，既包含待合并提案，也包含网站与仓库维护工作，因此不能直接理解为待评审方案数。本站不展示维护者审核正文；具体反馈仍以对应 PR comment 为准。</p>
 
 <div class="cards-wrapper">
+  <div class="gallery-toolbar" id="galleryToolbar" aria-live="polite">
+    <span class="gallery-range" id="galleryRange"></span>
+    <span class="gallery-page-size" data-i18n="pagination.size">每页 50 个方案</span>
+  </div>
   <div class="cards-grid" id="cardsGrid"></div>
+  <nav class="pagination" id="pagination" aria-label="方案分页"></nav>
 
   <div class="submit-guide">
     <div class="submit-guide-title" data-i18n="guide.title">如何提交方案</div>
@@ -402,7 +429,7 @@ nav{
       <div class="submit-n">3</div>
       <div>
         <div class="submit-step-title" data-i18n="g3.t">创建完整方案目录</div>
-        <div class="submit-step-desc" data-i18n-html="g3.d">按路径 <code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;font-size:.88em">submissions/&lt;ID&gt;/&lt;slug&gt;/</code> 提交 <code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;font-size:.88em">proposal.md</code>、<code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;font-size:.88em">visual/index.html</code> 和结构化数据</div>
+        <div class="submit-step-desc" data-i18n-html="g3.d">按路径 <code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;font-size:.88em">submissions/&lt;ID&gt;/&lt;slug&gt;/</code> 提交中英文对照的方案、HTML、A3/A0 和含文字图件，并参照<a href="https://github.com/open-city-ai/haidian/blob/main/docs/terminology-glossary.md" target="_blank" rel="noopener">赛事术语表</a>；缺少译稿只提示 warning</div>
       </div>
     </div>
     <div class="submit-step">
@@ -453,11 +480,12 @@ const T = {
     'empty.title':'征集进行中','empty.desc':'暂无已合并的方案。成为第一个提交方案的参与者，方案将在此展示。',
     'empty.none':'当前主分支没有这一状态的已公开方案；计数已经核对，不是加载失败。',
     'empty.cta1':'Fork 仓库 →','empty.cta2':'阅读任务书',
+    'pagination.size':'每页 50 个方案','pagination.prev':'上一页','pagination.next':'下一页','pagination.aria':'方案分页',
     'tag.ai.label':'AI Agent','tag.human.label':'人工',
     'guide.title':'如何提交方案',
     'g1.t':'Fork 仓库','g1.d':'<a href="https://github.com/open-city-ai/haidian" target="_blank" rel="noopener">github.com/open-city-ai/haidian</a> → Fork 到你的账号',
     'g2.t':'阅读任务书','g2.d':'<a href="brief.html">查看公开任务书</a> 了解背景、方向和边界',
-    'g3.t':'创建完整方案目录','g3.d':'按路径 <code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;font-size:.88em">submissions/&lt;ID&gt;/&lt;slug&gt;/</code> 提交 <code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;font-size:.88em">proposal.md</code>、<code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;font-size:.88em">visual/index.html</code> 和结构化数据',
+    'g3.t':'创建完整方案目录','g3.d':'按路径 <code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;font-size:.88em">submissions/&lt;ID&gt;/&lt;slug&gt;/</code> 提交中英文对照的方案、HTML、A3/A0 和含文字图件，并参照<a href="https://github.com/open-city-ai/haidian/blob/main/docs/terminology-glossary.md" target="_blank" rel="noopener">赛事术语表</a>；缺少译稿只提示 warning',
     'g4.t':'发起 Pull Request','g4.d':'向主仓库 main 分支发 PR，CI 自动校验格式与合规',
     'cta1':'前往 GitHub 提交','cta2':'AI Agent 指南',
     'f1':'← 返回首页','f2':'公开任务书','f3':'评审细则','f4':'在 GitHub 查看','f.note':'展示状态来自主分支方案包完整度与阻断级自检',
@@ -478,11 +506,12 @@ const T = {
     'empty.title':'Open Call in Progress','empty.desc':'No merged proposals yet. Be the first to submit — your proposal will be displayed here.',
     'empty.none':'No published proposal on main currently has this status. The zero was verified; this is not a loading failure.',
     'empty.cta1':'Fork Repo →','empty.cta2':'Read Brief',
+    'pagination.size':'50 proposals per page','pagination.prev':'Previous','pagination.next':'Next','pagination.aria':'Proposal pagination',
     'tag.ai.label':'AI Agent','tag.human.label':'Human',
     'guide.title':'How to Submit',
     'g1.t':'Fork the Repo','g1.d':'<a href="https://github.com/open-city-ai/haidian" target="_blank" rel="noopener">github.com/open-city-ai/haidian</a> → Fork to your account',
     'g2.t':'Read the Brief','g2.d':'<a href="brief.html">View the public brief</a> to understand the background, directions, and boundaries',
-    'g3.t':'Create a Complete Package','g3.d':'Submit <code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;font-size:.88em">proposal.md</code>, <code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;font-size:.88em">visual/index.html</code>, and structured data under <code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;font-size:.88em">submissions/&lt;ID&gt;/&lt;slug&gt;/</code>',
+    'g3.t':'Create a Complete Package','g3.d':'Submit matching Chinese and English proposal files, HTML, A3/A0 PDFs, and text-bearing figures under <code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;font-size:.88em">submissions/&lt;ID&gt;/&lt;slug&gt;/</code>, using the <a href="https://github.com/open-city-ai/haidian/blob/main/docs/terminology-glossary.md" target="_blank" rel="noopener">event glossary</a>. Missing translations produce warnings only',
     'g4.t':'Open a Pull Request','g4.d':'Open a PR to the main branch — CI automatically checks format and compliance',
     'cta1':'Go to GitHub →','cta2':'AI Agent Guide',
     'f1':'← Back to Home','f2':'Public Brief','f3':'Review Rubric','f4':'View on GitHub','f.note':'Display status follows package completeness and blocking self-checks on main',
@@ -578,25 +607,106 @@ function updateStatusCounts() {
   document.getElementById('totalCount').textContent = counts.all;
 }
 
-function renderCards(filter) {
+const PAGE_SIZE = 50;
+const VALID_FILTERS = new Set(['all', 'formal', 'revision', 'fixture']);
+
+function getFilteredSubmissions(filter) {
+  return filter === 'all' ? SUBMISSIONS : SUBMISSIONS.filter(s => statusMeta(s).group === filter);
+}
+
+function pageItems(current, total) {
+  if (total <= 7) return Array.from({length: total}, (_, index) => index + 1);
+  const items = [1];
+  const start = Math.max(2, current - 1);
+  const end = Math.min(total - 1, current + 1);
+  if (start > 2) items.push('ellipsis-start');
+  for (let page = start; page <= end; page += 1) items.push(page);
+  if (end < total - 1) items.push('ellipsis-end');
+  items.push(total);
+  return items;
+}
+
+function renderPagination(totalItems) {
+  const pagination = document.getElementById('pagination');
+  const toolbar = document.getElementById('galleryToolbar');
+  const range = document.getElementById('galleryRange');
+  const totalPages = Math.max(1, Math.ceil(totalItems / PAGE_SIZE));
+  currentPage = Math.min(Math.max(1, currentPage), totalPages);
+  toolbar.hidden = totalItems === 0;
+  pagination.hidden = totalItems <= PAGE_SIZE;
+  if (totalItems === 0) {
+    range.textContent = '';
+    pagination.innerHTML = '';
+    return;
+  }
+
+  const start = (currentPage - 1) * PAGE_SIZE + 1;
+  const end = Math.min(currentPage * PAGE_SIZE, totalItems);
+  range.innerHTML = lang === 'zh'
+    ? `正在显示 <strong>${start}–${end}</strong>，共 <strong>${totalItems}</strong> 个方案`
+    : `Showing <strong>${start}–${end}</strong> of <strong>${totalItems}</strong> proposals`;
+  pagination.setAttribute('aria-label', T[lang]['pagination.aria']);
+  if (totalItems <= PAGE_SIZE) {
+    pagination.innerHTML = '';
+    return;
+  }
+
+  const button = (page, label, disabled = false, current = false) =>
+    `<button class="page-button" type="button" data-page="${page}"${disabled ? ' disabled' : ''}${current ? ' aria-current="page"' : ''}>${label}</button>`;
+  const numbers = pageItems(currentPage, totalPages).map(item =>
+    typeof item === 'number'
+      ? button(item, item, false, item === currentPage)
+      : '<span class="page-ellipsis" aria-hidden="true">…</span>'
+  ).join('');
+  pagination.innerHTML = [
+    button(currentPage - 1, `← ${T[lang]['pagination.prev']}`, currentPage === 1),
+    numbers,
+    button(currentPage + 1, `${T[lang]['pagination.next']} →`, currentPage === totalPages)
+  ].join('');
+}
+
+function syncUrl(mode = 'replace') {
+  const url = new URL(window.location.href);
+  if (currentFilter === 'all') url.searchParams.delete('filter');
+  else url.searchParams.set('filter', currentFilter);
+  if (currentPage === 1) url.searchParams.delete('page');
+  else url.searchParams.set('page', String(currentPage));
+  history[mode === 'push' ? 'pushState' : 'replaceState']({}, '', url);
+}
+
+function renderCards(filter, options = {}) {
   const grid = document.getElementById('cardsGrid');
   const t = T[lang];
-  const filtered = filter === 'all' ? SUBMISSIONS : SUBMISSIONS.filter(s => statusMeta(s).group === filter);
+  const filtered = getFilteredSubmissions(filter);
   updateStatusCounts();
-  if (filtered.length === 0) { grid.innerHTML = renderEmpty(filter); return; }
-  grid.innerHTML = filtered.map((s, index) => {
+  renderPagination(filtered.length);
+  if (filtered.length === 0) {
+    grid.innerHTML = renderEmpty(filter);
+    syncUrl(options.historyMode || 'replace');
+    return;
+  }
+  const offset = (currentPage - 1) * PAGE_SIZE;
+  const visible = filtered.slice(offset, offset + PAGE_SIZE);
+  grid.innerHTML = visible.map((s, index) => {
     const state = statusMeta(s);
+    const absoluteIndex = SUBMISSIONS.indexOf(s);
+    const displayIndex = offset + index + 1;
     const title = escapeHTML(lang === 'zh' ? s.title : (s.titleEn || s.title));
     const summary = escapeHTML(lang === 'zh' ? s.summary : (s.summaryEn || s.summary));
-    const href = escapeHTML(s.proposalUrl || s.visualUrl || s.sourceUrl || '#');
+    const href = escapeHTML(
+      (lang === 'zh' ? s.proposalUrlZh : s.proposalUrlEn)
+      || s.proposalUrl || (lang === 'zh' ? s.visualUrlZh : s.visualUrlEn)
+      || s.visualUrl || (lang === 'zh' ? s.sourceUrlZh : s.sourceUrlEn)
+      || s.sourceUrl || '#'
+    );
     const author = escapeHTML(s.author || '');
     const initial = escapeHTML((s.authorInitial || s.author?.[0] || 'A').toUpperCase());
     const avatar = s.avatarUrl ? `<img src="${escapeHTML(s.avatarUrl)}" alt="" loading="lazy" decoding="async">` : '';
     return `
     <a class="card" href="${href}" target="_blank" rel="noopener">
       <div class="card-cover">
-        ${renderCover(s,index,title)}
-        <span class="card-cover-tag ${s.type==='ai'?'tag-ai':'tag-human'}">${String(index + 1).padStart(2, '0')} · ${s.type==='ai'?t['tag.ai.label']:t['tag.human.label']}</span>
+        ${renderCover(s,absoluteIndex,title)}
+        <span class="card-cover-tag ${s.type==='ai'?'tag-ai':'tag-human'}">${String(displayIndex).padStart(2, '0')} · ${s.type==='ai'?t['tag.ai.label']:t['tag.human.label']}</span>
         <span class="card-status status-${escapeHTML(state.key)}">${escapeHTML(state.label)}</span>
       </div>
       <div class="card-body">
@@ -611,6 +721,7 @@ function renderCards(filter) {
       </div>
     </a>`;
   }).join('');
+  syncUrl(options.historyMode || 'replace');
 }
 
 async function loadReviewCount() {
@@ -630,14 +741,39 @@ async function loadReviewCount() {
   }
 }
 
-let currentFilter = 'all';
+const initialParams = new URLSearchParams(window.location.search);
+let currentFilter = VALID_FILTERS.has(initialParams.get('filter')) ? initialParams.get('filter') : 'all';
+let currentPage = Math.max(1, Number.parseInt(initialParams.get('page') || '1', 10) || 1);
+
+function setActiveFilter() {
+  document.querySelectorAll('.filter-tab').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.filter === currentFilter);
+  });
+}
+
 document.querySelectorAll('.filter-tab').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
     currentFilter = btn.dataset.filter;
-    renderCards(currentFilter);
+    currentPage = 1;
+    setActiveFilter();
+    renderCards(currentFilter, {historyMode:'push'});
   });
+});
+
+document.getElementById('pagination').addEventListener('click', event => {
+  const button = event.target.closest('[data-page]');
+  if (!button || button.disabled) return;
+  currentPage = Number.parseInt(button.dataset.page, 10);
+  renderCards(currentFilter, {historyMode:'push'});
+  document.getElementById('galleryToolbar').scrollIntoView({behavior:'smooth', block:'start'});
+});
+
+window.addEventListener('popstate', () => {
+  const params = new URLSearchParams(window.location.search);
+  currentFilter = VALID_FILTERS.has(params.get('filter')) ? params.get('filter') : 'all';
+  currentPage = Math.max(1, Number.parseInt(params.get('page') || '1', 10) || 1);
+  setActiveFilter();
+  renderCards(currentFilter);
 });
 
 function applyLang(l) {
@@ -653,6 +789,7 @@ document.getElementById('langToggle').addEventListener('click', () => {
   document.body.style.opacity = '0.6';
   setTimeout(() => { applyLang(lang === 'zh' ? 'en' : 'zh'); document.body.style.opacity = '1'; }, 120);
 });
+setActiveFilter();
 applyLang(lang);
 loadReviewCount();
 </script>

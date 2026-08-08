@@ -205,6 +205,326 @@
           ]
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "id": "PUBLIC-006",
+      "properties": {
+        "id": "PUBLIC-006",
+        "layer": "PUBLIC_SPACE",
+        "source_type": "agent_generated_design",
+        "confidence": "medium",
+        "geometry_role": "design_proposal",
+        "name_zh": "大钟寺四象限连通广场",
+        "area_sqm_declared": 41755.422
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              116.3486,
+              39.9442
+            ],
+            [
+              116.3486,
+              39.9464
+            ],
+            [
+              116.3506,
+              39.9464
+            ],
+            [
+              116.3506,
+              39.9442
+            ],
+            [
+              116.3486,
+              39.9442
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "PUBLIC-007",
+      "properties": {
+        "id": "PUBLIC-007",
+        "layer": "PUBLIC_SPACE",
+        "source_type": "agent_generated_design",
+        "confidence": "medium",
+        "geometry_role": "design_proposal",
+        "name_zh": "中关村邻里广场",
+        "area_sqm_declared": 34158.173
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              116.3482,
+              39.9552
+            ],
+            [
+              116.3482,
+              39.9572
+            ],
+            [
+              116.35,
+              39.9572
+            ],
+            [
+              116.35,
+              39.9552
+            ],
+            [
+              116.3482,
+              39.9552
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "PUBLIC-008",
+      "properties": {
+        "id": "PUBLIC-008",
+        "layer": "PUBLIC_SPACE",
+        "source_type": "agent_generated_design",
+        "confidence": "medium",
+        "geometry_role": "design_proposal",
+        "name_zh": "原点社区北口袋广场",
+        "area_sqm_declared": 34144.453
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              116.3478,
+              39.9832
+            ],
+            [
+              116.3478,
+              39.985
+            ],
+            [
+              116.3498,
+              39.985
+            ],
+            [
+              116.3498,
+              39.9832
+            ],
+            [
+              116.3478,
+              39.9832
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "PUBLIC-009",
+      "properties": {
+        "id": "PUBLIC-009",
+        "layer": "PUBLIC_SPACE",
+        "source_type": "agent_generated_design",
+        "confidence": "medium",
+        "geometry_role": "design_proposal",
+        "name_zh": "小月河场景客厅广场",
+        "area_sqm_declared": 29468.373
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              116.3534,
+              39.97
+            ],
+            [
+              116.3534,
+              39.9722
+            ],
+            [
+              116.354724,
+              39.9722
+            ],
+            [
+              116.3549,
+              39.97
+            ],
+            [
+              116.3534,
+              39.97
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "PUBLIC-010",
+      "properties": {
+        "id": "PUBLIC-010",
+        "layer": "PUBLIC_SPACE",
+        "source_type": "agent_generated_design",
+        "confidence": "medium",
+        "geometry_role": "design_proposal",
+        "name_zh": "众智园滨河广场",
+        "area_sqm_declared": 37916.038
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              116.3462,
+              40.0238
+            ],
+            [
+              116.3462,
+              40.0258
+            ],
+            [
+              116.3482,
+              40.0258
+            ],
+            [
+              116.3482,
+              40.0238
+            ],
+            [
+              116.3462,
+              40.0238
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "PUBLIC-011",
+      "properties": {
+        "id": "PUBLIC-011",
+        "layer": "PUBLIC_SPACE",
+        "source_type": "agent_generated_design",
+        "confidence": "medium",
+        "geometry_role": "design_proposal",
+        "name_zh": "清河绿廊社区广场",
+        "area_sqm_declared": 37924.693
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              116.3448,
+              40.008
+            ],
+            [
+              116.3448,
+              40.01
+            ],
+            [
+              116.3468,
+              40.01
+            ],
+            [
+              116.3468,
+              40.008
+            ],
+            [
+              116.3448,
+              40.008
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "PUBLIC-012",
+      "properties": {
+        "id": "PUBLIC-012",
+        "layer": "PUBLIC_SPACE",
+        "source_type": "agent_generated_design",
+        "confidence": "medium",
+        "geometry_role": "design_proposal",
+        "name_zh": "大钟寺文化集散广场",
+        "area_sqm_declared": 37956.876
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              116.3522,
+              39.949
+            ],
+            [
+              116.3522,
+              39.951
+            ],
+            [
+              116.3542,
+              39.951
+            ],
+            [
+              116.3542,
+              39.949
+            ],
+            [
+              116.3522,
+              39.949
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "PUBLIC-013",
+      "properties": {
+        "id": "PUBLIC-013",
+        "layer": "PUBLIC_SPACE",
+        "source_type": "agent_generated_design",
+        "confidence": "medium",
+        "geometry_role": "design_proposal",
+        "name_zh": "小月河骑行驿站广场",
+        "area_sqm_declared": 22771.824
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              116.354,
+              39.956
+            ],
+            [
+              116.354,
+              39.958
+            ],
+            [
+              116.3552,
+              39.958
+            ],
+            [
+              116.3552,
+              39.956
+            ],
+            [
+              116.354,
+              39.956
+            ]
+          ]
+        ]
+      }
     }
   ]
 }

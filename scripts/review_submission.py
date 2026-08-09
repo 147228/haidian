@@ -210,6 +210,7 @@ def build_prompt(review_input: dict) -> str:
             "",
             "Important: deterministic validation and spatial review results are evidence. Treat blocking self-checks, known blockers, and missing official geometry as serious readiness limits.",
             "Treat background_only, provisional_only, and needs_review registry entries as non-formal evidence unless the submitted package separately provides reviewed official/cleared evidence.",
+            "Participant-collected sources are not required to appear in the maintainer-owned central source_registry. Absence from the central registry is neither approval nor prohibition and must not by itself reduce risk_compliance, create a required action or gate failure, or cause an adverse recommendation. Judge participant sources using the package's own sources.json, its evidence, and the applicable rules.",
             "Version 2 bilingual deliverables are mandatory. A missing, incomplete, malformed, or incorrectly mapped Chinese/English counterpart is a blocking package-readiness failure. Historical version 1 packages remain compatible; review their available language without inventing missing content. Human reviewers must still compare translated claims, metrics, evidence, and figure positions for substantive equivalence.",
             "If pre-submit self-check, spatial review, machine visual-packaging checks, or professional evidence review is FAIL, the package cannot enter formal professional scoring.",
             "",

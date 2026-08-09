@@ -100,7 +100,7 @@ The model objects are explicit rather than being a mode checklist: the 1,000-per
 
 In this normalized sandbox, the unmanaged peak produces a modeled peak curb queue of 86 cars and a station-gate load ratio of 1.05; the multimodal curb candidate produces 0 cars and 0.88; the weather ground fallback produces 47 cars and 0.96. This points to station gates, bus-stop capacity, curb service and accessible crossings as the first calibration targets, not to a construction conclusion. Following open activity/agent-based methods, formal calibration must compare mode share, road/curb volume, door-to-door time, trip distance and grouped accessibility—not only a single efficiency score [source:ATOM-MULTIMODAL-ABM] [source:ACCESS-ACCESSIBILITY-ABM]. Dated cross-boundary OD, headways, sections, parking, conflicts and fire/accessibility review must replace the design inputs before rerunning or claiming performance.
 
-![Design-scenario simulation: gates, trade-offs and calibration plan](assets/figures/simulation-pareto.en.png)
+![v1.3 enterprise–resident mobility system efficiency: candidates, groups and gates](assets/figures/system-efficiency-board.en.svg)
 ![Multimodal model objects: residents, vehicles, metro and analysis outputs](assets/figures/model-objects.en.png)
 
 #### B1 Enterprise arrival sensitivity: an inspectable flex-window test

@@ -146,7 +146,7 @@ iteration: "v1.0"
 
 在这套归一化沙盘中，未协同高峰的汽车路缘峰值排队为 86 辆、站口闸机负荷为 1.05；多方式路缘协同候选为 0 辆和 0.88；极端天气地面回退为 47 辆和 0.96。它说明优先校准站口闸机、公交站容量、路缘服务和无障碍过街，而不是把“模型分数”直接当成建设结论。现场补齐有日期的跨边界 OD、班次、断面、停车、冲突和消防审查后，才允许替换设计输入并重新运行。
 
-![设计场景综合模拟：硬门、权衡与下一步校准](assets/figures/simulation-pareto.png)
+![v1.3 企业—居民交通系统效率：候选方案、人群构成与硬门](assets/figures/system-efficiency-board.svg)
 ![多方式模型对象：居民、车辆、地铁与分析输出](assets/figures/model-objects.png)
 
 #### B1 企业到岗弹性：可解释的错峰敏感性
@@ -296,7 +296,7 @@ B2 解决“平时怎么选”，B3 继续问“地铁中断、恶劣天气或�
 
 在现场 OD、站点容量、信号、人员动线和路缘计数到位前，先用 `visual/assets/movement-simulation.json` 做 1000 人归一化设计单位的可解释对比：S0 无协同高峰、S1 多方式与路缘协同、S2 受监管闸门阻断的空中候选、S3 极端天气地面回退。`visual/assets/run-mobility-simulation.js` 是同一输入文件的无依赖确定性复核器；它只重算设计单位的队列和服务供给，不把论文参数或模型读数升级为海淀现状。S1 只是在建议硬门筛查后暂选的设计候选；广义成本、换乘可靠性、人员冲突、汽车外来流入、最差群体差距和能耗都是示范输入，不是海淀现状。图件把“先过硬门、再做帕累托比较、最后用现场数据替换”的决策链公开 [metric:multimodal_system_efficiency_index] [metric:person_flow_conflict_rate] [standard:SUMO-MULTIMODAL-SIMULATION]。
 
-![设计场景综合模拟：硬门、权衡与下一步校准](assets/figures/simulation-pareto.png)
+![v1.3 企业—居民交通系统效率：候选方案、人群构成与硬门](assets/figures/system-efficiency-board.svg)
 
 ## 蓝绿空间、公共空间与城市风貌（证据回读）
 

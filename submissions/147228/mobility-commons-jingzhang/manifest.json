@@ -118,7 +118,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "a4235cdcc8177afa487315e82e6cb0b07c3b04d052efe837cd297eda1fe10e7b"
+      "sha256": "88798d1f055acc8506d61709c1b1da776df02df0379268d3a62c524cdb885da1"
     },
     {
       "path": "compliance_matrix.json",
@@ -228,14 +228,14 @@
       "required": true,
       "language": "en",
       "translation_of": "proposal.md",
-      "sha256": "d119518be104a8a8b62f296c1d1f6bb28898e38e13379e7d7124d47a7a2f9f30"
+      "sha256": "0fbd8d067d38de5bb4a6265a65c032b7af78aaeef8718b0223ce3b8ee54eee72"
     },
     {
       "path": "proposal.md",
       "role": "narrative",
       "required": true,
       "language": "zh",
-      "sha256": "ea8fbbbc610ca395b08a9f390db51a282401bf7fafa551dc9d9ae9d4619fcb20"
+      "sha256": "6f5ffd5684af5328ef61071e80f6532fa1dc03996619e402cc868a84496d4e55"
     },
     {
       "path": "report/copyright_statement.md",
@@ -254,14 +254,14 @@
       "required": true,
       "language": "en",
       "translation_of": "report/proposal.html",
-      "sha256": "bbc5f71f4b78826c76d2717328c7a4726e2c828d3926d2c09dc627b2682af2f3"
+      "sha256": "32e2aab64303dc116b4763f03b7862fa3ae0949216ac119f9b82a849005c0c7a"
     },
     {
       "path": "report/proposal.html",
       "role": "rendered_proposal_html",
       "required": true,
       "language": "zh",
-      "sha256": "897153b656f9c2596946c6223eabae364aca16e2ecc96950d47baa72c69c629a"
+      "sha256": "15cafe659d0f347fb6583b1abe7c540de0017ba09125bb5dc8c289ebe9aba844"
     },
     {
       "path": "self_check.json",
@@ -322,14 +322,14 @@
       "required": true,
       "language": "en",
       "translation_of": "visual/index.html",
-      "sha256": "029438adf4f1714e2111646b78232a976ec98e04136aed71a4057d2abd7c5513"
+      "sha256": "ecb90e734ec5780f99f879c8d85d3ee80758985aa92e9809061ecbe9f15bafda"
     },
     {
       "path": "visual/index.html",
       "role": "visualization",
       "required": true,
       "language": "zh",
-      "sha256": "ac8f54bb91015777ab32c2e734d9f545c1ecc0dabfd02d9af3091dd18d4a4ea6"
+      "sha256": "2dbdd871a96e6c086ae9b7816bf589488e67777a42de2bb63e43a7bbe9319364"
     },
     {
       "path": "visual/assets/multimodal-network.json",
@@ -435,6 +435,21 @@
       "language": "en",
       "translation_of": "assets/figures/resilience-equity-board.svg",
       "sha256": "33bd76f20afad1539bf2141551731304d049d1a4117f96bd6195da932879df6b"
+    },
+    {
+      "path": "assets/figures/system-efficiency-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "dc66860007287f0535767373043455357b4136b07701b3eb0cc28d2e243acda2"
+    },
+    {
+      "path": "assets/figures/system-efficiency-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/system-efficiency-board.svg",
+      "sha256": "d63fdaa801a73085160a3e1e8473862fa85475bd24c58c49a02a65a9c76db0ce"
     }
   ]
 }

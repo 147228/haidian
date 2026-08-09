@@ -325,6 +325,48 @@ class AIReviewSubmissionTests(unittest.TestCase):
             self.assertNotIn("OPENAI_API_KEY", preview)
             self.assertIn("content_preflight_issues", result)
 
+    def test_visual_packet_includes_present_english_figure_counterparts(self) -> None:
+        try:
+            from PIL import Image
+        except ImportError:  # pragma: no cover - Pillow is a project test dependency.
+            self.skipTest("Pillow unavailable")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            figure_dir = root / "assets" / "figures"
+            figure_dir.mkdir(parents=True)
+            for name in ["site-overview.png", "site-overview.en.png"]:
+                Image.new("RGB", (2, 2), "white").save(figure_dir / name)
+            with mock.patch(
+                "ai_review_submission.FIGURE_PATHS",
+                ["assets/figures/site-overview.png"],
+            ), mock.patch("ai_review_submission.render_pdf_previews", return_value=[]), mock.patch(
+                "ai_review_submission.render_html_previews", return_value=[]
+            ):
+                _, included, warnings = collect_visual_inputs(root, root / "rendered", 2, 1024 * 1024)
+            self.assertEqual(
+                included,
+                ["assets/figures/site-overview.png", "assets/figures/site-overview.en.png"],
+            )
+            self.assertEqual([], warnings)
+
+    def test_organizer_owned_next_action_moves_to_data_gap(self) -> None:
+        review = valid_review()
+        for item in review["rubric_scores"]:
+            item["score"] = 5
+        review["required_next_actions_zh"] = ["官方几何发布后重算指标。"]
+        client = FakeClient(review)
+        with tempfile.TemporaryDirectory() as tmp, mock.patch(
+            "ai_review_submission.collect_visual_inputs", return_value=([], [], [])
+        ), mock.patch("ai_review_submission.content_preflight", return_value=[]):
+            result = run_ai_review(
+                ROOT, SUBMISSION, "alice", Path(tmp), client, "gpt-test",
+                "https://api.openai.com/v1", "high", 18, 1024 * 1024, False,
+            )
+        self.assertEqual("featured-candidate", result["decision"]["publication_recommendation"])
+        self.assertEqual([], result["review"]["required_next_actions_zh"])
+        self.assertIn("官方几何发布后重算指标。", result["review"]["data_gaps_zh"])
+        self.assertTrue(any("moved organizer-owned" in item for item in result["decision"]["local_gate_overrides"]))
+
     def test_submission_path_author_must_match_pr_author(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             with self.assertRaisesRegex(ReviewError, "does not match"):

@@ -8,6 +8,7 @@
     "proposal.md#一页执行摘要",
     "visual/assets/responsibility-acceptance-contract.json",
     "visual/assets/network-flow-readout.json",
+    "visual/assets/regional-scale-commute-readout.json",
     "visual/assets/capacity-closure-screen.json",
     "visual/assets/mobility-tabletop-evidence.json"
   ],
@@ -29,8 +30,8 @@
     {
       "id": "ai_planning_innovation",
       "label_zh": "AI 与城市规划创新性",
-      "start_here": ["visual/assets/run-network-flow-screen.js", "visual/assets/run-capacity-closure-screen.js", "visual/assets/network-flow-readout.json"],
-      "strongest_evidence": "全量聚合网络流、容量闭合与空中候选 fail-closed 共同约束方式选择",
+      "start_here": ["visual/assets/regional-scale-commute-readout.json", "visual/assets/run-regional-commute-simulation.js", "visual/assets/run-capacity-closure-screen.js", "visual/assets/network-flow-readout.json"],
+      "strongest_evidence": "持久化的 O1/O2/O3/O4 候选排名与鲁棒性排序，加上全量聚合网络流、容量闭合和空中候选 fail-closed，共同展示方式选择如何被硬门槛约束",
       "boundary": "输入是合成反事实；满意度、容量和网络压力不是本地绩效。"
     },
     {

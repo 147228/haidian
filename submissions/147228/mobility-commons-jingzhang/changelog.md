@@ -11,6 +11,9 @@
 - Added a deterministic recovery-time ledger that consumes the existing B3 synthetic runner output and exposes three events × seven groups without changing model inputs.
 - Added bilingual `resilience-recovery-board.svg` figures with fallback coverage, TTR gates, slowest-group comparison and a seven-group matrix.
 - Kept all TTR values explicitly synthetic recovery-time proxies; no incident-response, local resilience, accessibility-audit or p90 claim is made, and the air candidate remains blocked.
+- Persisted `candidate_selection_audit` in `regional-scale-commute-readout.json` for the O1/O2/O3/O4 nominal and robustness rankings, including processing, mass-conservation, hard-gate and privacy metadata from the deterministic runner.
+- Added `run-regional-readout-audit.js` to compare the committed compact readout with a fresh deterministic runner replay.
+- No local field, operations, performance or rights claim added; unknowns remain unchanged.
 
 ## v2.20 - 2026-08-10
 

@@ -118,7 +118,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "1be6832e6a19f1ef54acfba21890a2b6f634665a153e6499852fe1d92bcc5400"
+      "sha256": "92736b28f914f9e69015a2f2898568bef47af6e895c9f9f0316e764904264d3e"
     },
     {
       "path": "compliance_matrix.json",
@@ -668,13 +668,19 @@
       "path": "visual/assets/run-regional-commute-simulation.js",
       "role": "script",
       "required": true,
-      "sha256": "4aaf69fec1ede8e587f496a74b47052bdd053b87683d7a861ed8f5c82b87d1c3"
+      "sha256": "26d1e2c0f100cb96a52d6cc5c4578a352fc4ca8f5d4d9e8065bb5dcdfb2019ed"
     },
     {
       "path": "visual/assets/regional-scale-commute-readout.json",
       "role": "data_readout",
       "required": true,
-      "sha256": "3ad16c1dd6eddc7de80db15f7fdb82d96bcdd3ffdcbd3dc2783807d0c41dce34"
+      "sha256": "5ac022f38196fe2e3b3bd0aa06369641573e10f64095a080d36f30bfc77ebede"
+    },
+    {
+      "path": "visual/assets/run-regional-readout-audit.js",
+      "role": "script",
+      "required": true,
+      "sha256": "d308cf6f7691a4c4931f7bdf29cee14a79356bb70d8a4cbc20bedb812d8b66bf"
     },
     {
       "path": "assets/figures/resource-pressure-board.svg",
@@ -740,7 +746,7 @@
       "path": "visual/assets/review-evidence-index.json",
       "role": "review_navigation",
       "required": false,
-      "sha256": "9209e1af3d2947eac681c59d90f8ab7d9833597841a509358c8413e2391533f2"
+      "sha256": "e56ea9f485469fcde656185263f18da36f6a8288647429933a866644fd720d4d"
     }
   ]
 }

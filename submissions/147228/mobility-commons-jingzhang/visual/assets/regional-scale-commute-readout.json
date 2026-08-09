@@ -2478,7 +2478,14 @@
         "count": 113968,
         "share": 0.0365
       }
-    ]
+    ],
+    "status": "synthetic_candidate_subject_to_calibration",
+    "population_agents": 3122000,
+    "agents_processed": 3122000,
+    "all_agents_processed": true,
+    "mass_conservation": true,
+    "air_candidate": "blocked",
+    "privacy_check": "aggregate_only_no_personal_trace"
   },
   "departure_time_choice_screen": {
     "baseline": {
@@ -6803,5 +6810,188 @@
     "people_flow_conflict_observation",
     "resident_and_employee_satisfaction_survey",
     "weather_disruption_and_emergency_protocol"
-  ]
+  ],
+  "candidate_selection_audit": {
+    "generated_by": "node visual/assets/run-regional-commute-simulation.js",
+    "selected_policy": "O4_capacity_balanced",
+    "selected_policy_is_not_hand_picked": true,
+    "selection_order": [
+      "hard_gate_pass",
+      "satisfaction_proxy_max",
+      "average_generalized_cost_proxy_min",
+      "p90_travel_time_proxy_minutes_min",
+      "people_flow_conflict_rate_per_1000_proxy_min",
+      "external_car_inflow_ratio_min",
+      "vehicle_km_proxy_min"
+    ],
+    "hard_gate_constraints": {
+      "minimum_accessibility_completion_proxy": 0.92,
+      "maximum_worst_group_accessibility_gap_proxy_points": 5,
+      "require_mass_conservation": true,
+      "require_all_agents_processed": true,
+      "air_candidate_must_remain_blocked": true,
+      "maximum_peak_mode_load_ratio": 1.35
+    },
+    "ranked_candidates": [
+      {
+        "rank": 1,
+        "policy_id": "O4_capacity_balanced",
+        "weight_profile": "O4",
+        "hard_gate_pass": true,
+        "agents_processed": 3122000,
+        "all_agents_processed": true,
+        "mass_conservation": true,
+        "satisfaction_proxy": 66.44,
+        "average_generalized_cost_proxy": 49.44,
+        "p90_travel_time_proxy_minutes": 60,
+        "people_flow_conflict_rate_per_1000_proxy": 3.13,
+        "external_car_inflow_ratio": 0.0847,
+        "max_mode_load_ratio": 1.2088,
+        "capacity_overflow_person_trips": 332639,
+        "accessibility_completion_proxy": 0.9343,
+        "worst_group_accessibility_gap_proxy_points": 2.62,
+        "person_km_proxy": 28398272,
+        "vehicle_km_proxy": 3513768,
+        "air_candidate": "blocked",
+        "privacy_check": "aggregate_only_no_personal_trace"
+      },
+      {
+        "rank": 2,
+        "policy_id": "O1_transit_priority",
+        "weight_profile": "O1",
+        "hard_gate_pass": true,
+        "agents_processed": 3122000,
+        "all_agents_processed": true,
+        "mass_conservation": true,
+        "satisfaction_proxy": 66.23,
+        "average_generalized_cost_proxy": 50.06,
+        "p90_travel_time_proxy_minutes": 60,
+        "people_flow_conflict_rate_per_1000_proxy": 3.01,
+        "external_car_inflow_ratio": 0.086,
+        "max_mode_load_ratio": 1.3112,
+        "capacity_overflow_person_trips": 410139,
+        "accessibility_completion_proxy": 0.9337,
+        "worst_group_accessibility_gap_proxy_points": 2.93,
+        "person_km_proxy": 29608825,
+        "vehicle_km_proxy": 3611754,
+        "air_candidate": "blocked",
+        "privacy_check": "aggregate_only_no_personal_trace"
+      },
+      {
+        "rank": 3,
+        "policy_id": "O3_active_first",
+        "weight_profile": "O3",
+        "hard_gate_pass": false,
+        "agents_processed": 3122000,
+        "all_agents_processed": true,
+        "mass_conservation": true,
+        "satisfaction_proxy": 66.78,
+        "average_generalized_cost_proxy": 48.93,
+        "p90_travel_time_proxy_minutes": 60,
+        "people_flow_conflict_rate_per_1000_proxy": 3.11,
+        "external_car_inflow_ratio": 0.063,
+        "max_mode_load_ratio": 1.5724,
+        "capacity_overflow_person_trips": 389565,
+        "accessibility_completion_proxy": 0.9289,
+        "worst_group_accessibility_gap_proxy_points": 2.81,
+        "person_km_proxy": 28064518,
+        "vehicle_km_proxy": 2976150,
+        "air_candidate": "blocked",
+        "privacy_check": "aggregate_only_no_personal_trace"
+      },
+      {
+        "rank": 4,
+        "policy_id": "O2_equity_balanced",
+        "weight_profile": "O2",
+        "hard_gate_pass": false,
+        "agents_processed": 3122000,
+        "all_agents_processed": true,
+        "mass_conservation": true,
+        "satisfaction_proxy": 66.22,
+        "average_generalized_cost_proxy": 50.29,
+        "p90_travel_time_proxy_minutes": 90,
+        "people_flow_conflict_rate_per_1000_proxy": 2.94,
+        "external_car_inflow_ratio": 0.0729,
+        "max_mode_load_ratio": 1.4268,
+        "capacity_overflow_person_trips": 414711,
+        "accessibility_completion_proxy": 0.9331,
+        "worst_group_accessibility_gap_proxy_points": 3.23,
+        "person_km_proxy": 28837883,
+        "vehicle_km_proxy": 3110028,
+        "air_candidate": "blocked",
+        "privacy_check": "aggregate_only_no_personal_trace"
+      }
+    ],
+    "robustness": {
+      "selected_policy": "O2_equity_balanced",
+      "selected_policy_is_not_hand_picked": true,
+      "robust_gate_pass": true,
+      "selection_order": [
+        "nominal_gate",
+        "stress_gate_count",
+        "worst_case_satisfaction_proxy_max",
+        "worst_group_accessibility_gap_proxy_min",
+        "worst_peak_mode_load_ratio_min",
+        "mean_generalized_cost_proxy_min"
+      ],
+      "hard_gate_constraints": {
+        "minimum_accessibility_completion_proxy": 0.85,
+        "maximum_worst_group_accessibility_gap_proxy_points": 24,
+        "maximum_stress_peak_mode_load_ratio": 1.75,
+        "require_mass_conservation": true,
+        "require_all_agents_processed": true,
+        "air_candidate_must_remain_blocked": true
+      },
+      "ranked_candidates": [
+        {
+          "rank": 1,
+          "policy_id": "O2_equity_balanced",
+          "weight_profile": "O2",
+          "nominal_gate_pass": true,
+          "stress_gate_count": 3,
+          "robust_gate_pass": true,
+          "worst_case_satisfaction_proxy": 49.37,
+          "worst_group_accessibility_gap_proxy_points": 4.86,
+          "worst_peak_mode_load_ratio": 1.6986,
+          "mean_generalized_cost_proxy": 63.55
+        },
+        {
+          "rank": 2,
+          "policy_id": "O4_capacity_balanced",
+          "weight_profile": "O4",
+          "nominal_gate_pass": true,
+          "stress_gate_count": 3,
+          "robust_gate_pass": true,
+          "worst_case_satisfaction_proxy": 49.33,
+          "worst_group_accessibility_gap_proxy_points": 4.71,
+          "worst_peak_mode_load_ratio": 1.505,
+          "mean_generalized_cost_proxy": 62.32
+        },
+        {
+          "rank": 3,
+          "policy_id": "O1_transit_priority",
+          "weight_profile": "O1",
+          "nominal_gate_pass": true,
+          "stress_gate_count": 3,
+          "robust_gate_pass": true,
+          "worst_case_satisfaction_proxy": 48.73,
+          "worst_group_accessibility_gap_proxy_points": 5.36,
+          "worst_peak_mode_load_ratio": 1.5991,
+          "mean_generalized_cost_proxy": 63.42
+        },
+        {
+          "rank": 4,
+          "policy_id": "O3_active_first",
+          "weight_profile": "O3",
+          "nominal_gate_pass": true,
+          "stress_gate_count": 2,
+          "robust_gate_pass": false,
+          "worst_case_satisfaction_proxy": 49.26,
+          "worst_group_accessibility_gap_proxy_points": 5.88,
+          "worst_peak_mode_load_ratio": 2.0159,
+          "mean_generalized_cost_proxy": 61.88
+        }
+      ]
+    }
+  }
 }

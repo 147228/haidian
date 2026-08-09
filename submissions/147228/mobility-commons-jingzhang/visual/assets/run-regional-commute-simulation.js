@@ -1046,6 +1046,9 @@ const optimizationSearch = {
     policy_id: candidate.id,
     weight_profile: candidate.profile,
     hard_gate_pass: candidateEligible(candidate.result),
+    agents_processed: candidate.result.agents_processed,
+    all_agents_processed: candidate.result.all_agents_processed,
+    mass_conservation: candidate.result.mass_conservation,
     satisfaction_proxy: candidate.result.satisfaction_proxy,
     average_generalized_cost_proxy: candidate.result.average_generalized_cost_proxy,
     p90_travel_time_proxy_minutes: candidate.result.p90_travel_time_proxy_minutes,
@@ -1058,7 +1061,9 @@ const optimizationSearch = {
     accessibility_completion_proxy: candidate.result.accessibility_completion_proxy,
     worst_group_accessibility_gap_proxy_points: candidate.result.worst_group_accessibility_gap_proxy_points,
     person_km_proxy: candidate.result.person_km_proxy,
-    vehicle_km_proxy: candidate.result.vehicle_km_proxy
+    vehicle_km_proxy: candidate.result.vehicle_km_proxy,
+    air_candidate: candidate.result.air_candidate,
+    privacy_check: candidate.result.privacy_check
   })),
   interpretation: model.optimization_search.interpretation,
   robustness_screen: {
@@ -1136,6 +1141,13 @@ const output = {
   optimization_search: optimizationSearch,
   selected_policy_readout: {
     policy_id: selectedPolicy.id,
+    status: headlineOptimized.status,
+    population_agents: headlineOptimized.population_agents,
+    agents_processed: headlineOptimized.agents_processed,
+    all_agents_processed: headlineOptimized.all_agents_processed,
+    mass_conservation: headlineOptimized.mass_conservation,
+    air_candidate: headlineOptimized.air_candidate,
+    privacy_check: headlineOptimized.privacy_check,
     mode_counts: headlineOptimized.mode_counts,
     mode_shares: headlineOptimized.mode_shares,
     group_mode_counts: headlineOptimized.group_mode_counts,

@@ -163,6 +163,8 @@ Each phase has four role groups signing the readback: transport and local-manage
 
 Each phase retains a dated asset register, demand version, responsible role, metric readout and stop decision. P0 is accepted only when 100% of priority assets have an ID, an accountable role and a human fallback. P1 reads waiting time, route completion, curb conflicts, first response and closure status by enterprise/resident/accessibility group. P2 enters expansion review only when traffic-impact, fire, accessibility, privacy, ecology, insurance, procurement and maintenance evidence is complete, with `accessible_route_completion_ratio >= 0.95`, `curb_time_window_compliance_ratio >= 0.90` and a complaint status update within 24 hours. Any group-level deterioration, ownerless action or failed hard gate switches service back to public transport, human, telephone and paper access, with a recorded review date; a composite model score cannot replace field evidence or approval.
 
+The roles, fields, phase thresholds and human fallback are also recorded in `visual/assets/responsibility-acceptance-contract.json`. It publishes only an aggregate role × phase × group × metric acceptance structure, never personal trajectories, enterprise identities or vehicle identifiers. JSON `design_target` values are pre-pilot targets, not current achievements.
+
 The implementation loop is register → pilot → review → expand or stop. Operators sign a reversible service agreement; residents keep public paths and human service. An AI recommendation may always be rejected by an on-site person.
 
 ## Metrics, Area Recalculation, and Compliance Matrix

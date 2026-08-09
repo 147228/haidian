@@ -118,7 +118,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "f48b9bcfb84a9d8be4dc6aacbd9f652ef77fa8f77b6ce9ca865afc8fe6465500"
+      "sha256": "61ac8a1f2a24d4e248335afedf7eec0946dfc2e50b0b17f2ffef0662370a999c"
     },
     {
       "path": "compliance_matrix.json",
@@ -228,14 +228,14 @@
       "required": true,
       "language": "en",
       "translation_of": "proposal.md",
-      "sha256": "d0987b7aae54130789b5d454b4feaa70d4c8a38e08d694be6da05e7a1ce5a6cb"
+      "sha256": "c296ce4941944168360a39b52cc566ba7f60b5969efb9746884d75bae2a2b640"
     },
     {
       "path": "proposal.md",
       "role": "narrative",
       "required": true,
       "language": "zh",
-      "sha256": "c77da8f2355f3a15fb31eab2a1200fee9ed4123f71dd5625ed0528d3fc303eb7"
+      "sha256": "ab9aecc7eef633636464cbee1ed665bf5e8f2c5676c45d7a2068f965fa8f1ba3"
     },
     {
       "path": "report/copyright_statement.md",
@@ -254,14 +254,14 @@
       "required": true,
       "language": "en",
       "translation_of": "report/proposal.html",
-      "sha256": "c3cfadd90ac0a707a22a2765520af184e5a2cf038f3203476bae2fba3c13ecc2"
+      "sha256": "0685fd86e9f71c15dce67499cb467fac5902d25bf9b8c96c26042fc386e4cb8e"
     },
     {
       "path": "report/proposal.html",
       "role": "rendered_proposal_html",
       "required": true,
       "language": "zh",
-      "sha256": "6549c8a4d4d7d16f7ebd7bb35b6afda3ef2a3841d66686f952c0e0bbbc34a323"
+      "sha256": "e159d6a4d3881e297250b19af8d4ed7da58749d9560798fd8930a347024afdf3"
     },
     {
       "path": "self_check.json",
@@ -322,14 +322,14 @@
       "required": true,
       "language": "en",
       "translation_of": "visual/index.html",
-      "sha256": "3abf862c82b0af7675b044d38fa5ed9c4bff2544bd002bf6d35b10e600a7b697"
+      "sha256": "7b724c9a49965e27ec15dbac93281a986c69b5b5acddce41573115f461d29e92"
     },
     {
       "path": "visual/index.html",
       "role": "visualization",
       "required": true,
       "language": "zh",
-      "sha256": "6b3c23b6fe97f20e3ce1f4e1209ac511a53f51333949a6df1897dd274e688cb9"
+      "sha256": "79559ab99c1d8e1232b630e98098666e5870da61104a1b938591b67b13604498"
     },
     {
       "path": "visual/assets/multimodal-network.json",
@@ -360,6 +360,12 @@
       "role": "data",
       "required": false,
       "sha256": "83221f7e83ff164c8d4ebd3ba047001ada926e9796ca3b2d2d9b54f9a58ad30b"
+    },
+    {
+      "path": "visual/assets/responsibility-acceptance-contract.json",
+      "role": "data",
+      "required": true,
+      "sha256": "52b5e98d1329a5ef6b1c9f8a0896ba9e5f08fc17e3b0a20b0a6675c81d06416b"
     },
     {
       "path": "assets/figures/simulation-pareto.png",

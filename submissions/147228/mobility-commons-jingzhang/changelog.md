@@ -109,3 +109,9 @@
 - Added group × source-mode × target-mode × time-slice flows, recourse person-minute cost, residual queues by mode/group, share-limit checks, mode-capacity checks and an explicit protected walking/accessibility source guard.
 - Under the synthetic O4 inputs, 68,814.9 trips move from metro to car within declared bounds; the end-of-window queue falls to 383,853.1, but the 3.2431x peak and non-zero queue keep the operations gate failed closed. The recourse screen remains outside policy ranking and local route-choice claims.
 - Added bilingual `adaptive-recourse-board.svg`, refreshed proposal/readout/offline visual pages, and made denied-boarding transfer, alternate-mode acceptance, accessible/care constraints and spare-capacity observations explicit calibration requirements.
+
+## v2.12 - 2026-08-09
+
+- Converted the responsibility-and-acceptance contract into `visual/assets/responsibility-acceptance-contract.json` with bilingual role fields, required dated readback fields, P0/P1/P2 acceptance targets, group dimensions, calibration inputs and fail-safe human fallback channels.
+- Kept all thresholds explicitly marked as `design_target`; they do not assert current performance, institutional partnership, permit, procurement or budget decisions.
+- Synchronized both proposals, rendered reports, offline visual pages and manifest hashes so the operational acceptance chain can be inspected without personal trajectories, enterprise identities or vehicle identifiers.

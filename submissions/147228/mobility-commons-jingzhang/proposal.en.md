@@ -103,6 +103,12 @@ In this normalized sandbox, the unmanaged peak produces a modeled peak curb queu
 ![Design-scenario simulation: gates, trade-offs and calibration plan](assets/figures/simulation-pareto.en.png)
 ![Multimodal model objects: residents, vehicles, metro and analysis outputs](assets/figures/model-objects.en.png)
 
+#### B1 Enterprise arrival sensitivity: an inspectable flex-window test
+
+Without moving resident, care/child, visitor, logistics/maintenance or night-worker demand, B1 applies a 20% flexible-arrival sensitivity only to the 450 enterprise employee design units, moving 90 units out of the sharpest peak into a wider arrival window. The offline runner produces a synthetic readout of total peak queue 174 → 164 and mean queue person-minutes 75.7999 → 71.7917; peak car-curb queue stays at 60 and unmet demand stays at 89. The metro and bus load changes are pressure changes under the declared inputs, not an enterprise response or current Haidian performance; dated grouped enterprise OD, mode share, headways and station counts must replace the inputs before operational use [source:MATRAM-ACTIVITY-ADAPTATION-2026] [metric:mode_transfer_reliability].
+
+![Enterprise arrival sensitivity: B1 flex-window effect](assets/figures/activity-adaptation.en.svg)
+
 ## Blue-Green Network, Public Space, and Urban Character
 
 Blue-green space provides shade, rest, rain fallback and a safer night interface. The conceptual green ratio is about 12.34% and public-space ratio about 7.33%; neither proves ecological, thermal or drainage performance [metric:green_ratio] [metric:public_space_ratio]. Public counters, transit entrances, waiting, bicycle parking and green edges should share shelter, seats, lighting, water and accessible information without blocking wheelchair turns or fire access.

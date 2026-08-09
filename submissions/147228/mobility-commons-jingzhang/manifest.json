@@ -118,7 +118,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "4417c8e9361a709d77ce4f11aa8e7c8792d322068326a1f27cabef3382563524"
+      "sha256": "a267e4d327e248ef085f80a116aa480129060bd26ae0e066eb552bbb6467a94a"
     },
     {
       "path": "compliance_matrix.json",
@@ -228,14 +228,14 @@
       "required": true,
       "language": "en",
       "translation_of": "proposal.md",
-      "sha256": "987e2186fd6888ec048e7594e4ed1263236c68ec6b8c196a9d551678aa2bdc12"
+      "sha256": "f34f4cd46196a2dcacc4e811543175c1f19be137e58fa31f5334d65e14fb105f"
     },
     {
       "path": "proposal.md",
       "role": "narrative",
       "required": true,
       "language": "zh",
-      "sha256": "a84961fcb1e2f34f62b43db07492cae920266b3420055c01829bdaf10d81ca04"
+      "sha256": "8d374dbadca2df31dbbad40353d7b5c634ddc02d0af73ec632635447bab6f8ac"
     },
     {
       "path": "report/copyright_statement.md",
@@ -254,14 +254,14 @@
       "required": true,
       "language": "en",
       "translation_of": "report/proposal.html",
-      "sha256": "8bb484aba52729d8a6128fd8f5ccdfe59e8e744da847f707a30cb399c83fad58"
+      "sha256": "e8c25a5b6133cc7146eabb3f42460cedc9e6f6ad7a71348b005ce27ef063e2c5"
     },
     {
       "path": "report/proposal.html",
       "role": "rendered_proposal_html",
       "required": true,
       "language": "zh",
-      "sha256": "16baa48c7062b5d9074d7ad48c167e37e4a78fcccd14d7cfa7ae6d46ce9317cb"
+      "sha256": "32a7f46b9fd37b1d2b313c2f06d382b1d922167bc37942179ed9d772e2c3365b"
     },
     {
       "path": "self_check.json",
@@ -390,6 +390,21 @@
       "language": "en",
       "translation_of": "assets/figures/model-objects.png",
       "sha256": "bfc4918e8c9ea89bc5da35c4869af77be62ad6a0c11e8269a882df014dd82f73"
+    },
+    {
+      "path": "assets/figures/activity-adaptation.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "77a5ba8e51ea8360451f7f67f38d08871ddd7c3fa7c7aaafec794110e08b6463"
+    },
+    {
+      "path": "assets/figures/activity-adaptation.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/activity-adaptation.svg",
+      "sha256": "b4fbab9ebac80d308853886fe279fa4810b1740aedec443722a339600f76bfee"
     }
   ]
 }

@@ -9,7 +9,7 @@ license: "COMMUNITY-DISPLAY-ONLY"
 summary: "A time-windowed curb ledger brings metro, bus, bicycle, walking/accessibility, cars, parking and loading into one auditable system, while external commuting, people flow and multimodal simulation remain explicit; future air mobility is only a conditional, reversible, ground-first experiment."
 tracks: ["ai-traffic-walkability", "enterprise-services-ecosystem", "civic-agent-governance"]
 scenarios: ["ai-traffic-walkability", "enterprise-service-copilot", "public-safety-operations-review"]
-iteration: "v2.26"
+iteration: "v2.27"
 ---
 
 # Jing-Zhang Mobility Commons: An Enterprise–Resident Mobility Operating System
@@ -143,6 +143,25 @@ The first pilot is a small morning and evening window in Zhongzhiyuan, an access
 Personas include enterprise mobility coordinators, residents and carers, wheelchair users, rail and bus operators, logistics and maintenance staff, school and community workers, night-shift staff and transport/privacy/fire professionals. AI aggregates demand, explains conflicts and prepares rollback checklists; it cannot permanently lock a public route.
 
 Three industry tests structure the pilot: enterprise demand aggregation using grouped data; an equal-service comparison between AI, human, telephone and paper routes; and curb/communication-loss fallback during peak, event, snow or rain scenarios. Ten scenario cards cover consolidated enterprise shuttles, public-transport benefits, guaranteed night return, loading reservations, accessible daily routes, the last 500 metres to rail, event-day separation, degraded service and complaint-to-maintenance closure [source:EMPLOYER-TDM-GUIDE] [standard:PROJECT-AGENT-OPEN-CALL-TASKBOOK].
+
+### When Can a Pilot Start? Run the Ten Scenario Gates
+
+“Reversible pilot” is not a date written into a concept document. Each scenario must first pass the shared P0 evidence gate and then its own start checklist. Until accountable roles, dated evidence and an independent stop reviewer exist together, the scenario remains a demand record rather than a booking or expansion. All ten cards remain `not_authorized_not_run`; no partner, timetable, budget or field effect is invented.
+
+| Scenario | Check before start | Accountable roles | If one item is missing |
+| --- | --- | --- | --- |
+| M-01 Shuttle merge | Grouped enterprise demand, fleet and stop, curb/fire clearance, resident conflict response | Enterprise mobility, rail/bus, field maintenance | Keep public transport and human return-home service; do not open shared booking |
+| M-02 Transit benefit | Grouped mode baseline, benefit rule, fare/accessibility entry, employee opt-out | Enterprise mobility, rail/bus, privacy/safety review | Do not turn research effects into a local shift; remain in investigation |
+| M-03 Night return | Night demand, staffed phone, takeover person, safe waiting point and route | Enterprise mobility, community service, field maintenance | Stop at investigation if no person can answer |
+| M-04 Loading reservation | Vehicle class, curb owner, clearance deadline, fire and accessibility detour | Enterprise mobility, field maintenance, accessibility review | Record loading only; do not reserve public curb |
+| M-05 Resident care trip | Grouped service type, human/telephone/paper access, care rule and return plan | Community service, resident/carer observation, accessibility review | Keep ordinary public transport and a human desk; do not require registration |
+| M-06 Accessible route | Continuous route audit, lift/ramp status, crossings and weather fallback | Accessibility review, field maintenance, resident/carer observation | Do not open a recommendation without an equivalent route |
+| M-07 Rail last 500 m | Station and transfer counts, last-leg audit, bicycle parking and time baseline | Rail/bus, accessibility, field maintenance | Do not substitute synthetic time for station and street counts |
+| M-08 Event separation | Attendance range, resident return, logistics and emergency routes, clearance owner | Community service, safety, field maintenance, independent review | Reduce or cancel the rehearsal if emergency access is not continuous |
+| M-09 Storm/outage fallback | Dated disruption cases, manual takeover list, ground route and replay record | Rail/bus, field maintenance, independent safety/privacy review | Return to human and ground public transport when AI is unavailable |
+| M-10 Complaint and repair | Public complaint entry, owner, response SLA, repair log and independent review date | Community service, field maintenance, independent review | It is not closed without an owner and status update |
+
+The per-scenario fields and evidence paths are recorded in `visual/assets/pilot-startup-checklist.json`; `node visual/assets/run-pilot-startup-check.js` checks coverage, accountability, physical checks, human fallback and file traceability offline. It answers what must be true before a start request can be made. It does not grant permission, replace resident participation or professional and statutory review, and dates must be supplied by an authorised organisation [data:visual/assets/pilot-startup-checklist.json].
 
 ## Land Use, Building Scale, and Retain-Renovate-Demolish Strategy
 

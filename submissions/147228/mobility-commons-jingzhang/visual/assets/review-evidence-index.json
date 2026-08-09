@@ -7,6 +7,8 @@
   "reading_order": [
     "proposal.md#一页执行摘要",
     "proposal.md#四类人先看什么",
+    "proposal.md#试点什么时候能开始",
+    "visual/assets/pilot-startup-checklist.json",
     "assets/figures/failure-recourse-board.svg",
     "visual/assets/responsibility-acceptance-contract.json",
     "visual/assets/network-flow-readout.json",
@@ -40,15 +42,15 @@
     {
       "id": "implementation_feasibility",
       "label_zh": "可实施性",
-      "start_here": ["visual/assets/responsibility-acceptance-contract.json", "visual/assets/mobility-tabletop-contract.json", "visual/assets/capacity-closure-screen.json"],
-      "strongest_evidence": "P0/P1/P2 角色、字段、验收阈值、人工替代与停止/回滚动作被结构化",
+      "start_here": ["visual/assets/pilot-startup-checklist.json", "visual/assets/responsibility-acceptance-contract.json", "visual/assets/mobility-tabletop-contract.json", "visual/assets/capacity-closure-screen.json"],
+      "strongest_evidence": "十张场景卡各自有启动条件、责任角色、物理核对、人工回退和缺证据时的停止动作，并与 P0/P1/P2 合同相接",
       "boundary": "运营者、预算、采购、许可证、班次和现场容量仍需日期化证据。"
     },
     {
       "id": "public_interest_inclusion",
       "label_zh": "公共利益与包容性",
-      "start_here": ["proposal.md#四类人先看什么", "assets/figures/failure-recourse-board.svg", "visual/assets/mobility-tabletop-evidence.json", "visual/assets/service-levels.json"],
-      "strongest_evidence": "居民、企业、照护与无障碍、对外通勤四个入口和失败回退板把分组需求、非数字等价入口、公共路线连续和投诉回退摆在同一阅读入口",
+      "start_here": ["proposal.md#四类人先看什么", "proposal.md#试点什么时候能开始", "visual/assets/pilot-startup-checklist.json", "assets/figures/failure-recourse-board.svg", "visual/assets/mobility-tabletop-evidence.json", "visual/assets/service-levels.json"],
+      "strongest_evidence": "四类人入口、十张场景启动清单和失败回退板把分组需求、非数字等价入口、公共路线连续、投诉回退与停止条件摆在同一阅读入口",
       "boundary": "尚无居民样本、同意记录或现场可达性绩效；分组结果仍待实测。"
     },
     {

@@ -118,7 +118,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "87ddb83599ad57a47e0b9dfb861a56d7f6e023997122f3e80be371b854325b74"
+      "sha256": "a66b3581ced9b710ffc76e26810470ff63ac789829eb42163e474d4b4edd94a4"
     },
     {
       "path": "compliance_matrix.json",
@@ -228,14 +228,14 @@
       "required": true,
       "language": "en",
       "translation_of": "proposal.md",
-      "sha256": "08edd05dd2e12e2aff0d086ebf37b5e6de808f80620a3b2dfcef96f411179cdd"
+      "sha256": "b57729ddda134a0bce5f55e42a85115dd91ec8ec5e3a3cc136a5e5535b454e74"
     },
     {
       "path": "proposal.md",
       "role": "narrative",
       "required": true,
       "language": "zh",
-      "sha256": "57f5c64fa3a9c31a0ecde55a55c176c1b16305fdd4fdf535fe724ad2c6b2e81f"
+      "sha256": "d1e77de32d0bb463f48d455e33696d4f7fc7b18cc5ad0f38cd367998bf6fa480"
     },
     {
       "path": "report/copyright_statement.md",
@@ -254,14 +254,14 @@
       "required": true,
       "language": "en",
       "translation_of": "report/proposal.html",
-      "sha256": "c38af72ce945cfe6febaef74e8d6bde0c43222f9900737eeca2211a33490d20a"
+      "sha256": "882c95f7c3fc876847e1760dab45ad7184b3595362f10f5d6477100e3849cc2c"
     },
     {
       "path": "report/proposal.html",
       "role": "rendered_proposal_html",
       "required": true,
       "language": "zh",
-      "sha256": "bbc4d53111ea5be61293ec50d2ec92a8eef25ab0fcc8a5d7acca856d1a49cb81"
+      "sha256": "fc991cd2a39c8192cf7f090ac8fd54d66dba96511ca4af7d299e6585b051c8a7"
     },
     {
       "path": "self_check.json",
@@ -384,6 +384,18 @@
       "role": "data",
       "required": true,
       "sha256": "5a800568d4d376113a848313f75e1120c727a268d5ca34f1f9852e717a6706d8"
+    },
+    {
+      "path": "visual/assets/pilot-startup-checklist.json",
+      "role": "pilot_readiness_checklist",
+      "required": true,
+      "sha256": "857a9efc36e1cf3f9e3171bd6b0e57f2dfce8de85fdfe0548b3a2b0ae1645499"
+    },
+    {
+      "path": "visual/assets/run-pilot-startup-check.js",
+      "role": "verification_script",
+      "required": true,
+      "sha256": "07438e592849424fe85d2a6197c991a0b8a6dfd77b3aafc4faa5dc32b78ec9e8"
     },
     {
       "path": "visual/assets/mobility-tabletop-contract.json",
@@ -761,7 +773,7 @@
       "path": "visual/assets/review-evidence-index.json",
       "role": "review_navigation",
       "required": false,
-      "sha256": "9712ad6f6512de85aaae59b838c95bee3b6bb7675fffa0034c8a2a4bd6387dc1"
+      "sha256": "b90e00032879f86ab15ed22daafbadd28ea50b3617de296fcaba88b573e67d99"
     },
     {
       "path": "visual/assets/site-and-stakeholder-evidence.json",

@@ -50,16 +50,17 @@ FIGURE_PATHS = [
 ]
 PDF_PATHS = ["drawings/a3-booklet.pdf", "drawings/a0-boards.pdf"]
 HTML_PATHS = ["report/proposal.html", "visual/index.html"]
-ORGANIZER_ACTION_MARKERS = (
-    "组织方",
-    "主办方",
-    "组织方数据",
-    "官方边界",
-    "正式边界",
-    "官方几何",
-    "正式几何",
-    "官方资料",
-    "正式资料",
+ORGANIZER_ACTION_PREFIXES = (
+    "组织方：",
+    "组织方:",
+    "主办方：",
+    "主办方:",
+    "由组织方",
+    "由主办方",
+    "待组织方",
+    "待主办方",
+    "等待组织方",
+    "等待主办方",
 )
 
 
@@ -70,13 +71,16 @@ def localized_counterpart(relative_path: str) -> str:
 
 
 def is_organizer_owned_action(action: str) -> bool:
-    """Recognize only explicit organizer-owned follow-up language.
+    """Recognize only an explicit organizer-owned action prefix.
 
     The model still reports the item in ``data_gaps_zh``.  This narrow marker
-    set prevents an organizer's missing geometry or official data from being
-    mistaken for a participant-controlled repair that blocks publication.
+    set prevents a participant-controlled repair from being reclassified just
+    because it mentions official boundaries or geometry.  The prompt asks the
+    model to use ``组织方：`` or ``主办方：`` when the follow-up is external;
+    ambiguous wording stays fail-closed as a participant action.
     """
-    return any(marker in action for marker in ORGANIZER_ACTION_MARKERS)
+    normalized = " ".join(action.split())
+    return normalized.startswith(ORGANIZER_ACTION_PREFIXES)
 
 
 class ReviewError(RuntimeError):

@@ -412,7 +412,7 @@ class AIReviewSubmissionTests(unittest.TestCase):
         review = valid_review()
         for item in review["rubric_scores"]:
             item["score"] = 5
-        review["required_next_actions_zh"] = ["官方几何发布后重算指标。"]
+        review["required_next_actions_zh"] = ["组织方：发布官方几何后重算指标。"]
         client = FakeClient(review)
         with tempfile.TemporaryDirectory() as tmp, mock.patch(
             "ai_review_submission.collect_visual_inputs", return_value=([], [], [])
@@ -423,8 +423,32 @@ class AIReviewSubmissionTests(unittest.TestCase):
             )
         self.assertEqual("featured-candidate", result["decision"]["publication_recommendation"])
         self.assertEqual([], result["review"]["required_next_actions_zh"])
-        self.assertIn("官方几何发布后重算指标。", result["review"]["data_gaps_zh"])
+        self.assertIn("组织方：发布官方几何后重算指标。", result["review"]["data_gaps_zh"])
         self.assertTrue(any("moved organizer-owned" in item for item in result["decision"]["local_gate_overrides"]))
+
+    def test_participant_repair_mentioning_official_geometry_stays_blocking(self) -> None:
+        review = valid_review()
+        for item in review["rubric_scores"]:
+            item["score"] = 5
+        review["required_next_actions_zh"] = [
+            "修正把非官方边界误标为官方边界的声明。",
+            "删除声称使用官方几何的虚假描述。",
+        ]
+        client = FakeClient(review)
+        with tempfile.TemporaryDirectory() as tmp, mock.patch(
+            "ai_review_submission.collect_visual_inputs", return_value=([], [], [])
+        ), mock.patch("ai_review_submission.content_preflight", return_value=[]):
+            result = run_ai_review(
+                ROOT, SUBMISSION, "alice", Path(tmp), client, "gpt-test",
+                "https://api.openai.com/v1", "high", 7, 1024 * 1024, False,
+            )
+        self.assertEqual("request-changes", result["review"]["recommendation"])
+        self.assertFalse(result["review"]["can_enter_formal_review"])
+        self.assertEqual(
+            review["required_next_actions_zh"], result["review"]["required_next_actions_zh"]
+        )
+        self.assertEqual("do-not-publish", result["decision"]["publication_recommendation"])
+        self.assertFalse(any("moved organizer-owned" in item for item in result["decision"]["local_gate_overrides"]))
 
     def test_submission_path_author_must_match_pr_author(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

@@ -322,14 +322,14 @@
       "required": true,
       "language": "en",
       "translation_of": "visual/index.html",
-      "sha256": "7b724c9a49965e27ec15dbac93281a986c69b5b5acddce41573115f461d29e92"
+      "sha256": "ae96613fad2cf4c3e8fd46a5a537314f88fc43736ebf15be6543b585c6427613"
     },
     {
       "path": "visual/index.html",
       "role": "visualization",
       "required": true,
       "language": "zh",
-      "sha256": "79559ab99c1d8e1232b630e98098666e5870da61104a1b938591b67b13604498"
+      "sha256": "bf00396d22edd2be4fb17f7a619d803aee4a929d3fc3fc8e5649af86a2453053"
     },
     {
       "path": "visual/assets/multimodal-network.json",

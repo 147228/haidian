@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1500" viewBox="0 0 2400 1500" role="img" aria-labelledby="title desc">
-  <title id="title">区域人口规模通勤综合模拟：312.2 万合成人口代理</title>
-  <desc id="desc">B0 压力场景与 O4 容量平衡候选的聚合对比；早高峰去程和晚高峰返程覆盖屏查均处理全部 3,122,000 个合成代理。数值是模型代理，不是海淀现状观测。</desc>
+  <title id="title">区域人口规模通勤综合模拟：312.2 万合成人口代理与服务单元账本</title>
+  <desc id="desc">B0 压力场景与 O4 容量平衡候选的聚合对比；早高峰去程和晚高峰返程覆盖屏查均处理全部 3,122,000 个合成代理。图中区分乘客公里与车辆或服务单元公里；数值是模型代理，不是海淀现状观测。</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#081827"/><stop offset="1" stop-color="#102d43"/></linearGradient>
     <linearGradient id="mint" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4de1bf"/><stop offset="1" stop-color="#20a89b"/></linearGradient>
@@ -11,7 +11,7 @@
   </defs>
   <rect width="2400" height="1500" fill="url(#bg)"/>
   <circle cx="2240" cy="-80" r="360" fill="#1a6f76" opacity=".28"/><circle cx="2150" cy="1450" r="420" fill="#294575" opacity=".22"/>
-  <text x="130" y="100" class="sans teal" font-size="25" font-weight="800" letter-spacing="4">MOBILITY COMMONS / REGIONAL SCALE / v2.7</text>
+  <text x="130" y="100" class="sans teal" font-size="25" font-weight="800" letter-spacing="4">MOBILITY COMMONS / REGIONAL SCALE / v2.8</text>
   <text x="130" y="177" class="sans white" font-size="62" font-weight="800">区域人口规模通勤：早去晚回都做全量覆盖</text>
   <text x="130" y="228" class="sans muted" font-size="25">3,122,000 个合成代理 × AM 上班去程 + PM 返程屏查 × 地铁 / 公交 / 骑行 / 步行无障碍 / 汽车 / 企业接驳 · 只发布汇总流量</text>
   <rect x="1930" y="92" width="320" height="72" rx="36" fill="#173f50" stroke="#4de1bf" stroke-width="2"/><text x="2090" y="138" text-anchor="middle" class="sans teal" font-size="22" font-weight="800">ALL AGENTS PROCESSED</text>
@@ -37,7 +37,7 @@
   </g>
   <g class="sans mode"><text x="175" y="1000" class="blue">地铁</text><text x="335" y="1000" class="blue">公交</text><text x="495" y="1000" class="teal">自行车</text><text x="700" y="1000" fill="#b9d7b1">步行/无障碍</text><text x="965" y="1000" fill="#e77c65">汽车</text><text x="1125" y="1000" class="amber">企业接驳</text></g>
   <text x="175" y="1066" class="sans muted tiny">O4 先过峰值方式负荷 1.35× 硬门，再按满意度与成本排序；O3 虽然纸面满意度更高，但自行车负荷达 1.57×，不入选。</text>
-  <text x="175" y="1094" class="sans muted tiny">空气出行不进入分配：空域、适航、运营、保险、天气、噪声、应急与公众审查闸门未通过。</text>
+  <text x="175" y="1094" class="sans muted tiny">服务单元账本：地铁列次 / 公交发车 / 自行车槽位 / 无障碍槽位 / 汽车车辆等效 / 企业接驳车；乘客公里 34.86 → 28.40M；空中出行仍 blocked。</text>
 
   <rect x="1370" y="510" width="880" height="610" rx="28" fill="#f3f7f8" filter="url(#shadow)"/>
   <text x="1415" y="565" class="sans ink" font-size="30" font-weight="800">系统读数 / SYSTEM READOUT</text>
@@ -47,7 +47,7 @@
     <rect x="1830" y="640" width="380" height="125" rx="18" fill="#eef2ff"/><text x="1860" y="680" class="ink small">无障碍完成代理 ↑</text><text x="1860" y="735" class="ink value">91.24 → 93.43%</text>
     <rect x="1415" y="795" width="395" height="125" rx="18" fill="#fff0ee"/><text x="1445" y="835" class="ink small">人流冲突 / 1000 ↓</text><text x="1445" y="890" class="ink value">5.74 → 3.13</text>
     <rect x="1830" y="795" width="380" height="125" rx="18" fill="#fff5e5"/><text x="1860" y="835" class="ink small">外部汽车流入 ↓</text><text x="1860" y="890" class="ink value">26.95 → 8.47%</text>
-    <rect x="1415" y="950" width="395" height="125" rx="18" fill="#edf3fb"/><text x="1445" y="990" class="ink small">车辆公里代理 ↓</text><text x="1445" y="1045" class="ink value">28.11 → 25.94M</text>
+    <rect x="1415" y="950" width="395" height="125" rx="18" fill="#edf3fb"/><text x="1445" y="990" class="ink small">车辆/服务公里代理 ↓</text><text x="1445" y="1045" class="ink value">9.00 → 3.51M</text>
     <rect x="1830" y="950" width="380" height="125" rx="18" fill="#fcecf2"/><text x="1860" y="990" class="ink small">峰值方式负荷 ↓</text><text x="1860" y="1045" class="ink value">1.57× → 1.21×</text>
   </g>
 
@@ -65,5 +65,5 @@
     <path d="M1715 1333 H1815" class="arrow"/><polygon points="1815,1325 1835,1333 1815,1341" fill="#4de1bf"/>
     <rect x="1845" y="1305" width="340" height="56" rx="28" fill="#7b4d63"/><text x="2015" y="1341" text-anchor="middle" class="white">工作 / 服务目的地</text>
   </g>
-  <text x="175" y="1395" class="sans muted tiny">Source: regional-scale-commute.json + run-regional-commute-simulation.js · AM/PM each 3.122M population-scale coverage · synthetic simulation, not local observed performance</text>
+  <text x="175" y="1395" class="sans muted tiny">Source: regional-scale-commute.json + run-regional-commute-simulation.js · v2.8 service-unit ledger · AM/PM each 3.122M coverage · synthetic, not local observed performance</text>
 </svg>

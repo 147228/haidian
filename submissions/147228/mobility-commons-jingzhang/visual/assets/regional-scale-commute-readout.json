@@ -1,0 +1,88 @@
+{
+  "model_version": "2.8-regional-service-ledger",
+  "simulation_class": "regional_population_scale_synthetic_two_peak_flow_not_local_OD",
+  "generated_by": "node visual/assets/run-regional-commute-simulation.js",
+  "scope": {
+    "population_reference": 3122000,
+    "morning_agent_trips": 3122000,
+    "return_leg_agent_trips": 3122000,
+    "coverage_ratio": 1
+  },
+  "selected_policy": "O4_capacity_balanced",
+  "ranked_candidates": [
+    {"rank": 1, "policy_id": "O4_capacity_balanced", "weight_profile": "O4", "hard_gate_pass": true, "satisfaction_proxy": 66.44, "average_generalized_cost_proxy": 49.44, "p90_travel_time_proxy_minutes": 60, "people_flow_conflict_rate_per_1000_proxy": 3.13, "external_car_inflow_ratio": 0.0847, "person_km_proxy": 28398272, "vehicle_km_proxy": 3513768, "max_mode_load_ratio": 1.2088, "capacity_overflow_person_trips": 332639},
+    {"rank": 2, "policy_id": "O1_transit_priority", "weight_profile": "O1", "hard_gate_pass": true, "satisfaction_proxy": 66.23, "average_generalized_cost_proxy": 50.06, "p90_travel_time_proxy_minutes": 60, "people_flow_conflict_rate_per_1000_proxy": 3.01, "external_car_inflow_ratio": 0.086, "person_km_proxy": 29608825, "vehicle_km_proxy": 3611754, "max_mode_load_ratio": 1.3112, "capacity_overflow_person_trips": 410139},
+    {"rank": 3, "policy_id": "O3_active_first", "weight_profile": "O3", "hard_gate_pass": false, "satisfaction_proxy": 66.78, "average_generalized_cost_proxy": 48.93, "p90_travel_time_proxy_minutes": 60, "people_flow_conflict_rate_per_1000_proxy": 3.11, "external_car_inflow_ratio": 0.063, "person_km_proxy": 28064518, "vehicle_km_proxy": 2976150, "max_mode_load_ratio": 1.5724, "capacity_overflow_person_trips": 389565},
+    {"rank": 4, "policy_id": "O2_equity_balanced", "weight_profile": "O2", "hard_gate_pass": false, "satisfaction_proxy": 66.22, "average_generalized_cost_proxy": 50.29, "p90_travel_time_proxy_minutes": 90, "people_flow_conflict_rate_per_1000_proxy": 2.94, "external_car_inflow_ratio": 0.0729, "person_km_proxy": 28837883, "vehicle_km_proxy": 3110028, "max_mode_load_ratio": 1.4268, "capacity_overflow_person_trips": 414711}
+  ],
+  "comparison_optimized_minus_baseline": {
+    "selected_policy": "O4_capacity_balanced",
+    "satisfaction_proxy_points": 11.77,
+    "generalized_cost_proxy": -10.9,
+    "p90_travel_time_proxy_minutes": -30,
+    "people_flow_conflict_rate_per_1000_proxy": -2.61,
+    "external_car_inflow_ratio": -0.1848,
+    "person_km_proxy": -6465605,
+    "vehicle_km_proxy": -5485176,
+    "accessibility_completion_proxy": 0.0219
+  },
+  "selected_am": {
+    "period": "AM_outbound",
+    "policy_id": "O4_capacity_balanced",
+    "agents_processed": 3122000,
+    "mass_conservation": true,
+    "satisfaction_proxy": 66.44,
+    "average_generalized_cost_proxy": 49.44,
+    "p90_travel_time_proxy_minutes": 60,
+    "people_flow_conflict_rate_per_1000_proxy": 3.13,
+    "external_car_inflow_ratio": 0.0847,
+    "person_km_proxy": 28398272,
+    "vehicle_km_proxy": 3513768,
+    "mode_counts": {"metro": 952295, "bus": 602547, "bicycle": 422597, "walking_wheelchair": 652746, "car": 299361, "enterprise_shuttle": 192454},
+    "mode_shares": {"metro": 0.305, "bus": 0.193, "bicycle": 0.1354, "walking_wheelchair": 0.2091, "car": 0.0959, "enterprise_shuttle": 0.0616},
+    "mode_load_ratios": {"metro": 1.1203, "bus": 1.076, "bicycle": 1.1739, "walking_wheelchair": 1.2088, "car": 0.7301, "enterprise_shuttle": 1.0692},
+    "service_unit_ledger": {
+      "metro": {"unit_type": "metro_train_departure", "unit_label_zh": "地铁列次", "unit_label_en": "metro train departures", "vehicle_or_service": "vehicle", "capacity_persons_per_unit": 180, "person_trips": 952295, "available_units": 4723, "required_units": 5291, "unit_load_ratio": 1.1203, "vehicle_or_service_km_proxy": 95238},
+      "bus": {"unit_type": "bus_departure", "unit_label_zh": "公交发车", "unit_label_en": "bus departures", "vehicle_or_service": "vehicle", "capacity_persons_per_unit": 60, "person_trips": 602547, "available_units": 9334, "required_units": 10043, "unit_load_ratio": 1.076, "vehicle_or_service_km_proxy": 120516},
+      "bicycle": {"unit_type": "bicycle_slot", "unit_label_zh": "自行车服务槽位", "unit_label_en": "bicycle service slots", "vehicle_or_service": "service_slot", "capacity_persons_per_unit": 1, "person_trips": 422597, "available_units": 360000, "required_units": 422597, "unit_load_ratio": 1.1739, "vehicle_or_service_km_proxy": 0},
+      "walking_wheelchair": {"unit_type": "accessible_path_slot", "unit_label_zh": "连续无障碍服务槽位", "unit_label_en": "continuous accessible service slots", "vehicle_or_service": "service_slot", "capacity_persons_per_unit": 1, "person_trips": 652746, "available_units": 540000, "required_units": 652746, "unit_load_ratio": 1.2088, "vehicle_or_service_km_proxy": 0},
+      "car": {"unit_type": "car_vehicle_equivalent", "unit_label_zh": "汽车车辆等效", "unit_label_en": "car vehicle equivalents", "vehicle_or_service": "vehicle", "capacity_persons_per_unit": 1.7, "person_trips": 299361, "available_units": 241177, "required_units": 176095, "unit_load_ratio": 0.7301, "vehicle_or_service_km_proxy": 3169710},
+      "enterprise_shuttle": {"unit_type": "enterprise_shuttle_vehicle", "unit_label_zh": "企业接驳车", "unit_label_en": "enterprise shuttle vehicles", "vehicle_or_service": "vehicle", "capacity_persons_per_unit": 24, "person_trips": 192454, "available_units": 7500, "required_units": 8019, "unit_load_ratio": 1.0692, "vehicle_or_service_km_proxy": 128304}
+    }
+  },
+  "return_leg": {
+    "period": "PM_return",
+    "policy_id": "O4_capacity_balanced",
+    "agents_processed": 3122000,
+    "mass_conservation": true,
+    "satisfaction_proxy": 66.43,
+    "average_generalized_cost_proxy": 49.44,
+    "p90_travel_time_proxy_minutes": 60,
+    "people_flow_conflict_rate_per_1000_proxy": 3.13,
+    "external_car_inflow_ratio": 0.0853,
+    "person_km_proxy": 28410473,
+    "vehicle_km_proxy": 3517024,
+    "mode_counts": {"metro": 952283, "bus": 603490, "bicycle": 423596, "walking_wheelchair": 651588, "car": 299721, "enterprise_shuttle": 191322},
+    "mode_shares": {"metro": 0.305, "bus": 0.1933, "bicycle": 0.1357, "walking_wheelchair": 0.2087, "car": 0.096, "enterprise_shuttle": 0.0613},
+    "mode_load_ratios": {"metro": 1.1203, "bus": 1.0777, "bicycle": 1.1767, "walking_wheelchair": 1.2066, "car": 0.731, "enterprise_shuttle": 1.0629},
+    "service_unit_ledger": {
+      "metro": {"unit_type": "metro_train_departure", "unit_label_zh": "地铁列次", "unit_label_en": "metro train departures", "vehicle_or_service": "vehicle", "capacity_persons_per_unit": 180, "person_trips": 952283, "available_units": 4723, "required_units": 5291, "unit_load_ratio": 1.1203, "vehicle_or_service_km_proxy": 95238},
+      "bus": {"unit_type": "bus_departure", "unit_label_zh": "公交发车", "unit_label_en": "bus departures", "vehicle_or_service": "vehicle", "capacity_persons_per_unit": 60, "person_trips": 603490, "available_units": 9334, "required_units": 10059, "unit_load_ratio": 1.0777, "vehicle_or_service_km_proxy": 120708},
+      "bicycle": {"unit_type": "bicycle_slot", "unit_label_zh": "自行车服务槽位", "unit_label_en": "bicycle service slots", "vehicle_or_service": "service_slot", "capacity_persons_per_unit": 1, "person_trips": 423596, "available_units": 360000, "required_units": 423596, "unit_load_ratio": 1.1767, "vehicle_or_service_km_proxy": 0},
+      "walking_wheelchair": {"unit_type": "accessible_path_slot", "unit_label_zh": "连续无障碍服务槽位", "unit_label_en": "continuous accessible service slots", "vehicle_or_service": "service_slot", "capacity_persons_per_unit": 1, "person_trips": 651588, "available_units": 540000, "required_units": 651588, "unit_load_ratio": 1.2066, "vehicle_or_service_km_proxy": 0},
+      "car": {"unit_type": "car_vehicle_equivalent", "unit_label_zh": "汽车车辆等效", "unit_label_en": "car vehicle equivalents", "vehicle_or_service": "vehicle", "capacity_persons_per_unit": 1.7, "person_trips": 299721, "available_units": 241177, "required_units": 176307, "unit_load_ratio": 0.731, "vehicle_or_service_km_proxy": 3173526},
+      "enterprise_shuttle": {"unit_type": "enterprise_shuttle_vehicle", "unit_label_zh": "企业接驳车", "unit_label_en": "enterprise shuttle vehicles", "vehicle_or_service": "vehicle", "capacity_persons_per_unit": 24, "person_trips": 191322, "available_units": 7500, "required_units": 7972, "unit_load_ratio": 1.0629, "vehicle_or_service_km_proxy": 127552}
+    }
+  },
+  "checks": {
+    "all_population_agents_processed": true,
+    "declared_group_counts_sum_to_population": true,
+    "selected_policy_is_eligible": true,
+    "service_unit_ledger_complete": true,
+    "vehicle_km_is_service_unit_based": true,
+    "return_population_agents_processed": true,
+    "return_mass_conservation": true,
+    "air_candidate_fail_closed": true,
+    "privacy_aggregate_only": true
+  }
+}

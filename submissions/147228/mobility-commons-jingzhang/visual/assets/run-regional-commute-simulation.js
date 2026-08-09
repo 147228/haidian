@@ -73,6 +73,50 @@ function addMap(map, key, value = 1) {
   map[key] = Number(map[key] || 0) + value;
 }
 
+function tripDistanceKm(mode, distanceFactor, zoneFactor) {
+  const base = {
+    car: 18,
+    bicycle: 8,
+    walking_wheelchair: 3,
+    metro: 8.5,
+    bus: 8.5,
+    enterprise_shuttle: 8.5
+  }[mode];
+  return distanceFactor * zoneFactor * base;
+}
+
+function buildServiceLedger(modeCounts) {
+  return Object.fromEntries(MODES.map((mode) => {
+    const parameters = model.mode_parameters[mode];
+    const unit = parameters.service_unit;
+    const personTrips = Number(modeCounts[mode] || 0);
+    const capacityPerUnit = Number(unit.capacity_persons_per_unit);
+    const requiredUnits = Math.ceil(personTrips / capacityPerUnit);
+    const availableUnits = Math.ceil(parameters.capacity_person_trips / capacityPerUnit);
+    const availablePersonCapacity = availableUnits * capacityPerUnit;
+    return [mode, {
+      mode,
+      label_zh: parameters.label_zh,
+      label_en: parameters.label_en,
+      unit_type: unit.unit_type,
+      unit_label_zh: unit.label_zh,
+      unit_label_en: unit.label_en,
+      vehicle_or_service: unit.vehicle_or_service,
+      capacity_persons_per_unit: capacityPerUnit,
+      distance_km_per_unit: unit.distance_km_per_unit,
+      person_trips: personTrips,
+      declared_person_capacity: parameters.capacity_person_trips,
+      available_units: availableUnits,
+      required_units: requiredUnits,
+      spare_units: Math.max(0, availableUnits - requiredUnits),
+      unit_load_ratio: round(requiredUnits / Math.max(availableUnits, 1)),
+      person_capacity_utilization: round(personTrips / Math.max(availablePersonCapacity, 1)),
+      vehicle_or_service_km_proxy: round(requiredUnits * Number(unit.distance_km_per_unit), 0),
+      interpretation: 'synthetic service-unit screen; not an observed fleet, timetable or capacity fact'
+    }];
+  }));
+}
+
 function emptyHistogram() {
   return {"0-30": 0, "30-45": 0, "45-60": 0, "60-90": 0, "90+": 0};
 }
@@ -147,7 +191,7 @@ function simulateScenario(scenarioId, weightsOverride = null, policyId = scenari
   let totalSatisfaction = 0;
   let totalAccessibility = 0;
   let totalConflictProbability = 0;
-  let totalVehicleKm = 0;
+  let totalPersonKm = 0;
   let workActivityAgents = 0;
 
   for (const group of ranges) {
@@ -184,7 +228,7 @@ function simulateScenario(scenarioId, weightsOverride = null, policyId = scenari
       totalSatisfaction += satisfaction;
       totalAccessibility += accessibility;
       totalConflictProbability += conflictProbability;
-      totalVehicleKm += (mode === 'car' ? distanceFactor * zoneFactor * 18 : mode === 'bicycle' ? distanceFactor * zoneFactor * 8 : mode === 'walking_wheelchair' ? distanceFactor * zoneFactor * 3 : distanceFactor * zoneFactor * 8.5) * (mode === 'car' ? 1 / 1.7 : 1);
+      totalPersonKm += tripDistanceKm(mode, distanceFactor, zoneFactor);
       addHistogram(timeHistogram, time);
       if (external) externalAgents += 1;
       if (external && mode === 'car') externalCarAgents += 1;
@@ -196,6 +240,8 @@ function simulateScenario(scenarioId, weightsOverride = null, policyId = scenari
   const modeShares = Object.fromEntries(MODES.map((mode) => [mode, round(modeCounts[mode] / processed)]));
   const modeLoadRatios = Object.fromEntries(MODES.map((mode) => [mode, round(modeCounts[mode] / model.mode_parameters[mode].capacity_person_trips)]));
   const capacityOverflowPersonTrips = sum(MODES.map((mode) => Math.max(0, modeCounts[mode] - model.mode_parameters[mode].capacity_person_trips)));
+  const serviceUnitLedger = buildServiceLedger(modeCounts);
+  const vehicleOrServiceKmProxy = sum(Object.values(serviceUnitLedger).map((item) => item.vehicle_or_service_km_proxy));
   const maxModeLoadRatio = round(Math.max(...Object.values(modeLoadRatios)));
   const groupSatisfactionProxy = Object.fromEntries(GROUPS.map((group) => [group.id, round(groupSatisfaction[group.id] / groupCounts[group.id], 2)]));
   const groupAccessibilityCompletion = Object.fromEntries(GROUPS.map((group) => [group.id, round(groupAccessibility[group.id] / groupCounts[group.id], 4)]));
@@ -220,6 +266,7 @@ function simulateScenario(scenarioId, weightsOverride = null, policyId = scenari
     mode_load_ratios: modeLoadRatios,
     max_mode_load_ratio: maxModeLoadRatio,
     capacity_overflow_person_trips: capacityOverflowPersonTrips,
+    service_unit_ledger: serviceUnitLedger,
     total_trips: processed,
     completed_trips: processed,
     p50_travel_time_proxy_minutes: percentileFromHistogram(timeHistogram, 0.50, processed),
@@ -233,7 +280,9 @@ function simulateScenario(scenarioId, weightsOverride = null, policyId = scenari
     worst_group_satisfaction_gap_proxy_points: round(Math.max(...satisfactionValues) - Math.min(...satisfactionValues), 2),
     worst_group_accessibility_gap_proxy_points: round((Math.max(...accessibilityValues) - Math.min(...accessibilityValues)) * 100, 2),
     people_flow_conflict_rate_per_1000_proxy: round((totalConflictProbability / processed) * 1000, 2),
-    vehicle_km_proxy: round(totalVehicleKm, 0),
+    person_km_proxy: round(totalPersonKm, 0),
+    vehicle_km_proxy: vehicleOrServiceKmProxy,
+    vehicle_or_service_km_proxy: vehicleOrServiceKmProxy,
     route_flow_summary: topRoutes,
     top_corridor_flow_summary: topCorridors,
     privacy_check: "aggregate_only_no_personal_trace",
@@ -257,7 +306,7 @@ function simulateReturnLeg(scenarioId, weightsOverride, policyId) {
   let totalSatisfaction = 0;
   let totalAccessibility = 0;
   let totalConflictProbability = 0;
-  let totalVehicleKm = 0;
+  let totalPersonKm = 0;
 
   for (const group of ranges) {
     groupCounts[group.id] = 0;
@@ -291,7 +340,7 @@ function simulateReturnLeg(scenarioId, weightsOverride, policyId) {
       totalSatisfaction += satisfaction;
       totalAccessibility += accessibility;
       totalConflictProbability += conflictProbability;
-      totalVehicleKm += (mode === 'car' ? distanceFactor * zoneFactor * 18 : mode === 'bicycle' ? distanceFactor * zoneFactor * 8 : mode === 'walking_wheelchair' ? distanceFactor * zoneFactor * 3 : distanceFactor * zoneFactor * 8.5) * (mode === 'car' ? 1 / 1.7 : 1);
+      totalPersonKm += tripDistanceKm(mode, distanceFactor, zoneFactor);
       addHistogram(timeHistogram, time);
       if (external) externalAgents += 1;
       if (external && mode === 'car') externalCarAgents += 1;
@@ -301,6 +350,9 @@ function simulateReturnLeg(scenarioId, weightsOverride, policyId) {
 
   const modeShares = Object.fromEntries(MODES.map((mode) => [mode, round(modeCounts[mode] / processed)]));
   const modeLoadRatios = Object.fromEntries(MODES.map((mode) => [mode, round(modeCounts[mode] / model.mode_parameters[mode].capacity_person_trips)]));
+  const capacityOverflowPersonTrips = sum(MODES.map((mode) => Math.max(0, modeCounts[mode] - model.mode_parameters[mode].capacity_person_trips)));
+  const serviceUnitLedger = buildServiceLedger(modeCounts);
+  const vehicleOrServiceKmProxy = sum(Object.values(serviceUnitLedger).map((item) => item.vehicle_or_service_km_proxy));
   const groupSatisfactionProxy = Object.fromEntries(GROUPS.map((group) => [group.id, round(groupSatisfaction[group.id] / groupCounts[group.id], 2)]));
   const groupAccessibilityCompletion = Object.fromEntries(GROUPS.map((group) => [group.id, round(groupAccessibility[group.id] / groupCounts[group.id], 4)]));
   const satisfactionValues = Object.values(groupSatisfactionProxy);
@@ -320,6 +372,8 @@ function simulateReturnLeg(scenarioId, weightsOverride, policyId) {
     mode_shares: modeShares,
     mode_load_ratios: modeLoadRatios,
     max_mode_load_ratio: round(Math.max(...Object.values(modeLoadRatios))),
+    capacity_overflow_person_trips: capacityOverflowPersonTrips,
+    service_unit_ledger: serviceUnitLedger,
     total_trips: processed,
     completed_trips: processed,
     p50_travel_time_proxy_minutes: percentileFromHistogram(timeHistogram, 0.50, processed),
@@ -333,7 +387,9 @@ function simulateReturnLeg(scenarioId, weightsOverride, policyId) {
     worst_group_satisfaction_gap_proxy_points: round(Math.max(...satisfactionValues) - Math.min(...satisfactionValues), 2),
     worst_group_accessibility_gap_proxy_points: round((Math.max(...accessibilityValues) - Math.min(...accessibilityValues)) * 100, 2),
     people_flow_conflict_rate_per_1000_proxy: round((totalConflictProbability / processed) * 1000, 2),
-    vehicle_km_proxy: round(totalVehicleKm, 0),
+    person_km_proxy: round(totalPersonKm, 0),
+    vehicle_km_proxy: vehicleOrServiceKmProxy,
+    vehicle_or_service_km_proxy: vehicleOrServiceKmProxy,
     route_flow_summary: topRoutes,
     privacy_check: 'aggregate_only_no_personal_trace',
     air_candidate: 'blocked'
@@ -417,7 +473,9 @@ const optimizationSearch = {
     max_mode_load_ratio: candidate.result.max_mode_load_ratio,
     capacity_overflow_person_trips: candidate.result.capacity_overflow_person_trips,
     accessibility_completion_proxy: candidate.result.accessibility_completion_proxy,
-    worst_group_accessibility_gap_proxy_points: candidate.result.worst_group_accessibility_gap_proxy_points
+    worst_group_accessibility_gap_proxy_points: candidate.result.worst_group_accessibility_gap_proxy_points,
+    person_km_proxy: candidate.result.person_km_proxy,
+    vehicle_km_proxy: candidate.result.vehicle_km_proxy
   })),
   interpretation: model.optimization_search.interpretation
 };
@@ -432,6 +490,8 @@ const checks = {
   optimized_conflict_proxy_not_higher: selectedPolicy.result.people_flow_conflict_rate_per_1000_proxy <= baseline.people_flow_conflict_rate_per_1000_proxy,
   optimized_external_car_inflow_not_higher: selectedPolicy.result.external_car_inflow_ratio <= baseline.external_car_inflow_ratio,
   optimized_peak_mode_capacity_screen_pass: selectedPolicy.result.max_mode_load_ratio <= model.optimization_search.hard_gate_constraints.maximum_peak_mode_load_ratio,
+  service_unit_ledger_complete: scenarios.every((scenario) => MODES.every((mode) => scenario.service_unit_ledger[mode].person_trips === scenario.mode_counts[mode] && scenario.service_unit_ledger[mode].required_units >= 0)),
+  vehicle_km_is_service_unit_based: scenarios.every((scenario) => scenario.vehicle_km_proxy === sum(Object.values(scenario.service_unit_ledger).map((item) => item.vehicle_or_service_km_proxy))),
   return_population_agents_processed: returnLegReadout.all_agents_processed,
   return_mass_conservation: returnLegReadout.mass_conservation,
   air_candidate_fail_closed: scenarios.every((scenario) => scenario.air_candidate === 'blocked'),
@@ -459,6 +519,7 @@ const output = {
     mode_load_ratios: headlineOptimized.mode_load_ratios,
     max_mode_load_ratio: headlineOptimized.max_mode_load_ratio,
     capacity_overflow_person_trips: headlineOptimized.capacity_overflow_person_trips,
+    service_unit_ledger: headlineOptimized.service_unit_ledger,
     return_leg: returnLegReadout,
     satisfaction_proxy: headlineOptimized.satisfaction_proxy,
     average_generalized_cost_proxy: headlineOptimized.average_generalized_cost_proxy,
@@ -468,6 +529,8 @@ const output = {
     people_flow_conflict_rate_per_1000_proxy: headlineOptimized.people_flow_conflict_rate_per_1000_proxy,
     external_car_inflow_ratio: headlineOptimized.external_car_inflow_ratio,
     vehicle_km_proxy: headlineOptimized.vehicle_km_proxy,
+    person_km_proxy: headlineOptimized.person_km_proxy,
+    vehicle_or_service_km_proxy: headlineOptimized.vehicle_or_service_km_proxy,
     route_flow_summary: headlineOptimized.route_flow_summary
   },
   scenarios,
@@ -479,6 +542,7 @@ const output = {
       p90_travel_time_proxy_minutes: headlineOptimized.p90_travel_time_proxy_minutes - baseline.p90_travel_time_proxy_minutes,
       people_flow_conflict_rate_per_1000_proxy: round(headlineOptimized.people_flow_conflict_rate_per_1000_proxy - baseline.people_flow_conflict_rate_per_1000_proxy, 2),
       external_car_inflow_ratio: round(headlineOptimized.external_car_inflow_ratio - baseline.external_car_inflow_ratio, 4),
+      person_km_proxy: headlineOptimized.person_km_proxy - baseline.person_km_proxy,
       vehicle_km_proxy: headlineOptimized.vehicle_km_proxy - baseline.vehicle_km_proxy,
       accessibility_completion_proxy: round(headlineOptimized.accessibility_completion_proxy - baseline.accessibility_completion_proxy, 4)
     },

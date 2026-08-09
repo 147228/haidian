@@ -79,6 +79,61 @@ function serviceCapacityPerMinute(mode, minute, objects) {
   return 0;
 }
 
+function profileWeights(profile) {
+  return Array.from({length: horizon}, (_, minute) => {
+    const distance = (minute - profile.peak_minute) / profile.spread_minutes;
+    const peak = Math.exp(-0.5 * distance * distance);
+    return 1 + profile.peak_concentration * peak;
+  });
+}
+
+function runMode(mode, demandSlices, objects, includeTrace = true) {
+  const arrivals = Array(horizon).fill(0);
+  for (const slice of demandSlices) {
+    const weights = profileWeights(slice.profile);
+    allocate(slice.demand, weights).forEach((value, minute) => {
+      arrivals[minute] += value;
+    });
+  }
+
+  let queue = 0;
+  let peakQueue = 0;
+  let queuePersonMinutes = 0;
+  let served = 0;
+  let peakServiceLoad = 0;
+  const trace = [];
+
+  for (let minute = 0; minute < horizon; minute += 1) {
+    queue += arrivals[minute];
+    const service = serviceCapacityPerMinute(mode, minute, objects);
+    const beforeService = queue;
+    const servedNow = Math.min(queue, Math.floor(service));
+    queue -= servedNow;
+    served += servedNow;
+    peakQueue = Math.max(peakQueue, queue);
+    queuePersonMinutes += beforeService;
+    peakServiceLoad = Math.max(peakServiceLoad, service > 0 ? beforeService / service : 0);
+    if (includeTrace) {
+      trace.push({minute, arrivals: arrivals[minute], served: servedNow, queue});
+    }
+  }
+
+  const supply = sum(Array.from({length: horizon}, (_, minute) =>
+    serviceCapacityPerMinute(mode, minute, objects)));
+  const output = {
+    demand: sum(demandSlices.map((slice) => slice.demand)),
+    service_supply: round(supply),
+    capacity_load_ratio: round(sum(demandSlices.map((slice) => slice.demand)) / Math.max(supply, 1)),
+    served,
+    unmet_at_horizon: queue,
+    peak_queue: peakQueue,
+    mean_queue_person_minutes: round(queuePersonMinutes / horizon),
+    peak_service_load_ratio: round(peakServiceLoad)
+  };
+  if (includeTrace) output.trace = trace;
+  return output;
+}
+
 function runScenario(scenarioId, demand, objects) {
   const profile = profiles[scenarioId];
   if (!profile || profile.status === 'blocked') {
@@ -87,46 +142,8 @@ function runScenario(scenarioId, demand, objects) {
 
   const modeOutputs = {};
   for (const [mode, totalDemand] of Object.entries(demand)) {
-    const weights = Array.from({length: horizon}, (_, minute) => {
-      const distance = (minute - profile.peak_minute) / profile.spread_minutes;
-      const peak = Math.exp(-0.5 * distance * distance);
-      return 1 + profile.peak_concentration * peak;
-    });
-    const arrivals = allocate(totalDemand, weights);
-    let queue = 0;
-    let peakQueue = 0;
-    let queuePersonMinutes = 0;
-    let served = 0;
-    let peakServiceLoad = 0;
-    const trace = [];
-
-    for (let minute = 0; minute < horizon; minute += 1) {
-      queue += arrivals[minute];
-      const service = serviceCapacityPerMinute(mode, minute, objects);
-      const beforeService = queue;
-      const servedNow = Math.min(queue, Math.floor(service));
-      queue -= servedNow;
-      served += servedNow;
-      peakQueue = Math.max(peakQueue, queue);
-      queuePersonMinutes += beforeService;
-      peakServiceLoad = Math.max(peakServiceLoad, service > 0 ? beforeService / service : 0);
-      trace.push({minute, arrivals: arrivals[minute], served: servedNow, queue});
-    }
-
-    const supply = sum(Array.from({length: horizon}, (_, minute) =>
-      serviceCapacityPerMinute(mode, minute, objects)));
-    modeOutputs[mode] = {
-      demand: totalDemand,
-      mode_share: round(totalDemand / model.demand_units),
-      service_supply: round(supply),
-      capacity_load_ratio: round(totalDemand / Math.max(supply, 1)),
-      served: served,
-      unmet_at_horizon: queue,
-      peak_queue: peakQueue,
-      mean_queue_person_minutes: round(queuePersonMinutes / horizon),
-      peak_service_load_ratio: round(peakServiceLoad),
-      trace
-    };
+    modeOutputs[mode] = runMode(mode, [{demand: totalDemand, profile}], objects);
+    modeOutputs[mode].mode_share = round(totalDemand / model.demand_units);
   }
 
   return {
@@ -145,9 +162,65 @@ function runScenario(scenarioId, demand, objects) {
   };
 }
 
+function summarizeModeOutputs(modeOutputs) {
+  return {
+    total_peak_queue_persons: sum(Object.values(modeOutputs).map((item) => item.peak_queue)),
+    total_mean_queue_person_minutes: round(sum(Object.values(modeOutputs).map((item) => item.mean_queue_person_minutes))),
+    peak_car_curb_queue_vehicles: modeOutputs.car ? modeOutputs.car.peak_queue : null,
+    metro_peak_service_load_ratio: modeOutputs.metro ? modeOutputs.metro.peak_service_load_ratio : null,
+    bus_peak_service_load_ratio: modeOutputs.bus ? modeOutputs.bus.peak_service_load_ratio : null,
+    total_unmet_at_horizon: sum(Object.values(modeOutputs).map((item) => item.unmet_at_horizon))
+  };
+}
+
+function runBehavioralSensitivity(demandByScenario, objects) {
+  const sensitivity = model.behavioral_sensitivity;
+  const baseScenario = sensitivity.base_scenario;
+  const baseDemand = demandByScenario[baseScenario];
+  const baseProfile = profiles[baseScenario];
+  const adaptiveProfile = sensitivity.policy.adaptive_profile;
+  const shiftedFraction = sensitivity.policy.eligible_fraction_shifted;
+  const enterpriseDemand = sensitivity.eligible_demand_by_mode;
+  const modeOutputs = {};
+  let shiftedEnterpriseUnits = 0;
+
+  for (const [mode, totalDemand] of Object.entries(baseDemand)) {
+    const eligible = Number(enterpriseDemand[mode] || 0);
+    const shifted = Math.round(eligible * shiftedFraction);
+    shiftedEnterpriseUnits += shifted;
+    modeOutputs[mode] = runMode(mode, [
+      {demand: totalDemand - shifted, profile: baseProfile},
+      {demand: shifted, profile: adaptiveProfile}
+    ], objects, false);
+  }
+
+  const baseline = runScenario(baseScenario, baseDemand, objects);
+  const baselineSummary = summarizeModeOutputs(baseline.mode_outputs);
+  const adaptiveSummary = summarizeModeOutputs(modeOutputs);
+  return {
+    id: sensitivity.id,
+    status: sensitivity.status,
+    base_scenario: baseScenario,
+    eligible_agent_group: sensitivity.eligible_agent_group,
+    shifted_enterprise_units: shiftedEnterpriseUnits,
+    protected_agent_groups: sensitivity.protected_agent_groups,
+    policy: sensitivity.policy,
+    baseline: baselineSummary,
+    adaptive: adaptiveSummary,
+    delta_adaptive_minus_baseline: Object.fromEntries(
+      Object.keys(baselineSummary).map((key) => [key, adaptiveSummary[key] - baselineSummary[key]])
+    ),
+    mode_outputs: modeOutputs,
+    disclaimer: 'Synthetic schedule-spreading sensitivity only; not a local employer response or measured effect.'
+  };
+}
+
 const agentCount = sum(spec.agent_types.map((item) => item.design_unit_count));
 const objects = serviceObjects();
 const demandByScenario = model.model_analysis.mode_demand_by_scenario;
+const behavioralSensitivity = runBehavioralSensitivity(demandByScenario, objects);
+const enterpriseAgentCount = spec.agent_types.find((item) => item.id === model.behavioral_sensitivity.eligible_agent_group).design_unit_count;
+const eligibleEnterpriseDemand = sum(Object.values(model.behavioral_sensitivity.eligible_demand_by_mode));
 const checks = [
   {id: 'agent_total', pass: agentCount === model.demand_units, observed: agentCount, expected: model.demand_units},
   {id: 'time_step', pass: stepSeconds === 60, observed: stepSeconds, expected: 60},
@@ -158,7 +231,19 @@ const checks = [
     pass: sum(Object.values(demand)) === model.demand_units,
     observed: sum(Object.values(demand)),
     expected: model.demand_units
-  }))
+  })),
+  {
+    id: 'behavioral_enterprise_demand_matches_agent_group',
+    pass: eligibleEnterpriseDemand === enterpriseAgentCount,
+    observed: eligibleEnterpriseDemand,
+    expected: enterpriseAgentCount
+  },
+  {
+    id: 'behavioral_shift_is_declared_fraction',
+    pass: behavioralSensitivity.shifted_enterprise_units === Math.round(eligibleEnterpriseDemand * model.behavioral_sensitivity.policy.eligible_fraction_shifted),
+    observed: behavioralSensitivity.shifted_enterprise_units,
+    expected: Math.round(eligibleEnterpriseDemand * model.behavioral_sensitivity.policy.eligible_fraction_shifted)
+  }
 ];
 
 const scenarioOutputs = Object.entries(demandByScenario)
@@ -172,6 +257,7 @@ const result = {
   disclaimer: 'Synthetic design-unit recalculation only; not a local Haidian performance claim.',
   checks,
   scenario_outputs: scenarioOutputs,
+  behavioral_sensitivity: behavioralSensitivity,
   next_calibration: model.model_spec.calibration_metrics
 };
 

@@ -118,7 +118,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "1772e014f17a236e3e868c7780199b69157e831ee7a3f9d34a9baa8158088a72"
+      "sha256": "4417c8e9361a709d77ce4f11aa8e7c8792d322068326a1f27cabef3382563524"
     },
     {
       "path": "compliance_matrix.json",
@@ -273,7 +273,7 @@
       "path": "sources.json",
       "role": "data",
       "required": true,
-      "sha256": "e4eb8b8716a30cf10f14a9e65572bee497e47d922ffed46e0ce05f9b900c6e30"
+      "sha256": "241855bd0f800da8993cce64ba551e4cb688377b14ee4dd26ebb9cae6768239a"
     },
     {
       "path": "standard_matrix.json",
@@ -341,13 +341,13 @@
       "path": "visual/assets/movement-simulation.json",
       "role": "data",
       "required": false,
-      "sha256": "46ef0b56359e3ef4d3b919941553cd3e0dce52ceb286df38863ccc9146254287"
+      "sha256": "c0cf7357021f705d04be8dceeb3bd18ea107c5daa5d62056a136a5d859c6b441"
     },
     {
       "path": "visual/assets/run-mobility-simulation.js",
       "role": "verification_script",
       "required": false,
-      "sha256": "b2617424840c94e9373f077d69d514c10f60d20a6ceca15e894d6b0ff16477e9"
+      "sha256": "b79672f782ef2cd8ac28d4bcddc9512b8c8228fdc54f784be5900a1c31e86097"
     },
     {
       "path": "visual/assets/air-mobility-gate.json",

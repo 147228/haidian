@@ -159,6 +159,13 @@
       "accessed_date": "2026-08-09"
     },
     {
+      "id": "MATRAM-ACTIVITY-ADAPTATION-2026",
+      "source_type": "academic_public_preprint",
+      "usage": "Activity-scheduling adaptation method reference for a bounded enterprise-window sensitivity; no imported coefficients, local effect size or employee-level inference.",
+      "url": "https://arxiv.org/abs/2605.30547",
+      "accessed_date": "2026-08-09"
+    },
+    {
       "id": "ACCESS-ACCESSIBILITY-ABM",
       "source_type": "academic_public",
       "usage": "Grouped job-accessibility inequality method; supports distributional checks and does not transfer São Paulo results to Haidian.",

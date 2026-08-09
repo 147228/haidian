@@ -22,3 +22,8 @@
 ## v1.4 - 2026-08-09
 
 - Added machine-readable `model_family` and `model_detail` disclosure fields while retaining the legacy `model` field for compatibility.
+
+## v1.5 - 2026-08-09
+
+- Added B1, a deterministic enterprise-only flexible arrival-window sensitivity test: 20% of the declared enterprise demand is shifted later across a wider window while resident, care, visitor, logistics and night-worker demand is protected.
+- Kept B1 separate from the headline scenario score: it is a method-informed design sensitivity, not a local mode-choice effect, and it requires grouped OD/mode-share calibration before operational use.

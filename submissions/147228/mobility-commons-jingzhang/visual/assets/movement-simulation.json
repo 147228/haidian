@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "simulation_class": "illustrative_design_scenario_not_local_baseline",
   "status": "transparent_sandbox_before_field_calibration",
   "purpose": "Compare operating logic and expose trade-offs before real counts; never report these values as current Haidian performance.",
@@ -194,7 +194,8 @@
       "people_vehicle_conflict_rate",
       "external_car_inflow_ratio",
       "worst_group_gap_points",
-      "ground_fallback_recovery_time"
+      "ground_fallback_recovery_time",
+      "enterprise_activity_adaptation_sensitivity"
     ],
     "calibration_inputs": [
       "dated_grouped_external_OD",
@@ -214,7 +215,8 @@
       "station_and_vehicle_load",
       "accessible_route_completion_by_group",
       "people_flow_conflict_rate_by_group",
-      "worst_group_accessibility_gap"
+      "worst_group_accessibility_gap",
+      "activity_schedule_change_by_group"
     ]
   },
   "model_analysis": {
@@ -274,6 +276,53 @@
     ],
     "interpretation": "The sandbox suggests where coordination matters: station gates and curb service dominate the unmanaged peak, while a ground-first multimodal candidate lowers modeled queues and transfer wait in the normalized unit. These are design sensitivities, not local performance claims."
   },
+  "behavioral_sensitivity": {
+    "id": "B1_enterprise_flexible_arrival_window",
+    "analysis_class": "transparent_synthetic_activity_adaptation",
+    "base_scenario": "S0_peak_unmanaged",
+    "method_sources": [
+      "ATOM-MULTIMODAL-ABM",
+      "MATRAM-ACTIVITY-ADAPTATION-2026"
+    ],
+    "eligible_agent_group": "enterprise_employee",
+    "eligible_design_unit_count": 450,
+    "eligible_demand_by_mode": {
+      "metro": 180,
+      "bus": 70,
+      "bicycle": 20,
+      "walking_wheelchair": 35,
+      "car": 105,
+      "enterprise_shuttle": 40
+    },
+    "protected_agent_groups": [
+      "resident",
+      "carer_or_child",
+      "visitor",
+      "logistics_and_maintenance",
+      "night_worker"
+    ],
+    "policy": {
+      "name": "employer_staggered_arrival_window",
+      "trigger": "synthetic_peak_queue_or_station_gate_screen",
+      "eligible_fraction_shifted": 0.2,
+      "shift_minutes": 20,
+      "adaptive_profile": {
+        "peak_minute": 55,
+        "spread_minutes": 30,
+        "peak_concentration": 0.5
+      },
+      "resident_rule": "do_not_shift_resident_or_care_demand_without_grouped_evidence_and_consent",
+      "privacy_rule": "publish_grouped_schedule_effects_only; never expose employee-level arrival times"
+    },
+    "outputs": [
+      "peak_queue_change_by_mode",
+      "mean_queue_change_by_mode",
+      "station_and_vehicle_load_change",
+      "curb_queue_change",
+      "shifted_enterprise_units"
+    ],
+    "status": "illustrative_sensitivity_not_local_effect"
+  },
   "reproducibility": {
     "runner": "visual/assets/run-mobility-simulation.js",
     "command": "node visual/assets/run-mobility-simulation.js",
@@ -302,7 +351,7 @@
         "peak_concentration": 1.5
       }
     },
-    "behavioral_boundary": "No imported mode-choice coefficient or local effect size; employer incentives, shared rides and feeder services require a sensitivity test after observed grouped OD and mode-share data arrive."
+    "behavioral_boundary": "No imported mode-choice coefficient or local effect size; B1 is a declared schedule-spreading sensitivity only. Employer incentives, shared rides and feeder services require observed grouped OD, mode-share data and a separate review."
   },
   "scenarios": [
     {

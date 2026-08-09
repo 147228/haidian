@@ -118,7 +118,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "242907a2f79dd96f7b8b8b7d50765461a0b56a14c753ed956a02336e68a7717f"
+      "sha256": "13b6c5a7737e5c9c8e96eb8912c962fe503f22172f224596d63e834ba8502f42"
     },
     {
       "path": "compliance_matrix.json",
@@ -228,14 +228,14 @@
       "required": true,
       "language": "en",
       "translation_of": "proposal.md",
-      "sha256": "6fbdf6843fc3744f2074deb411026e0bb8ed47fe0809a8cd2fc67acf738eb6e7"
+      "sha256": "7cd24d7164656fef89a0800fa24f1c8655b5e221be74d61f3c3ab936076ba211"
     },
     {
       "path": "proposal.md",
       "role": "narrative",
       "required": true,
       "language": "zh",
-      "sha256": "08b373692c7f158dacdd7bc05918fd9f71058f377ed5afc43187f8bacbe0c347"
+      "sha256": "a56c1564ddf55f463265a4fba7e39972d95d605eab4598553900e65cc2636c17"
     },
     {
       "path": "report/copyright_statement.md",
@@ -254,14 +254,14 @@
       "required": true,
       "language": "en",
       "translation_of": "report/proposal.html",
-      "sha256": "959b84ce318efe86dc56c12d69dafd66380fa4e1ea51874a30eebef7c019ea49"
+      "sha256": "285bee34e390ab69e623ab564cc2cdf1bae7f7f42622f97a1274fbefa0806b8b"
     },
     {
       "path": "report/proposal.html",
       "role": "rendered_proposal_html",
       "required": true,
       "language": "zh",
-      "sha256": "1d8c00b6a8b3070281d098f4c38bbdaa0f49ec2c4a6af8a4108912e40d3ecbce"
+      "sha256": "c60e55d31b525cca06c6d86d7c4b8f4389f09b30ef75af9cff2e79e3fc5240c3"
     },
     {
       "path": "self_check.json",
@@ -322,14 +322,14 @@
       "required": true,
       "language": "en",
       "translation_of": "visual/index.html",
-      "sha256": "ae96613fad2cf4c3e8fd46a5a537314f88fc43736ebf15be6543b585c6427613"
+      "sha256": "02a5db96745db986d79a1f3b81f4bdcf835c79802dd6c399f3e55fa0e772af91"
     },
     {
       "path": "visual/index.html",
       "role": "visualization",
       "required": true,
       "language": "zh",
-      "sha256": "bf00396d22edd2be4fb17f7a619d803aee4a929d3fc3fc8e5649af86a2453053"
+      "sha256": "3a133216afb5aa11f227d9c52af3654c8ec44537f12b516e70270d0d6f0a3e17"
     },
     {
       "path": "visual/assets/multimodal-network.json",
@@ -462,7 +462,7 @@
       "role": "proposal_figure",
       "required": true,
       "language": "zh",
-      "sha256": "53cadc58d555f15e5f167ed1edf4eb9fe08789291da13339f6a458094f4d2683"
+      "sha256": "6217c324e68c730bd69295db6516e5f6e8c67c8e90d665bb609b32c22bfc3309"
     },
     {
       "path": "assets/figures/regional-scale-commute-board.en.svg",
@@ -470,7 +470,22 @@
       "required": true,
       "language": "en",
       "translation_of": "assets/figures/regional-scale-commute-board.svg",
-      "sha256": "c2c4904a634b3b1ca04ab0d63898a3d380f8b0af0ae3c38814132f0d3a0ed0de"
+      "sha256": "98187c9a6ed140166d3549be2c7563eba98c04ab23e9501308e7a42846af2cd8"
+    },
+    {
+      "path": "assets/figures/resident-vehicle-capacity-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "623800881534319399d7d974703f1a75de508cabce96cb342af8fd0d86ec75de"
+    },
+    {
+      "path": "assets/figures/resident-vehicle-capacity-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/resident-vehicle-capacity-board.svg",
+      "sha256": "0ec72773b18551ff06188cf80f94783a3c1f2ca4ab744eed4ca8ed44e14e63a5"
     },
     {
       "path": "assets/figures/activity-choice-operations-board.svg",
@@ -542,13 +557,13 @@
       "path": "visual/assets/run-regional-commute-simulation.js",
       "role": "script",
       "required": true,
-      "sha256": "8481d2893f1b8ed861f9718154dc2ba42d1e593739dbe99870d7c9302918beb1"
+      "sha256": "d0e004df377406c72be3cb0a787327382ef309251c63e4cd87f109d5e52809f8"
     },
     {
       "path": "visual/assets/regional-scale-commute-readout.json",
       "role": "data_readout",
       "required": true,
-      "sha256": "f35af4b5b4642930067763075f4c9f6ed8a903af54e203ee5008b80c38bd2de4"
+      "sha256": "7c89c854b1d5ac64b3c25c912da83a83ee6b72346c80cedecb5ae14c0c2f7945"
     }
   ]
 }

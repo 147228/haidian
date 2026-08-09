@@ -650,6 +650,10 @@ function simulateScenario(scenarioId, weightsOverride = null, policyId = scenari
   const ranges = groupRanges();
   const modeCounts = Object.fromEntries(MODES.map((mode) => [mode, 0]));
   const groupCounts = {};
+  const groupModeCounts = Object.fromEntries(GROUPS.map((group) => [
+    group.id,
+    Object.fromEntries(MODES.map((mode) => [mode, 0]))
+  ]));
   const groupSatisfaction = {};
   const groupAccessibility = {};
   const routeCounts = {};
@@ -691,6 +695,7 @@ function simulateScenario(scenarioId, weightsOverride = null, policyId = scenari
       const satisfaction = clamp(100 - generalizedCost * 0.56 - (1 - reliability) * 10 - conflictProbability * 1600, 0, 100);
 
       addMap(modeCounts, mode);
+      addMap(groupModeCounts[group.id], mode);
       addMap(routeCounts, route);
       addMap(corridorCounts, `${corridor} / ${mode}`);
       groupCounts[group.id] += 1;
@@ -718,6 +723,10 @@ function simulateScenario(scenarioId, weightsOverride = null, policyId = scenari
   const maxModeLoadRatio = round(Math.max(...Object.values(modeLoadRatios)));
   const groupSatisfactionProxy = Object.fromEntries(GROUPS.map((group) => [group.id, round(groupSatisfaction[group.id] / groupCounts[group.id], 2)]));
   const groupAccessibilityCompletion = Object.fromEntries(GROUPS.map((group) => [group.id, round(groupAccessibility[group.id] / groupCounts[group.id], 4)]));
+  const groupModeShares = Object.fromEntries(GROUPS.map((group) => [
+    group.id,
+    Object.fromEntries(MODES.map((mode) => [mode, round(groupModeCounts[group.id][mode] / groupCounts[group.id])]))
+  ]));
   const satisfactionValues = Object.values(groupSatisfactionProxy);
   const accessibilityValues = Object.values(groupAccessibilityCompletion);
   const topRoutes = Object.entries(routeCounts).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([route, count]) => ({route, count, share: round(count / processed)}));
@@ -736,6 +745,8 @@ function simulateScenario(scenarioId, weightsOverride = null, policyId = scenari
     external_car_inflow_ratio: round(externalCarAgents / Math.max(externalAgents, 1)),
     mode_counts: modeCounts,
     mode_shares: modeShares,
+    group_mode_counts: groupModeCounts,
+    group_mode_shares: groupModeShares,
     mode_load_ratios: modeLoadRatios,
     max_mode_load_ratio: maxModeLoadRatio,
     capacity_overflow_person_trips: capacityOverflowPersonTrips,
@@ -1119,16 +1130,20 @@ const output = {
     policy_id: selectedPolicy.id,
     mode_counts: headlineOptimized.mode_counts,
     mode_shares: headlineOptimized.mode_shares,
+    group_mode_counts: headlineOptimized.group_mode_counts,
+    group_mode_shares: headlineOptimized.group_mode_shares,
     mode_load_ratios: headlineOptimized.mode_load_ratios,
     max_mode_load_ratio: headlineOptimized.max_mode_load_ratio,
     capacity_overflow_person_trips: headlineOptimized.capacity_overflow_person_trips,
     service_unit_ledger: headlineOptimized.service_unit_ledger,
     return_leg: returnLegReadout,
     satisfaction_proxy: headlineOptimized.satisfaction_proxy,
+    satisfaction_proxy_by_group: headlineOptimized.satisfaction_proxy_by_group,
     average_generalized_cost_proxy: headlineOptimized.average_generalized_cost_proxy,
     p50_travel_time_proxy_minutes: headlineOptimized.p50_travel_time_proxy_minutes,
     p90_travel_time_proxy_minutes: headlineOptimized.p90_travel_time_proxy_minutes,
     accessibility_completion_proxy: headlineOptimized.accessibility_completion_proxy,
+    accessibility_completion_by_group: headlineOptimized.accessibility_completion_by_group,
     people_flow_conflict_rate_per_1000_proxy: headlineOptimized.people_flow_conflict_rate_per_1000_proxy,
     external_car_inflow_ratio: headlineOptimized.external_car_inflow_ratio,
     vehicle_km_proxy: headlineOptimized.vehicle_km_proxy,

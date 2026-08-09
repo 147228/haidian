@@ -122,3 +122,9 @@
 - Added machine-readable scenario summaries, stress-gate status, worst-case satisfaction, accessibility gap, peak load, overflow and calibration requirements; the screen retains aggregates only and keeps the air candidate blocked.
 - Under the declared synthetic inputs, O2 is the robustness-screen winner while O4 remains the nominal-efficiency winner; O3 exits on the capacity-shock load gate. This is a sensitivity ranking, not a local resilience or implementation claim.
 - Added bilingual `robustness-screen-board.svg`, synchronized proposal/readout/model version and recorded the exact system-optimum transit method reference without importing paper coefficients.
+
+## v2.14 - 2026-08-09
+
+- Added group-level mode counts/shares, satisfaction proxies and accessibility-completion proxies to the population-scale runner and selected-policy readout.
+- Added bilingual `resident-vehicle-capacity-board.svg`: residents, carers/children, night workers and logistics/maintenance are visible alongside metro, bus, bicycle, accessible-path, car and enterprise-shuttle pressure.
+- Made the 1.00× declared capacity line, 1.35× candidate gate and 332,639 synthetic capacity-overflow person-trips explicit, so the board points to adding service and calibration rather than presenting pressure as solved.

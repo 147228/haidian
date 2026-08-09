@@ -71,6 +71,18 @@
       "enterprise_shuttle": {"unit_type": "enterprise_shuttle_vehicle", "unit_label_zh": "企业接驳车", "unit_label_en": "enterprise shuttle vehicles", "vehicle_or_service": "vehicle", "capacity_persons_per_unit": 24, "person_trips": 192454, "available_units": 7500, "required_units": 8019, "unit_load_ratio": 1.0692, "vehicle_or_service_km_proxy": 128304}
     }
   },
+  "group_readout": {
+    "policy_id": "O4_capacity_balanced",
+    "basis": "Synthetic AM outbound group × mode aggregates; proxies are not resident or employee survey results.",
+    "groups": [
+      {"id": "enterprise_employee", "label_zh": "企业员工", "label_en": "enterprise employees", "count": 1092700, "share": 0.35, "satisfaction_proxy": 66.15, "accessibility_completion_proxy": 0.9302, "mode_shares": {"metro": 0.3999, "bus": 0.1801, "bicycle": 0.1399, "walking_wheelchair": 0.1197, "car": 0.0801, "enterprise_shuttle": 0.0803}},
+      {"id": "resident_worker", "label_zh": "居民工作者", "label_en": "resident workers", "count": 936600, "share": 0.30, "satisfaction_proxy": 67.38, "accessibility_completion_proxy": 0.9287, "mode_shares": {"metro": 0.3202, "bus": 0.1799, "bicycle": 0.1794, "walking_wheelchair": 0.2104, "car": 0.0601, "enterprise_shuttle": 0.05}},
+      {"id": "carer_or_child", "label_zh": "照护者/儿童", "label_en": "carers / children", "count": 468300, "share": 0.15, "satisfaction_proxy": 67.24, "accessibility_completion_proxy": 0.9549, "mode_shares": {"metro": 0.16, "bus": 0.2393, "bicycle": 0.0599, "walking_wheelchair": 0.4509, "car": 0.0397, "enterprise_shuttle": 0.0501}},
+      {"id": "visitor_service", "label_zh": "访客/服务人员", "label_en": "visitors / service users", "count": 312200, "share": 0.10, "satisfaction_proxy": 68.07, "accessibility_completion_proxy": 0.9289, "mode_shares": {"metro": 0.3098, "bus": 0.2101, "bicycle": 0.1804, "walking_wheelchair": 0.2395, "car": 0.0201, "enterprise_shuttle": 0.04}},
+      {"id": "logistics_and_maintenance", "label_zh": "物流/维护", "label_en": "logistics / maintenance", "count": 156100, "share": 0.05, "satisfaction_proxy": 57.21, "accessibility_completion_proxy": 0.9307, "mode_shares": {"metro": 0.0504, "bus": 0.0604, "bicycle": 0.0302, "walking_wheelchair": 0.0299, "car": 0.7575, "enterprise_shuttle": 0.0717}},
+      {"id": "night_worker", "label_zh": "夜班工作者", "label_en": "night workers", "count": 156100, "share": 0.05, "satisfaction_proxy": 66.35, "accessibility_completion_proxy": 0.949, "mode_shares": {"metro": 0.2298, "bus": 0.3212, "bicycle": 0.0802, "walking_wheelchair": 0.2199, "car": 0.0796, "enterprise_shuttle": 0.0692}}
+    ]
+  },
   "return_leg": {
     "period": "PM_return",
     "policy_id": "O4_capacity_balanced",

@@ -19,7 +19,7 @@
     "model_family": "gpt",
     "model_detail": "OpenAI GPT-5 family via Codex"
   },
-  "generated_at": "2026-08-09T21:34:12+08:00",
+  "generated_at": "2026-08-10T00:04:58+08:00",
   "files": [
     {
       "path": "manifest.json",
@@ -118,7 +118,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "5d85086a712787a9def2ddb31d1d26be571bfa8d340e5373381b4fcc69182099"
+      "sha256": "1be6832e6a19f1ef54acfba21890a2b6f634665a153e6499852fe1d92bcc5400"
     },
     {
       "path": "compliance_matrix.json",
@@ -228,14 +228,14 @@
       "required": true,
       "language": "en",
       "translation_of": "proposal.md",
-      "sha256": "ee361dc0970bb039b960979df525e60a26a7b1ec8af572d90d5dee15f48c8181"
+      "sha256": "17e1b8b7b81a9c33e61b280e308ef663cfdacfaa597e0c23c3ac20228dacd3a4"
     },
     {
       "path": "proposal.md",
       "role": "narrative",
       "required": true,
       "language": "zh",
-      "sha256": "2bd5490ad4f997410c2c82fdb0a99762d3a9d8266a301527037e484098cd45d8"
+      "sha256": "f7812a6fc745ee11b76a9bc711221b5ae9337081c52e2d0410944e1bbec5efb3"
     },
     {
       "path": "report/copyright_statement.md",
@@ -254,14 +254,14 @@
       "required": true,
       "language": "en",
       "translation_of": "report/proposal.html",
-      "sha256": "0513c9791e42c08924ec2bc71dd91f5e97acc764c005bfca7981c7c3880827ae"
+      "sha256": "b9cae372eb7896c5517af3d987ba10a045226db96729769f8cb1fe41eb0837c0"
     },
     {
       "path": "report/proposal.html",
       "role": "rendered_proposal_html",
       "required": true,
       "language": "zh",
-      "sha256": "512531514597b348670175c47a3917111651fddb62023c0eaef8a7f87c06dcb2"
+      "sha256": "9238bb32e456be9ceb7afee5e22942204ffb7907093744118a8eb93dca2b4ae8"
     },
     {
       "path": "self_check.json",
@@ -273,7 +273,7 @@
       "path": "sources.json",
       "role": "data",
       "required": true,
-      "sha256": "e4eb8b8716a30cf10f14a9e65572bee497e47d922ffed46e0ce05f9b900c6e30"
+      "sha256": "6cde457dd64bc68193a23a19823bff10ff7e7ae5d6612afdc3969a579f0980eb"
     },
     {
       "path": "standard_matrix.json",
@@ -297,27 +297,9 @@
       "sha256": "a8d48ba0ed7b1e58f161801387966fbe2d6b79cc7f2898cae672fea420439b6a"
     },
     {
-      "path": "visual/assets/implementation-operation-contract.json",
-      "role": "data",
-      "required": true,
-      "sha256": "5a800568d4d376113a848313f75e1120c727a268d5ca34f1f9852e717a6706d8"
-    },
-    {
       "path": "visual/assets/mobility-nodes.json",
       "role": "data",
       "sha256": "2fd1ef35ed93f639233a97b5655bfa029414ad56ed5761210b30ae19161a364d"
-    },
-    {
-      "path": "visual/assets/mobility-tabletop-contract.json",
-      "role": "data",
-      "required": true,
-      "sha256": "b0541ce33d754fb375f532b5cdd56b851bc399e0dc21dfb77060f55fe0c1e8b8"
-    },
-    {
-      "path": "visual/assets/mobility-tabletop-evidence.json",
-      "role": "data",
-      "required": true,
-      "sha256": "a31acbb6c5f0d0eefbe2d1a51a829ad929b3e6cf6a0de3acedefa3deffb221e1"
     },
     {
       "path": "visual/assets/scenario-cards.json",
@@ -340,14 +322,14 @@
       "required": true,
       "language": "en",
       "translation_of": "visual/index.html",
-      "sha256": "029438adf4f1714e2111646b78232a976ec98e04136aed71a4057d2abd7c5513"
+      "sha256": "11195b165dc20a0af08de4cbbff274d4de0feae6d267002045478a09e4117022"
     },
     {
       "path": "visual/index.html",
       "role": "visualization",
       "required": true,
       "language": "zh",
-      "sha256": "ac8f54bb91015777ab32c2e734d9f545c1ecc0dabfd02d9af3091dd18d4a4ea6"
+      "sha256": "9a0e0f594bf407931400685b603557da46f044dbf78b9e8b32d56953aca2a643"
     },
     {
       "path": "visual/assets/multimodal-network.json",
@@ -359,19 +341,13 @@
       "path": "visual/assets/movement-simulation.json",
       "role": "data",
       "required": false,
-      "sha256": "46ef0b56359e3ef4d3b919941553cd3e0dce52ceb286df38863ccc9146254287"
+      "sha256": "a75f8cb9fc9be8ccf1bfb2082dfb73f494ee9242a1ca9209f5988a7f336a38d0"
     },
     {
       "path": "visual/assets/run-mobility-simulation.js",
       "role": "verification_script",
       "required": false,
-      "sha256": "b2617424840c94e9373f077d69d514c10f60d20a6ceca15e894d6b0ff16477e9"
-    },
-    {
-      "path": "visual/assets/run-mobility-tabletop.js",
-      "role": "verification_script",
-      "required": false,
-      "sha256": "52173fcd297dc88a348256027790dbf4c4410818b1ba45169901bd575454083f"
+      "sha256": "35c21d54bedc848772892dc021e8fcfa07ec3b6cfe9ed156725ed2752d248efd"
     },
     {
       "path": "visual/assets/run-metrics-schema-audit.js",
@@ -396,6 +372,36 @@
       "role": "data",
       "required": false,
       "sha256": "83221f7e83ff164c8d4ebd3ba047001ada926e9796ca3b2d2d9b54f9a58ad30b"
+    },
+    {
+      "path": "visual/assets/responsibility-acceptance-contract.json",
+      "role": "data",
+      "required": true,
+      "sha256": "52b5e98d1329a5ef6b1c9f8a0896ba9e5f08fc17e3b0a20b0a6675c81d06416b"
+    },
+    {
+      "path": "visual/assets/implementation-operation-contract.json",
+      "role": "data",
+      "required": true,
+      "sha256": "5a800568d4d376113a848313f75e1120c727a268d5ca34f1f9852e717a6706d8"
+    },
+    {
+      "path": "visual/assets/mobility-tabletop-contract.json",
+      "role": "data",
+      "required": true,
+      "sha256": "0cb35df7838e83e031cf770ef8df9e7d5010ab475d831ce525c18314aa016041"
+    },
+    {
+      "path": "visual/assets/mobility-tabletop-evidence.json",
+      "role": "data",
+      "required": true,
+      "sha256": "357c0bf04c9cce16cc23670384d4c501a5064ae2597b5716f808eca424271030"
+    },
+    {
+      "path": "visual/assets/run-mobility-tabletop.js",
+      "role": "verification_script",
+      "required": false,
+      "sha256": "47f6d2bf997d3376c2789d4278b24ec652fafdbab380770b1ea89d8afd6df667"
     },
     {
       "path": "assets/figures/simulation-pareto.png",
@@ -426,6 +432,315 @@
       "language": "en",
       "translation_of": "assets/figures/model-objects.png",
       "sha256": "bfc4918e8c9ea89bc5da35c4869af77be62ad6a0c11e8269a882df014dd82f73"
+    },
+    {
+      "path": "assets/figures/activity-adaptation.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "015fdad9bd73c43d0b3db13fb0a8dd206698c0721ab41634a69c37a78503286e"
+    },
+    {
+      "path": "assets/figures/activity-adaptation.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/activity-adaptation.svg",
+      "sha256": "a3b8c4bf06493e2d5e9c0e9587363a77d27201147efdde50ca3347b53d431945"
+    },
+    {
+      "path": "assets/figures/multimodal-choice-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "a662bb29667ff94411a8e90faf5a72e2e22374c07a8b1e9a01258df2e2f8d0ad"
+    },
+    {
+      "path": "assets/figures/multimodal-choice-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/multimodal-choice-board.svg",
+      "sha256": "58ed9d018d4a25b77c28a7887abf31542a67acaafcf02fc9c50a95ac6d72ae0e"
+    },
+    {
+      "path": "assets/figures/resilience-equity-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "a055be99e8c4d1977a5025b783d4818a7c7cb802fc79c177b806ca1bc78c5a14"
+    },
+    {
+      "path": "assets/figures/resilience-equity-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/resilience-equity-board.svg",
+      "sha256": "33bd76f20afad1539bf2141551731304d049d1a4117f96bd6195da932879df6b"
+    },
+    {
+      "path": "assets/figures/system-efficiency-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "dc66860007287f0535767373043455357b4136b07701b3eb0cc28d2e243acda2"
+    },
+    {
+      "path": "assets/figures/system-efficiency-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/system-efficiency-board.svg",
+      "sha256": "d63fdaa801a73085160a3e1e8473862fa85475bd24c58c49a02a65a9c76db0ce"
+    },
+    {
+      "path": "assets/figures/regional-scale-commute-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "6217c324e68c730bd69295db6516e5f6e8c67c8e90d665bb609b32c22bfc3309"
+    },
+    {
+      "path": "assets/figures/regional-scale-commute-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/regional-scale-commute-board.svg",
+      "sha256": "98187c9a6ed140166d3549be2c7563eba98c04ab23e9501308e7a42846af2cd8"
+    },
+    {
+      "path": "assets/figures/resident-vehicle-capacity-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "623800881534319399d7d974703f1a75de508cabce96cb342af8fd0d86ec75de"
+    },
+    {
+      "path": "assets/figures/resident-vehicle-capacity-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/resident-vehicle-capacity-board.svg",
+      "sha256": "0ec72773b18551ff06188cf80f94783a3c1f2ca4ab744eed4ca8ed44e14e63a5"
+    },
+    {
+      "path": "assets/figures/activity-choice-operations-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "4ff2c9b7ead06e5cb844698c5bbb993aafb709a61c29c2d5c906433f026e56f6"
+    },
+    {
+      "path": "assets/figures/activity-choice-operations-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/activity-choice-operations-board.svg",
+      "sha256": "530e55b7159f05ff78010ca42ca593f3659f8af094b2ca5fcf15c3c2002da8d3"
+    },
+    {
+      "path": "assets/figures/service-time-operations-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "03e5163d3ecb10d532ea9a3c346d015ce536221163ba36769f67d70dc13f1db1"
+    },
+    {
+      "path": "assets/figures/service-time-operations-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/service-time-operations-board.svg",
+      "sha256": "c94339aac7568251519a47f3d576b598b4e0d7a0a13ccb48d5f7cf0d80bd20d9"
+    },
+    {
+      "path": "assets/figures/adaptive-recourse-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "3d11930572b71d2d10674d80cc1a6465b18645e2f8f86bb466f08e58bd351634"
+    },
+    {
+      "path": "assets/figures/adaptive-recourse-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/adaptive-recourse-board.svg",
+      "sha256": "d7609e8a481f2a74dd93da36c4b6e49ceefd7e376d00e014f6aa3aa64eae844a"
+    },
+    {
+      "path": "assets/figures/robustness-screen-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "751288753ebf68818eac2b79e2c15559ecf1c2f44bc55a81d460cf7d3b7350f0"
+    },
+    {
+      "path": "assets/figures/robustness-screen-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/robustness-screen-board.svg",
+      "sha256": "2df99d0dc084d5cfbfb33bf0038074a32ebb3549f419f92b44dcf41c7694e7ad"
+    },
+    {
+      "path": "assets/figures/mobility-tabletop-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "dd4bfb16a7357b85f3a5954b64a1b4cd071de588ad0386cf46ccae31b7f9e37f"
+    },
+    {
+      "path": "assets/figures/mobility-tabletop-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/mobility-tabletop-board.svg",
+      "sha256": "fe59dba6aa619dae00383612b3d3e69096d33e2106f0b5ded3a49465821314ef"
+    },
+    {
+      "path": "assets/figures/capacity-closure-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "43e0e283cd68e8bd46a47ea3b4a48859616f65f3bb4d2cfe610d548716ddf7b1"
+    },
+    {
+      "path": "assets/figures/capacity-closure-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/capacity-closure-board.svg",
+      "sha256": "ec39cff7d896677a9e1d6671bc7eb17f218dd55c3664da822c08e52bde5824d4"
+    },
+    {
+      "path": "visual/assets/capacity-closure-screen.json",
+      "role": "data",
+      "required": true,
+      "sha256": "82a124b4890ee337104e295dce7e796b59d495ca8b2740ee5f24e8975045a4fe"
+    },
+    {
+      "path": "visual/assets/run-capacity-closure-screen.js",
+      "role": "script",
+      "required": true,
+      "sha256": "67de6933e31118cdb122825c8e551b6782aaa5f782d8d5df5f3015b383a60ca4"
+    },
+    {
+      "path": "assets/figures/network-flow-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "8ccf53cb3aef364f74372b4f8620d612f017cc5e8fc5235c2fd0e600f06bc66b"
+    },
+    {
+      "path": "assets/figures/network-flow-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/network-flow-board.svg",
+      "sha256": "ade503b446cb10b2c45892001eae4dddf9187a0aac3e7350821c274196ea3ebc"
+    },
+    {
+      "path": "visual/assets/network-flow-screen.json",
+      "role": "data",
+      "required": true,
+      "sha256": "df9c3d48619a29295f54d98e4af35a29fb52750e23824b56acc5187cd8636435"
+    },
+    {
+      "path": "visual/assets/network-flow-readout.json",
+      "role": "data_readout",
+      "required": true,
+      "sha256": "85fb191b5b8a050643908c68946f60880935af758181e2c6893b1e146f9a181e"
+    },
+    {
+      "path": "visual/assets/run-network-flow-screen.js",
+      "role": "script",
+      "required": true,
+      "sha256": "81d36a5ca166f9c0c2619792bfccb6d7a643bed65dbce69f4e5e32cc07115e7a"
+    },
+    {
+      "path": "visual/assets/regional-scale-commute.json",
+      "role": "data",
+      "required": true,
+      "sha256": "c236b7cc9ed1de54544e38e6c23453105f366b0ceee7a0a36a88bb67c0b777b9"
+    },
+    {
+      "path": "visual/assets/run-regional-commute-simulation.js",
+      "role": "script",
+      "required": true,
+      "sha256": "4aaf69fec1ede8e587f496a74b47052bdd053b87683d7a861ed8f5c82b87d1c3"
+    },
+    {
+      "path": "visual/assets/regional-scale-commute-readout.json",
+      "role": "data_readout",
+      "required": true,
+      "sha256": "3ad16c1dd6eddc7de80db15f7fdb82d96bcdd3ffdcbd3dc2783807d0c41dce34"
+    },
+    {
+      "path": "assets/figures/resource-pressure-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "c0a602645c5f6ceac899188d2066ae8a791b8e779e246b5392c4da38c974d364"
+    },
+    {
+      "path": "assets/figures/resource-pressure-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/resource-pressure-board.svg",
+      "sha256": "72191d1756a2e812c94191ad76737a3e27aa569cca3426a50e2bf94e2648c368"
+    },
+    {
+      "path": "visual/assets/resource-pressure-screen.json",
+      "role": "data",
+      "required": true,
+      "sha256": "cb99a4ff4a2f5cf58ed3e98bf3ad68d66ae4abe59a5e87d5519099e827b8be74"
+    },
+    {
+      "path": "visual/assets/resource-pressure-readout.json",
+      "role": "data_readout",
+      "required": true,
+      "sha256": "081fa803101263c916d2eced5345a775f34700423890e21739e3c639fde81871"
+    },
+    {
+      "path": "visual/assets/run-resource-pressure-screen.js",
+      "role": "script",
+      "required": true,
+      "sha256": "8f3a8b642a169d3bb0cbb9ba22478b0ce2fec8c8b13e2db1a4d698b95816efed"
+    },
+    {
+      "path": "assets/figures/resilience-recovery-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "f19a5c0a9fd3c5b23d761c64f024c205c60a61f2bc6eca14612bdc4b3a146539"
+    },
+    {
+      "path": "assets/figures/resilience-recovery-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/resilience-recovery-board.svg",
+      "sha256": "4794a05ec3e9ae823862b811b3df2aa8b1615d66dc648168f2ce4aff6c56453f"
+    },
+    {
+      "path": "visual/assets/resilience-recovery-readout.json",
+      "role": "data_readout",
+      "required": true,
+      "sha256": "0e4c7e24530e75fdf42173b83ed1599b94f5fa782d271d87667891bbc8dd6823"
+    },
+    {
+      "path": "visual/assets/run-resilience-recovery-screen.js",
+      "role": "script",
+      "required": true,
+      "sha256": "5139b377d0b2759860401e94ea225effa125083ba6a34b3b66ef9837e82b9baa"
+    },
+    {
+      "path": "visual/assets/review-evidence-index.json",
+      "role": "review_navigation",
+      "required": false,
+      "sha256": "9209e1af3d2947eac681c59d90f8ab7d9833597841a509358c8413e2391533f2"
     }
   ]
 }

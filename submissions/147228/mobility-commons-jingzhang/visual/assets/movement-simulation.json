@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.3",
   "simulation_class": "illustrative_design_scenario_not_local_baseline",
   "status": "transparent_sandbox_before_field_calibration",
   "purpose": "Compare operating logic and expose trade-offs before real counts; never report these values as current Haidian performance.",
@@ -29,6 +29,57 @@
     "assumption_note": "Demand is a normalized 1000-person design unit with no local count claim; replace with dated grouped OD and field observations."
   },
   "score_formula": "efficiency_index is a 0-100 illustrative weighted comparison after hard-gate screening: cost 30%, transfer 20%, people-flow 20%, external-car reduction 15%, worst-group equity 15%.",
+  "behavioral_choice_contract": {
+    "model_class": "grouped_mode_and_departure_time_choice_with_activity_chain",
+    "status": "method_contract_only_before_local_calibration",
+    "choice_set": [
+      "metro",
+      "bus",
+      "bicycle",
+      "walking_wheelchair",
+      "car",
+      "enterprise_shuttle",
+      "air_candidate"
+    ],
+    "generalized_cost_components": [
+      "door_to_door_time",
+      "schedule_delay_and_arrival_flexibility",
+      "transfer_wait_and_reliability",
+      "crowding_and_station_gate_friction",
+      "curb_parking_and_loading_time",
+      "fare_and_energy_cost",
+      "accessibility_and_worst_group_gap"
+    ],
+    "decision_order": [
+      "apply_fire_emergency_accessibility_public_transport_privacy_and_human_service_gates",
+      "compare_grouped_mode_and_departure_time_alternatives_by_generalized_cost",
+      "recheck_people_flow_conflicts_external_car_inflow_and_worst_group_gap",
+      "publish_aggregate_readout_and_keep_a_ground_fallback"
+    ],
+    "grouped_replanning": {
+      "enterprise_employee": ["arrival_window", "mode", "transfer_chain"],
+      "resident": ["service_window", "accessible_route", "mode"],
+      "carer_or_child": ["care_stop_chain", "human_assistance", "mode"],
+      "visitor": ["wayfinding", "event_window", "mode"],
+      "logistics_and_maintenance": ["service_window", "curb_state", "vehicle_route"],
+      "night_worker": ["low_frequency_transit", "human_backup", "safe_return"]
+    },
+    "external_commute_contract": {
+      "boundary": "cross_boundary_grouped_OD",
+      "required_records": [
+        "origin_zone_group",
+        "destination_zone_group",
+        "boundary_direction",
+        "arrival_departure_window",
+        "mode_and_transfer_chain",
+        "park_and_ride_or_curb_use",
+        "door_to_door_time_p50_p90"
+      ],
+      "privacy": "no_personal_trace; suppress small cells and publish aggregate changes only"
+    },
+    "air_candidate_rule": "air_candidate_is_not a choice alternative until airspace_airworthiness_operator_insurance_weather_noise_emergency_and_public_review gates pass",
+    "coefficient_rule": "do not import coefficients or local effects from papers; estimate grouped parameters from dated local observations"
+  },
   "hard_gates": [
     "fire_emergency",
     "accessibility_continuity",
@@ -194,7 +245,11 @@
       "people_vehicle_conflict_rate",
       "external_car_inflow_ratio",
       "worst_group_gap_points",
-      "ground_fallback_recovery_time"
+      "ground_fallback_recovery_time",
+      "enterprise_activity_adaptation_sensitivity",
+      "network_resilience_under_disruption",
+      "worst_group_p90_wait_proxy",
+      "ground_fallback_coverage_ratio"
     ],
     "calibration_inputs": [
       "dated_grouped_external_OD",
@@ -204,7 +259,10 @@
       "bicycle_parking_inventory",
       "curb_queue_observations",
       "wheelchair_route_audit",
-      "weather_and_emergency_protocol"
+      "weather_and_emergency_protocol",
+      "dated_disruption_log",
+      "fallback_service_capacity_audit",
+      "grouped_p90_door_to_door_sample"
     ],
     "calibration_metrics": [
       "mode_share_by_group",
@@ -214,7 +272,11 @@
       "station_and_vehicle_load",
       "accessible_route_completion_by_group",
       "people_flow_conflict_rate_by_group",
-      "worst_group_accessibility_gap"
+      "worst_group_accessibility_gap",
+      "activity_schedule_change_by_group",
+      "recovery_time_by_disruption",
+      "worst_group_p90_door_to_door",
+      "fallback_coverage_by_group"
     ]
   },
   "model_analysis": {
@@ -272,7 +334,131 @@
         "status": "illustrative_ground_fallback"
       }
     ],
-    "interpretation": "The sandbox suggests where coordination matters: station gates and curb service dominate the unmanaged peak, while a ground-first multimodal candidate lowers modeled queues and transfer wait in the normalized unit. These are design sensitivities, not local performance claims."
+    "interpretation": "The sandbox suggests where coordination matters: station gates and curb service dominate the unmanaged peak, while a ground-first multimodal candidate lowers modeled queues and transfer wait in the normalized unit. B3 adds disruption and weather screens so efficiency is not accepted when it leaves protected groups without a recoverable ground route. These are design sensitivities, not local performance claims."
+  },
+  "behavioral_sensitivity": {
+    "id": "B1_enterprise_flexible_arrival_window",
+    "analysis_class": "transparent_synthetic_activity_adaptation",
+    "base_scenario": "S0_peak_unmanaged",
+    "method_sources": [
+      "ATOM-MULTIMODAL-ABM",
+      "MATRAM-ACTIVITY-ADAPTATION-2026"
+    ],
+    "eligible_agent_group": "enterprise_employee",
+    "eligible_design_unit_count": 450,
+    "eligible_demand_by_mode": {
+      "metro": 180,
+      "bus": 70,
+      "bicycle": 20,
+      "walking_wheelchair": 35,
+      "car": 105,
+      "enterprise_shuttle": 40
+    },
+    "protected_agent_groups": [
+      "resident",
+      "carer_or_child",
+      "visitor",
+      "logistics_and_maintenance",
+      "night_worker"
+    ],
+      "policy": {
+        "name": "employer_staggered_arrival_window",
+        "trigger": "synthetic_peak_queue_or_station_gate_screen",
+        "eligible_fraction_shifted": 0.2,
+        "shift_minutes": 20,
+      "adaptive_profile": {
+        "peak_minute": 55,
+        "spread_minutes": 30,
+        "peak_concentration": 0.5
+        },
+        "resident_rule": "do_not_shift_resident_or_care_demand_without_grouped_evidence_and_consent",
+        "privacy_rule": "publish_grouped_schedule_effects_only; never expose employee-level arrival times",
+        "transit_coordination_required": true,
+        "rescheduling_cost_must_be_measured": true
+      },
+      "outputs": [
+        "peak_queue_change_by_mode",
+        "mean_queue_change_by_mode",
+        "station_and_vehicle_load_change",
+        "curb_queue_change",
+        "shifted_enterprise_units",
+        "rescheduling_cost_not_estimated"
+      ],
+      "required_calibration": [
+        "employee_schedule_acceptance_by_group",
+        "rescheduling_cost_person_minutes",
+        "transit_schedule_compatibility",
+        "mode_share_change_by_group",
+        "peak_station_and_curb_counts"
+      ],
+    "status": "illustrative_sensitivity_not_local_effect"
+  },
+  "resilience_sensitivity": {
+    "id": "B3_ground_resilience_and_equity",
+    "analysis_class": "transparent_synthetic_disruption_and_equity_sensitivity",
+    "base_scenario": "S1_multimodal_curb_transfer",
+    "method_sources": [
+      "UAM-MULTIMODAL-RESILIENCE-2025",
+      "TRANSPORT-EQUITY-ABM-2025",
+      "MATRAM-ACTIVITY-ADAPTATION-2026"
+    ],
+    "status": "illustrative_sensitivity_not_local_resilience_claim",
+    "group_mode_weights": {
+      "resident": {"metro": 0.28, "bus": 0.25, "bicycle": 0.12, "walking_wheelchair": 0.30, "car": 0.05},
+      "enterprise_employee": {"metro": 0.42, "bus": 0.18, "bicycle": 0.10, "walking_wheelchair": 0.08, "car": 0.12, "enterprise_shuttle": 0.10},
+      "carer_or_child": {"metro": 0.20, "bus": 0.28, "bicycle": 0.04, "walking_wheelchair": 0.40, "car": 0.08},
+      "wheelchair_user": {"metro": 0.18, "bus": 0.25, "walking_wheelchair": 0.48, "car": 0.09},
+      "visitor": {"metro": 0.30, "bus": 0.22, "bicycle": 0.16, "walking_wheelchair": 0.22, "car": 0.10},
+      "logistics_and_maintenance": {"bus": 0.10, "walking_wheelchair": 0.08, "car": 0.72, "enterprise_shuttle": 0.10},
+      "night_worker": {"metro": 0.22, "bus": 0.38, "walking_wheelchair": 0.20, "car": 0.20}
+    },
+    "events": [
+      {
+        "id": "R0_nominal_ground_first",
+        "event": "no_disruption",
+        "capacity_multiplier_by_mode": {},
+        "blocked_windows_by_mode": {},
+        "fallback_mode_by_mode": {},
+        "fallback_recovery_fraction": 0,
+        "group_gap_penalty_points": {},
+        "recovery_time_proxy_minutes_by_group": {}
+      },
+      {
+        "id": "R1_metro_segment_disruption",
+        "event": "metro_segment_blocked_for_30_minutes",
+        "capacity_multiplier_by_mode": {"metro": 0.35, "bus": 1.50, "bicycle": 1.0, "walking_wheelchair": 1.0, "car": 0.80, "enterprise_shuttle": 1.25},
+        "blocked_windows_by_mode": {"metro": [{"start_minute": 30, "end_minute": 60}]},
+        "fallback_mode_by_mode": {"metro": "bus"},
+        "fallback_recovery_fraction": 0.75,
+        "group_gap_penalty_points": {"resident": 4, "enterprise_employee": 2, "carer_or_child": 8, "wheelchair_user": 10, "visitor": 3, "logistics_and_maintenance": 5, "night_worker": 7},
+        "recovery_time_proxy_minutes_by_group": {"resident": 12, "enterprise_employee": 10, "carer_or_child": 20, "wheelchair_user": 24, "visitor": 12, "logistics_and_maintenance": 16, "night_worker": 22}
+      },
+      {
+        "id": "R2_weather_ground_fallback",
+        "event": "severe_weather_suppresses_bicycle_and_blocks_air_candidate",
+        "capacity_multiplier_by_mode": {"metro": 1.0, "bus": 1.80, "bicycle": 0.15, "walking_wheelchair": 0.75, "car": 1.05, "enterprise_shuttle": 1.25},
+        "blocked_windows_by_mode": {"bicycle": [{"start_minute": 0, "end_minute": 120}]},
+        "fallback_mode_by_mode": {"bicycle": "bus", "walking_wheelchair": "bus"},
+        "fallback_recovery_fraction": 0.80,
+        "group_gap_penalty_points": {"resident": 3, "enterprise_employee": 2, "carer_or_child": 9, "wheelchair_user": 12, "visitor": 4, "logistics_and_maintenance": 5, "night_worker": 8},
+        "recovery_time_proxy_minutes_by_group": {"resident": 10, "enterprise_employee": 9, "carer_or_child": 22, "wheelchair_user": 28, "visitor": 13, "logistics_and_maintenance": 15, "night_worker": 20}
+      }
+    ],
+    "policy": {
+      "air_candidate": "always_blocked_until_airspace_airworthiness_operator_insurance_weather_noise_emergency_and_public_review",
+      "fallback_priority": ["wheelchair_user", "carer_or_child", "resident", "night_worker", "logistics_and_maintenance"],
+      "max_worst_group_gap_proxy_points": 24,
+      "max_recovery_time_proxy_minutes": 45,
+      "minimum_fallback_coverage_ratio": 0.70,
+      "no_success_claim_without_dated_disruption_and_grouped_p90_observation": true
+    },
+    "required_calibration": [
+      "dated_disruption_log_by_mode_and_duration",
+      "fallback_service_capacity_by_time_window",
+      "grouped_p90_door_to_door_time_before_and_after_event",
+      "wheelchair_and_carer_route_completion_during_disruption",
+      "weather_cancellation_and_emergency_protocol"
+    ]
   },
   "reproducibility": {
     "runner": "visual/assets/run-mobility-simulation.js",
@@ -302,7 +488,16 @@
         "peak_concentration": 1.5
       }
     },
-    "behavioral_boundary": "No imported mode-choice coefficient or local effect size; employer incentives, shared rides and feeder services require a sensitivity test after observed grouped OD and mode-share data arrive."
+    "behavioral_boundary": "No imported mode-choice coefficient or local effect size; B1 is a declared schedule-spreading sensitivity only. Employer incentives, shared rides and feeder services require observed grouped OD, mode-share data and a separate review."
+  },
+  "regional_scale_extension": {
+    "configuration": "visual/assets/regional-scale-commute.json",
+    "runner": "visual/assets/run-regional-commute-simulation.js",
+    "population_reference": 3122000,
+    "coverage_ratio": 1,
+    "status": "population-scale_synthetic_aggregate_stress_test_not_local_OD",
+    "privacy": "all-agent processing with aggregate counters only; no personal trajectory",
+    "satisfaction_boundary": "The regional runner reports a synthetic satisfaction proxy; actual resident and employee satisfaction remains unknown until survey/intercept evidence."
   },
   "scenarios": [
     {

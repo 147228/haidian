@@ -63,3 +63,7 @@
 
 - Added a full-population lexicographic policy search over O1 transit-priority, O2 equity-balanced and O3 active-first profiles; every candidate is replayed over all 3,122,000 synthetic agents before selection.
 - Selected O3 under the declared hard gates and proxy objective, and synchronized the bilingual evidence boards and proposal readouts to the selected policy rather than a hand-picked scenario.
+
+## v2.3 - 2026-08-09
+
+- Aligned the runner’s optimized-policy checks with the full-replay-selected policy, so machine checks, comparison output and evidence boards all refer to O3 rather than silently retaining O1.

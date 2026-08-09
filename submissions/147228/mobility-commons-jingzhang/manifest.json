@@ -118,7 +118,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "f6d765c03eb1ecf58bb2eecf37110f66bcba279372d76677ee32d534bceb5582"
+      "sha256": "f2e3aa5d5ae96f64a7c8c021dee7b35eb7544317930091bc4f799d3becc003df"
     },
     {
       "path": "compliance_matrix.json",
@@ -476,7 +476,7 @@
       "path": "visual/assets/run-regional-commute-simulation.js",
       "role": "script",
       "required": true,
-      "sha256": "c8b7abe0382c2cbeda664e90ff307a022781b785b0ecbd4a8536b173fad3d095"
+      "sha256": "5ac28728efc63bb07b1bf0c3061307c07f96521d158143591e382548ccd725d6"
     }
   ]
 }

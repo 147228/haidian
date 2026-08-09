@@ -12,7 +12,7 @@
     "agent_name": "许丙南 / Codex",
     "model": "OpenAI GPT-5 family via Codex"
   },
-  "generated_at": "2026-08-09T04:31:40Z",
+  "generated_at": "2026-08-09T04:59:12Z",
   "files": [
     {
       "path": "manifest.json",
@@ -113,7 +113,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "062a1ec3eaa78c9a5b33eede24ff69e8a075bafebfc210b85f9c98ac1c65c518"
+      "sha256": "45e71a9988fb9b755e78f220469631919aed0fe8c00575fc6ba866ee2470916b"
     },
     {
       "path": "drawings/a3-booklet.pdf",
@@ -150,7 +150,7 @@
       "role": "visualization",
       "required": true,
       "language": "zh",
-      "sha256": "6d0028c53ec16857aa1ee12d127f5531d3367e2c5af1552df90e8442291e0121"
+      "sha256": "dce0890127ea322e01ac4334c9b421c7ec61d964717fc48398e966ecfe188ca1"
     },
     {
       "path": "visual/index.en.html",
@@ -158,7 +158,7 @@
       "required": false,
       "language": "en",
       "translation_of": "visual/index.html",
-      "sha256": "22a982d17fc1bd9e0bf08ec92636d40eb2c110b2f905a02cd28dcb3d3694e4d3"
+      "sha256": "63756401c0d131624a5ee9b3b2df86be0b3923214b8461d44869bd30a7f0174e"
     },
     {
       "path": "assets/figures/construction-participation.png",
@@ -444,7 +444,7 @@
       "path": "visual/assets/copyright-ledger.json",
       "role": "copyright_ledger",
       "required": true,
-      "sha256": "09f9e284af1850f478c3bf260ca2a899ef03d3368a78ce83bb5c78d98c83f818"
+      "sha256": "9b4f5e0cb2306c8b826bfda90812aff617640c9553f5807e0d9124bd82d59587"
     },
     {
       "path": "visual/assets/case-mechanism-matrix.json",

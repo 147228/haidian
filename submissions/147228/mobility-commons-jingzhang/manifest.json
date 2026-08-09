@@ -118,7 +118,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "898f982d984181c91fd731649fa265d213eebe0989ed11f3357a06cc0ba191fa"
+      "sha256": "7e25734a00c55fce418404be38a48924163a7bebe592cb56fdeb3f8f53e67111"
     },
     {
       "path": "compliance_matrix.json",
@@ -228,14 +228,14 @@
       "required": true,
       "language": "en",
       "translation_of": "proposal.md",
-      "sha256": "03a8de11d3a918f1018991afccc2a76b76c364b3290461bad2916658eec4012a"
+      "sha256": "969bf4f4fb524378516a641d661aeedf8aac6e9ddf31aa3d9d3771ea9739e867"
     },
     {
       "path": "proposal.md",
       "role": "narrative",
       "required": true,
       "language": "zh",
-      "sha256": "d33f79e28857214da0cead3a161f5f1331a46e4cac645bf7052196f645413ebd"
+      "sha256": "0ade1faed03c5954ca38aeb3af670f7b738d89720e009d4645155d9b847a575b"
     },
     {
       "path": "report/copyright_statement.md",
@@ -254,14 +254,14 @@
       "required": true,
       "language": "en",
       "translation_of": "report/proposal.html",
-      "sha256": "1f2b971f7ad698129ef8e34c6b8b5cf53238d556978c5e6ce5bc060988a953ba"
+      "sha256": "83000aa1a4615fb28806388dc7e9a8ae07a6178a0a55fd8da6b365d729250289"
     },
     {
       "path": "report/proposal.html",
       "role": "rendered_proposal_html",
       "required": true,
       "language": "zh",
-      "sha256": "7a395d9db88c291ea68aae7a12bd28be257f4218bca0580b32b744e766c4cd23"
+      "sha256": "320c727de718d8f1e386c442e1445221ebfe5c6917ae7f3270a95090f86faf2e"
     },
     {
       "path": "self_check.json",
@@ -322,14 +322,14 @@
       "required": true,
       "language": "en",
       "translation_of": "visual/index.html",
-      "sha256": "f744e5cc531e9f3ef4c602bba838e24ca7275b49cba9558c40cb2438690985b5"
+      "sha256": "acce83117bcd38350e9f1b21026bef5787bf2d2f03e5dabb92641e9f14028241"
     },
     {
       "path": "visual/index.html",
       "role": "visualization",
       "required": true,
       "language": "zh",
-      "sha256": "ec2dcba59becf5c04c510c2935dea79bba885461ee1e0afe314111c94ef3131d"
+      "sha256": "98bc5600f3a1ebe7efa44d8db6358a19ac9cec48466381269b0b8d3020e7971d"
     },
     {
       "path": "visual/assets/multimodal-network.json",
@@ -456,7 +456,7 @@
       "role": "proposal_figure",
       "required": true,
       "language": "zh",
-      "sha256": "28213c08f14a230908d260bcb58a503e958b39e660c3464ac171c55ee4c60c37"
+      "sha256": "512e7f2961cd279778938a9d1a7821d47c4284ad95a077806e2b47ba0772cb8b"
     },
     {
       "path": "assets/figures/regional-scale-commute-board.en.svg",
@@ -464,19 +464,19 @@
       "required": true,
       "language": "en",
       "translation_of": "assets/figures/regional-scale-commute-board.svg",
-      "sha256": "9e3ab5443819d002de6c7e5f329301e46cf69d689766921ea3b29aeeb638f687"
+      "sha256": "195a65ccb312a92ebc2b518c8c2d8a916e5779f0b0e087eb3f8ff92d40672d2e"
     },
     {
       "path": "visual/assets/regional-scale-commute.json",
       "role": "data",
       "required": true,
-      "sha256": "6ab1d9c403ec49e497e21cef7a70c5147dc03561789f1be1283dc11a9c8a6f8b"
+      "sha256": "f0f6f9fbd67ac8a331e454f05e4fd65113ee4eb76ff3f514666b65b8764dc917"
     },
     {
       "path": "visual/assets/run-regional-commute-simulation.js",
       "role": "script",
       "required": true,
-      "sha256": "b7d510d09c24cdf8a73d87fe385b8da7da24736633e47f7bcc9f4596377d5043"
+      "sha256": "785d68b526aaaacf557563b839860b72b130cca54b8108e8ba29d0df57de96df"
     }
   ]
 }

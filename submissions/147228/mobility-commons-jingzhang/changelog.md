@@ -79,3 +79,7 @@
 ## v2.6 - 2026-08-09
 
 - Added O4 capacity-balanced policy search and a declared 1.35x maximum peak mode-load hard gate; the selected policy must now satisfy capacity, accessibility, privacy, mass-conservation and air-candidate gates before satisfaction ranking.
+
+## v2.7 - 2026-08-09
+
+- Added an independent full-population PM return-leg coverage screen for the selected policy. It replays all 3,122,000 agents with reversed aggregate route chains while keeping morning policy selection unchanged; the return readout is explicitly a synthetic coverage check, not an observed evening OD claim.

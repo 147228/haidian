@@ -1,14 +1,15 @@
 {
-  "version": "2.6-regional-scale",
-  "simulation_class": "regional_population_scale_synthetic_morning_flow_not_local_OD",
+  "version": "2.7-regional-scale",
+  "simulation_class": "regional_population_scale_synthetic_two_peak_flow_not_local_OD",
   "status": "transparent_sandbox_before_field_calibration",
-  "purpose": "Process one synthetic morning movement chain for every person in the regional population reference, compare a current-like stress case with an optimized multimodal operating case, and publish only aggregate flows.",
+  "purpose": "Process one synthetic morning work/service chain and one separate synthetic return-leg coverage screen for every person in the regional population reference, compare a current-like stress case with an optimized multimodal operating case, and publish only aggregate flows.",
   "regional_scope": {
     "population_reference": 3122000,
     "population_reference_label": "Haidian permanent residents at the end of 2024",
     "population_reference_source": "HAIDIAN-POPULATION-2024",
     "coverage_ratio": 1,
     "morning_agent_trips": 3122000,
+    "return_leg_agent_trips": 3122000,
     "scope_boundary": "Haidian district population reference envelope; the package geometry remains a provisional Jing-Zhang analytical boundary",
     "interpretation": "This is a population-scale stress test and coverage guard, not an observed workforce count, census microdata release, or calibrated Haidian origin-destination matrix."
   },
@@ -139,6 +140,6 @@
     "command": "node visual/assets/run-regional-commute-simulation.js",
     "network_access": false,
     "seed": 147228,
-    "algorithm": "For each declared group, process exactly its synthetic count; assign a seeded origin, destination, cross-boundary flag, mode and route template; retain aggregate counters and travel-time bins only."
+    "algorithm": "For each declared group, process exactly its synthetic count for the morning work/service leg and again for a separately seeded return leg; assign grouped zones, cross-boundary flag, mode and route template; retain aggregate counters and travel-time bins only."
   }
 }

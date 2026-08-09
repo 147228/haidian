@@ -241,6 +241,105 @@ function simulateScenario(scenarioId, weightsOverride = null, policyId = scenari
   };
 }
 
+function simulateReturnLeg(scenarioId, weightsOverride, policyId) {
+  const parameters = scenarioParameters(scenarioId, weightsOverride);
+  const ranges = groupRanges();
+  const modeCounts = Object.fromEntries(MODES.map((mode) => [mode, 0]));
+  const groupCounts = {};
+  const groupSatisfaction = {};
+  const groupAccessibility = {};
+  const routeCounts = {};
+  const timeHistogram = emptyHistogram();
+  let processed = 0;
+  let externalAgents = 0;
+  let externalCarAgents = 0;
+  let totalGeneralizedCost = 0;
+  let totalSatisfaction = 0;
+  let totalAccessibility = 0;
+  let totalConflictProbability = 0;
+  let totalVehicleKm = 0;
+
+  for (const group of ranges) {
+    groupCounts[group.id] = 0;
+    groupSatisfaction[group.id] = 0;
+    groupAccessibility[group.id] = 0;
+    for (let offset = 0; offset < group.count; offset += 1) {
+      const index = group.start + offset;
+      const origin = model.zones.destinations[hash(index, 13) % model.zones.destinations.length];
+      const destination = model.zones.origins[hash(index, 11) % model.zones.origins.length];
+      const external = unit(index, 17) < (group.id === 'enterprise_employee' ? 0.58 : group.id === 'resident_worker' ? 0.24 : 0.14);
+      const mode = selectWeighted(parameters.weights[group.id], index, 31);
+      const reliability = model.mode_parameters[mode].reliability[scenarioId];
+      const distanceFactor = 0.82 + unit(index, 37) * 0.58;
+      const zoneFactor = 0.92 + ((hash(index, 43) % 17) / 100);
+      const time = model.mode_parameters[mode].base_minutes * parameters.timeMultiplier[mode] * distanceFactor * zoneFactor + (external ? 5 : 0);
+      const accessibility = accessibilityScore(group.id, mode, scenarioId);
+      const conflictProbability = model.mode_parameters[mode].conflict_rate * (scenarioId === 'O1' ? 0.72 : scenarioId === 'R1' ? 1.18 : 1.0) * (external ? 1.08 : 1);
+      const route = routeTemplate(mode, external, group.id).split(' → ').reverse().join(' → ');
+      const waitPenalty = (1 - reliability) * 12;
+      const crowdPenalty = mode === 'metro' || mode === 'bus' ? 1.5 : 0;
+      const curbPenalty = mode === 'car' ? 3 : 0;
+      const generalizedCost = time + waitPenalty + crowdPenalty + curbPenalty + (1 - accessibility) * 15;
+      const satisfaction = clamp(100 - generalizedCost * 0.56 - (1 - reliability) * 10 - conflictProbability * 1600, 0, 100);
+
+      addMap(modeCounts, mode);
+      addMap(routeCounts, route);
+      groupCounts[group.id] += 1;
+      groupSatisfaction[group.id] += satisfaction;
+      groupAccessibility[group.id] += accessibility;
+      totalGeneralizedCost += generalizedCost;
+      totalSatisfaction += satisfaction;
+      totalAccessibility += accessibility;
+      totalConflictProbability += conflictProbability;
+      totalVehicleKm += (mode === 'car' ? distanceFactor * zoneFactor * 18 : mode === 'bicycle' ? distanceFactor * zoneFactor * 8 : mode === 'walking_wheelchair' ? distanceFactor * zoneFactor * 3 : distanceFactor * zoneFactor * 8.5) * (mode === 'car' ? 1 / 1.7 : 1);
+      addHistogram(timeHistogram, time);
+      if (external) externalAgents += 1;
+      if (external && mode === 'car') externalCarAgents += 1;
+      processed += 1;
+    }
+  }
+
+  const modeShares = Object.fromEntries(MODES.map((mode) => [mode, round(modeCounts[mode] / processed)]));
+  const modeLoadRatios = Object.fromEntries(MODES.map((mode) => [mode, round(modeCounts[mode] / model.mode_parameters[mode].capacity_person_trips)]));
+  const groupSatisfactionProxy = Object.fromEntries(GROUPS.map((group) => [group.id, round(groupSatisfaction[group.id] / groupCounts[group.id], 2)]));
+  const groupAccessibilityCompletion = Object.fromEntries(GROUPS.map((group) => [group.id, round(groupAccessibility[group.id] / groupCounts[group.id], 4)]));
+  const satisfactionValues = Object.values(groupSatisfactionProxy);
+  const accessibilityValues = Object.values(groupAccessibilityCompletion);
+  const topRoutes = Object.entries(routeCounts).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([route, count]) => ({route, count, share: round(count / processed)}));
+
+  return {
+    period: 'PM_return',
+    policy_id: policyId,
+    population_agents: TOTAL,
+    agents_processed: processed,
+    all_agents_processed: processed === TOTAL,
+    mass_conservation: sum(Object.values(modeCounts)) === TOTAL,
+    external_agents: externalAgents,
+    external_car_inflow_ratio: round(externalCarAgents / Math.max(externalAgents, 1)),
+    mode_counts: modeCounts,
+    mode_shares: modeShares,
+    mode_load_ratios: modeLoadRatios,
+    max_mode_load_ratio: round(Math.max(...Object.values(modeLoadRatios))),
+    total_trips: processed,
+    completed_trips: processed,
+    p50_travel_time_proxy_minutes: percentileFromHistogram(timeHistogram, 0.50, processed),
+    p90_travel_time_proxy_minutes: percentileFromHistogram(timeHistogram, 0.90, processed),
+    travel_time_histogram: timeHistogram,
+    average_generalized_cost_proxy: round(totalGeneralizedCost / processed, 2),
+    satisfaction_proxy: round(totalSatisfaction / processed, 2),
+    satisfaction_proxy_by_group: groupSatisfactionProxy,
+    accessibility_completion_proxy: round(totalAccessibility / processed, 4),
+    accessibility_completion_by_group: groupAccessibilityCompletion,
+    worst_group_satisfaction_gap_proxy_points: round(Math.max(...satisfactionValues) - Math.min(...satisfactionValues), 2),
+    worst_group_accessibility_gap_proxy_points: round((Math.max(...accessibilityValues) - Math.min(...accessibilityValues)) * 100, 2),
+    people_flow_conflict_rate_per_1000_proxy: round((totalConflictProbability / processed) * 1000, 2),
+    vehicle_km_proxy: round(totalVehicleKm, 0),
+    route_flow_summary: topRoutes,
+    privacy_check: 'aggregate_only_no_personal_trace',
+    air_candidate: 'blocked'
+  };
+}
+
 function sum(values) {
   return values.reduce((total, value) => total + Number(value || 0), 0);
 }
@@ -296,6 +395,7 @@ function compareCandidates(left, right) {
 
 const rankedCandidates = [...searchCandidates].sort(compareCandidates);
 const selectedPolicy = rankedCandidates[0];
+const returnLegReadout = simulateReturnLeg('O1', model.mode_weights_by_group[selectedPolicy.profile], selectedPolicy.id);
 const optimizationSearch = {
   method: model.optimization_search.method,
   selection_order: model.optimization_search.selection_order,
@@ -332,6 +432,8 @@ const checks = {
   optimized_conflict_proxy_not_higher: selectedPolicy.result.people_flow_conflict_rate_per_1000_proxy <= baseline.people_flow_conflict_rate_per_1000_proxy,
   optimized_external_car_inflow_not_higher: selectedPolicy.result.external_car_inflow_ratio <= baseline.external_car_inflow_ratio,
   optimized_peak_mode_capacity_screen_pass: selectedPolicy.result.max_mode_load_ratio <= model.optimization_search.hard_gate_constraints.maximum_peak_mode_load_ratio,
+  return_population_agents_processed: returnLegReadout.all_agents_processed,
+  return_mass_conservation: returnLegReadout.mass_conservation,
   air_candidate_fail_closed: scenarios.every((scenario) => scenario.air_candidate === 'blocked'),
   privacy_aggregate_only: scenarios.every((scenario) => scenario.privacy_check === 'aggregate_only_no_personal_trace'),
   optimization_has_eligible_candidate: rankedCandidates.some((candidate) => candidateEligible(candidate.result)),
@@ -357,6 +459,7 @@ const output = {
     mode_load_ratios: headlineOptimized.mode_load_ratios,
     max_mode_load_ratio: headlineOptimized.max_mode_load_ratio,
     capacity_overflow_person_trips: headlineOptimized.capacity_overflow_person_trips,
+    return_leg: returnLegReadout,
     satisfaction_proxy: headlineOptimized.satisfaction_proxy,
     average_generalized_cost_proxy: headlineOptimized.average_generalized_cost_proxy,
     p50_travel_time_proxy_minutes: headlineOptimized.p50_travel_time_proxy_minutes,

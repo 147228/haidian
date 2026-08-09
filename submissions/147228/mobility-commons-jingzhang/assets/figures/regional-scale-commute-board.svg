@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1500" viewBox="0 0 2400 1500" role="img" aria-labelledby="title desc">
   <title id="title">区域人口规模通勤综合模拟：312.2 万合成人口代理</title>
-  <desc id="desc">B0 压力场景与 O4 容量平衡候选的聚合对比。所有 3,122,000 个合成代理均被处理；数值是模型代理，不是海淀现状观测。</desc>
+  <desc id="desc">B0 压力场景与 O4 容量平衡候选的聚合对比；早高峰去程和晚高峰返程覆盖屏查均处理全部 3,122,000 个合成代理。数值是模型代理，不是海淀现状观测。</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#081827"/><stop offset="1" stop-color="#102d43"/></linearGradient>
     <linearGradient id="mint" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4de1bf"/><stop offset="1" stop-color="#20a89b"/></linearGradient>
@@ -11,9 +11,9 @@
   </defs>
   <rect width="2400" height="1500" fill="url(#bg)"/>
   <circle cx="2240" cy="-80" r="360" fill="#1a6f76" opacity=".28"/><circle cx="2150" cy="1450" r="420" fill="#294575" opacity=".22"/>
-  <text x="130" y="100" class="sans teal" font-size="25" font-weight="800" letter-spacing="4">MOBILITY COMMONS / REGIONAL SCALE / v2.6</text>
-  <text x="130" y="177" class="sans white" font-size="62" font-weight="800">区域人口规模通勤：把每个人的早高峰动线算进去</text>
-  <text x="130" y="228" class="sans muted" font-size="25">3,122,000 个合成代理 × 聚合 OD × 地铁 / 公交 / 骑行 / 步行无障碍 / 汽车 / 企业接驳 · 只发布汇总流量</text>
+  <text x="130" y="100" class="sans teal" font-size="25" font-weight="800" letter-spacing="4">MOBILITY COMMONS / REGIONAL SCALE / v2.7</text>
+  <text x="130" y="177" class="sans white" font-size="62" font-weight="800">区域人口规模通勤：早去晚回都做全量覆盖</text>
+  <text x="130" y="228" class="sans muted" font-size="25">3,122,000 个合成代理 × AM 上班去程 + PM 返程屏查 × 地铁 / 公交 / 骑行 / 步行无障碍 / 汽车 / 企业接驳 · 只发布汇总流量</text>
   <rect x="1930" y="92" width="320" height="72" rx="36" fill="#173f50" stroke="#4de1bf" stroke-width="2"/><text x="2090" y="138" text-anchor="middle" class="sans teal" font-size="22" font-weight="800">ALL AGENTS PROCESSED</text>
 
   <g filter="url(#shadow)">
@@ -27,7 +27,7 @@
 
   <rect x="130" y="510" width="1190" height="610" rx="28" fill="#0d2538" stroke="#24465b"/>
   <text x="175" y="565" class="sans white" font-size="30" font-weight="800">方式重分配 / MODE MIX</text>
-  <text x="175" y="600" class="sans muted small">每条横条 = 3,122,000 人的一个早高峰动线；不是实际调查份额</text>
+  <text x="175" y="600" class="sans muted small">每条横条 = 3,122,000 人的 AM 去程；PM 返程屏查同样逐人守恒，不是实际调查份额</text>
   <text x="175" y="680" class="sans amber label">B0 压力场景</text><text x="175" y="815" class="sans teal label">O4 容量平衡 / 全量搜索选中</text>
   <g>
     <rect x="365" y="645" width="251" height="56" fill="#4b79b8"/><rect x="616" y="645" width="181" height="56" fill="#5d9fc1"/><rect x="797" y="645" width="87" height="56" fill="#4db49e"/><rect x="884" y="645" width="163" height="56" fill="#b9d7b1"/><rect x="1047" y="645" width="263" height="56" fill="#e77c65"/><rect x="1310" y="645" width="55" height="56" fill="#f4bd63"/>
@@ -65,5 +65,5 @@
     <path d="M1715 1333 H1815" class="arrow"/><polygon points="1815,1325 1835,1333 1815,1341" fill="#4de1bf"/>
     <rect x="1845" y="1305" width="340" height="56" rx="28" fill="#7b4d63"/><text x="2015" y="1341" text-anchor="middle" class="white">工作 / 服务目的地</text>
   </g>
-  <text x="175" y="1395" class="sans muted tiny">Source: regional-scale-commute.json + run-regional-commute-simulation.js · 3.122M population reference from official Beijing profile · synthetic scale simulation, not local observed performance</text>
+  <text x="175" y="1395" class="sans muted tiny">Source: regional-scale-commute.json + run-regional-commute-simulation.js · AM/PM each 3.122M population-scale coverage · synthetic simulation, not local observed performance</text>
 </svg>

@@ -9,7 +9,7 @@ license: "COMMUNITY-DISPLAY-ONLY"
 summary: "把地铁、公交、自行车、步行/无障碍、汽车与停车装卸纳入同一张可审计的时段路缘账本，并把企业—居民对外通勤、人员动线和综合仿真接上；未来空中出行只作为受审批、可撤回、地面接驳优先的实验接口，三处重点区以五道硬门逐步验证。"
 tracks: ["ai-traffic-walkability", "enterprise-services-ecosystem", "civic-agent-governance"]
 scenarios: ["ai-traffic-walkability", "enterprise-service-copilot", "public-safety-operations-review"]
-iteration: "v2.24"
+iteration: "v2.26"
 ---
 
 # 京张共行环。企业与居民交通共益系统
@@ -32,19 +32,34 @@ iteration: "v2.24"
 
 这张表把设计图、路缘账本、M-09 回退桌演和 P0/P1/P2 分期接成一条验收流程。4 条合成请求的 PASS 只证明状态机和回滚逻辑可重放，不证明真实客流、无障碍绩效、人员值守、公众接受或安全结果。
 
+## 四类人先看什么。把交通方案落到出门、到岗、到家
+
+同一张路网对不同的人有不同的难处。下面把企业、居民、照护与无障碍、对外通勤四个入口单独摆出来。它们是情景入口，现场调查完成前不升级为已验证需求。
+
+| 人群 | 先要解决的卡点 | 方案先给什么选择 | 进入验证前要看到什么 |
+| --- | --- | --- | --- |
+| 居民 | 上学、就医、买菜和夜间回家在换乘处断开 | 地铁和公交接驳、连续步行与轮椅路线、人工和电话入口 | 有日期的分时方式计数、无障碍走查、投诉回应人 |
+| 企业员工 | 到岗时窗、班车、停车和装卸互相挤占 | 合并班车候选、路缘预约、公共交通接驳和保证回家回退 | 企业聚合需求、班次与路权证据、责任人 |
+| 照护者与轮椅使用者 | 照护链不能等待，连续路线不能被停车和装卸截断 | 无障碍优先路缘、人工引导、公共交通和照护服务回退 | 连续路线审计、辅助通行记录、最弱群体结果 |
+| 对外通勤者 | 跨边界停车换乘、地铁公交衔接和到岗时间不稳定 | 跨边界分组 OD、换乘链、停车换乘和时段选择 | 脱敏聚合 OD、站点容量、外部运营协同记录 |
+
+![失败与回退板](assets/figures/failure-recourse-board.svg)
+
+这张图先回答“出了问题怎么办”。图中的阈值属于设计门槛或合成压力屏查，现场运行前不代表海淀实测结果 [data:assets/figures/failure-recourse-board.svg] [data:visual/assets/network-flow-screen.json] [data:visual/assets/resilience-recovery-readout.json]。
+
 ## 评审导览。七个维度从哪里开始读
 
 下面是一张面向评审的导航表，不是正式评分表，也不把合成结果升级为现场证据。每一行只给出最短阅读入口、最强证据和必须保留的边界；完整结构化版本见 `visual/assets/review-evidence-index.json`。
 
-| Rubric 维度 | 最短入口 | 评审先看什么 | 仍不能推出什么 |
+| Rubric 维度 | 最短入口 | 首要读者 | 评审先看什么 | 仍不能推出什么 |
 | --- | --- | --- | --- |
-| 任务书相关性 | 三层范围、`compliance_matrix.json` | 三层研究、三处重点区、AI+交通场景的交叉回接 | provisional 几何不是法定红线 |
-| 原创性 | 一页执行摘要、责任与验收合同 | 时段路缘账本 + 企业与居民共益 + 可撤回人工回退链 | 角色不是已签合同或合作事实 |
-| AI 与城市规划创新性 | network-flow / capacity-closure runner | 全量聚合网络流、容量闭合、空中候选硬阻断 | 合成压力、满意度和容量不是本地绩效 |
-| 可实施性 | `responsibility-acceptance-contract.json`、M-09 contract | P0/P1/P2 角色、字段、阈值、停止与回滚 | 运营者、预算、采购、许可和班次仍待日期化证据 |
-| 公共利益与包容性 | 一页执行摘要、M-09 evidence、`service-levels.json` | 无障碍/照护/夜班分组、非数字入口、公共路线和投诉回退 | 尚无居民样本、同意记录或现场可达性绩效 |
-| 风险与合规意识 | network-flow、`assumptions.json`、`sources.json` | 空中候选 fail-closed、隐私最小化、provisional 与 not-authorized 边界 | 政策/论文不能替代专业审查、保险或许可 |
-| 表达完整度 | 双语 proposal、离线 HTML、visual、manifest | 人读层、图板、JSON 审计层、图纸和 hash 的同包一致性 | 导航索引不代表官方评分、CI 通过或实施 |
+| 任务书相关性 | 三层范围、`compliance_matrix.json` | 规划与治理评审 | 三层研究、三处重点区、AI+交通场景的交叉回接 | provisional 几何不是法定红线 |
+| 原创性 | 一页执行摘要、责任与验收合同 | 方案评审 | 时段路缘账本、企业与居民共益、可撤回人工回退链 | 角色不是已签合同或合作事实 |
+| AI 与城市规划创新性 | network-flow / capacity-closure runner | 数据与技术评审 | 全量聚合网络流、容量闭合、空中候选硬阻断 | 合成压力、满意度和容量不是本地绩效 |
+| 可实施性 | `responsibility-acceptance-contract.json`、M-09 contract | 运营与实施评审 | P0/P1/P2 角色、字段、阈值、停止与回滚 | 运营者、预算、采购、许可和班次仍待日期化证据 |
+| 公共利益与包容性 | 一页执行摘要、M-09 evidence、`service-levels.json` | 居民、企业与无障碍评审 | 无障碍、照护、夜班分组、非数字入口、公共路线和投诉回退 | 尚无居民样本、同意记录或现场可达性绩效 |
+| 风险与合规意识 | network-flow、`assumptions.json`、`sources.json` | 合规与安全评审 | 空中候选 fail-closed、隐私最小化、provisional 与 not-authorized 边界 | 政策和论文不能替代专业审查、保险或许可 |
+| 表达完整度 | 双语 proposal、离线 HTML、visual、manifest | 全部读者 | 人读层、图板、JSON 审计层、图纸和 hash 的同包一致性 | 导航索引不代表官方评分、CI 通过或实施 |
 
 这张表帮助评审在长篇证据和边界声明之间找到入口，不增加新的事实、指标或实施承诺 [data:visual/assets/review-evidence-index.json]。
 

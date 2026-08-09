@@ -6,6 +6,8 @@
   "not_a_score": true,
   "reading_order": [
     "proposal.md#一页执行摘要",
+    "proposal.md#四类人先看什么",
+    "assets/figures/failure-recourse-board.svg",
     "visual/assets/responsibility-acceptance-contract.json",
     "visual/assets/network-flow-readout.json",
     "visual/assets/regional-scale-commute-readout.json",
@@ -45,15 +47,15 @@
     {
       "id": "public_interest_inclusion",
       "label_zh": "公共利益与包容性",
-      "start_here": ["proposal.md#一页执行摘要", "visual/assets/mobility-tabletop-evidence.json", "visual/assets/service-levels.json"],
-      "strongest_evidence": "无障碍/照护/夜班分组、非数字等价入口、公共路线连续和投诉回退被保留",
+      "start_here": ["proposal.md#四类人先看什么", "assets/figures/failure-recourse-board.svg", "visual/assets/mobility-tabletop-evidence.json", "visual/assets/service-levels.json"],
+      "strongest_evidence": "居民、企业、照护与无障碍、对外通勤四个入口和失败回退板把分组需求、非数字等价入口、公共路线连续和投诉回退摆在同一阅读入口",
       "boundary": "尚无居民样本、同意记录或现场可达性绩效；分组结果仍待实测。"
     },
     {
       "id": "risk_compliance",
       "label_zh": "风险与合规意识",
-      "start_here": ["visual/assets/network-flow-screen.json", "assumptions.json", "sources.json"],
-      "strongest_evidence": "空中候选硬阻断、个人轨迹最小化、provisional 边界和 not_authorized_not_run 明确",
+      "start_here": ["assets/figures/failure-recourse-board.svg", "visual/assets/network-flow-screen.json", "assumptions.json", "sources.json"],
+      "strongest_evidence": "失败回退板、空中候选硬阻断、个人轨迹最小化、provisional 边界和 not_authorized_not_run 明确",
       "boundary": "论文与政策材料只作为方法/责任背景，不替代交通、消防、无障碍、隐私和保险审查。"
     },
     {

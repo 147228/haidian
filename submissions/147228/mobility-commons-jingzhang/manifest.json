@@ -118,7 +118,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "a9b9abef9c9a09a9d02e9cd2b01a1037ab2e2c936242dd1507782aa748b8562e"
+      "sha256": "87ddb83599ad57a47e0b9dfb861a56d7f6e023997122f3e80be371b854325b74"
     },
     {
       "path": "compliance_matrix.json",
@@ -228,14 +228,14 @@
       "required": true,
       "language": "en",
       "translation_of": "proposal.md",
-      "sha256": "023ab8963b58d14d48300ae97ee273c51e6df6ce69aa841de2aac52204c86608"
+      "sha256": "08edd05dd2e12e2aff0d086ebf37b5e6de808f80620a3b2dfcef96f411179cdd"
     },
     {
       "path": "proposal.md",
       "role": "narrative",
       "required": true,
       "language": "zh",
-      "sha256": "59683e0659c00027f0485baae3e1011725fdcbd157b351ff20f8c75a7218e639"
+      "sha256": "57f5c64fa3a9c31a0ecde55a55c176c1b16305fdd4fdf535fe724ad2c6b2e81f"
     },
     {
       "path": "report/copyright_statement.md",
@@ -254,14 +254,14 @@
       "required": true,
       "language": "en",
       "translation_of": "report/proposal.html",
-      "sha256": "31538ae4450317bdc8e8d91ceecdc45c37e0c2e47c5f524df7169d1d2bdae455"
+      "sha256": "c38af72ce945cfe6febaef74e8d6bde0c43222f9900737eeca2211a33490d20a"
     },
     {
       "path": "report/proposal.html",
       "role": "rendered_proposal_html",
       "required": true,
       "language": "zh",
-      "sha256": "5e6e36866f3096c84721d017dd80b4358587a637e90f6538311e6694a6ef7352"
+      "sha256": "bbc4d53111ea5be61293ec50d2ec92a8eef25ab0fcc8a5d7acca856d1a49cb81"
     },
     {
       "path": "self_check.json",
@@ -322,14 +322,14 @@
       "required": true,
       "language": "en",
       "translation_of": "visual/index.html",
-      "sha256": "11195b165dc20a0af08de4cbbff274d4de0feae6d267002045478a09e4117022"
+      "sha256": "53cfb1a306b074239fa7510880656d3655dfe3381e2783cea80746f649f28c9a"
     },
     {
       "path": "visual/index.html",
       "role": "visualization",
       "required": true,
       "language": "zh",
-      "sha256": "9a0e0f594bf407931400685b603557da46f044dbf78b9e8b32d56953aca2a643"
+      "sha256": "3f23dbeffb65916caf4db160bcd13966b01c39462062bcdd02e3f23cf58b1435"
     },
     {
       "path": "visual/assets/multimodal-network.json",
@@ -731,6 +731,21 @@
       "sha256": "4794a05ec3e9ae823862b811b3df2aa8b1615d66dc648168f2ce4aff6c56453f"
     },
     {
+      "path": "assets/figures/failure-recourse-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "e5467c310c1724e1995c049f920bffc46a3ca5705ae01414c0bb639f9fd03ac8"
+    },
+    {
+      "path": "assets/figures/failure-recourse-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/failure-recourse-board.svg",
+      "sha256": "cd969177996f03c0cd3b8c10c901c14743f1c88580e2bfebfa7fa6778743d854"
+    },
+    {
       "path": "visual/assets/resilience-recovery-readout.json",
       "role": "data_readout",
       "required": true,
@@ -746,7 +761,7 @@
       "path": "visual/assets/review-evidence-index.json",
       "role": "review_navigation",
       "required": false,
-      "sha256": "b5ca55337df179ab54d89c404c5085fbbb6a9d0c27073ff321059ddead46c20b"
+      "sha256": "9712ad6f6512de85aaae59b838c95bee3b6bb7675fffa0034c8a2a4bd6387dc1"
     },
     {
       "path": "visual/assets/site-and-stakeholder-evidence.json",

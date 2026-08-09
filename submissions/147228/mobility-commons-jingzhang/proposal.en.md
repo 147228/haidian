@@ -9,7 +9,7 @@ license: "COMMUNITY-DISPLAY-ONLY"
 summary: "A time-windowed curb ledger brings metro, bus, bicycle, walking/accessibility, cars, parking and loading into one auditable system, while external commuting, people flow and multimodal simulation remain explicit; future air mobility is only a conditional, reversible, ground-first experiment."
 tracks: ["ai-traffic-walkability", "enterprise-services-ecosystem", "civic-agent-governance"]
 scenarios: ["ai-traffic-walkability", "enterprise-service-copilot", "public-safety-operations-review"]
-iteration: "v2.24"
+iteration: "v2.26"
 ---
 
 # Jing-Zhang Mobility Commons: An Enterprise–Resident Mobility Operating System
@@ -32,19 +32,34 @@ An ordinary person is not a flow point in a model. At each step—leaving, trans
 
 This table connects the design boards, curb ledger, M-09 fallback tabletop and P0/P1/P2 phasing to one acceptance entry point. PASS for four synthetic requests proves only that the state machine and rollback logic can be replayed; it does not prove real demand, accessibility performance, staffing, public acceptance or safety.
 
+## What Different People Need First: From Leaving Home to Getting Home
+
+The same network creates different problems for different people. The four entry points below cover residents, enterprise employees, carers and accessibility users, and cross-boundary commuters. They are scenario entry points; they do not become validated demand before field work.
+
+| Group | Immediate problem | First choice offered | Evidence before validation |
+| --- | --- | --- | --- |
+| Residents | School, health, shopping and night-return chains break at transfers | Rail and bus connections, continuous walking and wheelchair routes, human and phone access | Dated time-slice mode counts, accessibility walkthrough and complaint owner |
+| Enterprise employees | Arrival windows, shuttles, parking and loading compete for the same curb | Consolidated-shuttle candidate, curb booking, public transport and guaranteed-ride-home fallback | Grouped employer demand, headway and right-of-way evidence, accountable role |
+| Carers and wheelchair users | Care chains cannot wait and continuous routes cannot be cut by parking or loading | Accessibility-priority curb, human guidance, public transport and care-service fallback | Continuous-route audit, assisted-trip record and worst-group readout |
+| Cross-boundary commuters | Park-and-ride, rail-bus transfer and arrival time remain unstable | Grouped cross-boundary OD, transfer chain, park-and-ride and departure-window choice | Privacy-preserving OD, station capacity and external-operator coordination record |
+
+![Failure and fallback board](assets/figures/failure-recourse-board.en.svg)
+
+This board answers what happens when a test fails. Its thresholds are design gates or synthetic stress-screen inputs; they are not observed Haidian operating results [data:assets/figures/failure-recourse-board.en.svg] [data:visual/assets/network-flow-screen.json] [data:visual/assets/resilience-recovery-readout.json].
+
 ## Reviewer Guide: Where to Start Across the Seven Dimensions
 
 This is a reviewer navigation aid, not a formal scorecard. Each row gives the shortest reading entry, the strongest evidence surface and the boundary that must remain explicit. The structured counterpart is `visual/assets/review-evidence-index.json`.
 
-| Rubric dimension | Shortest entry | What to inspect first | What it still cannot prove |
+| Rubric dimension | Shortest entry | Primary reader | What to inspect first | What it still cannot prove |
 | --- | --- | --- | --- |
-| Brief alignment | Three-level scope, `compliance_matrix.json` | Three research scales, three key areas and AI+mobility task coverage | Provisional geometry is not a statutory redline |
-| Originality | One-page brief, responsibility–acceptance contract | Time-windowed curb ledger, enterprise–resident commons and reversible human fallback | Roles are not signed contracts or partnerships |
-| AI/planning innovation | Network-flow and capacity-closure runners | Population-scale aggregate flow, capacity closure and air-candidate hard block | Synthetic pressure, satisfaction and capacity are not local performance |
-| Implementation feasibility | `responsibility-acceptance-contract.json`, M-09 contract | P0/P1/P2 roles, fields, thresholds, stop and rollback paths | Operators, budget, procurement, permits and headways still need dated evidence |
-| Public interest/inclusion | One-page brief, M-09 evidence, `service-levels.json` | Accessibility/care/night groups, non-digital access, public-route continuity and redress | No resident sample, consent record or field accessibility performance exists yet |
-| Risk/compliance | Network-flow, `assumptions.json`, `sources.json` | Air fail-closed, data minimisation, provisional and not-authorized boundaries | Policy/papers do not replace professional, insurance or permit review |
-| Expression completeness | Bilingual proposals, offline HTML, visual, manifest | Human layer, boards, JSON audit layer, drawings and hash consistency as one package | The index is not an official score, CI result or implementation approval |
+| Brief alignment | Three-level scope, `compliance_matrix.json` | Planning and governance review | Three research scales, three key areas and AI+mobility task coverage | Provisional geometry is not a statutory redline |
+| Originality | One-page brief, responsibility–acceptance contract | Design review | Time-windowed curb ledger, enterprise–resident commons and reversible human fallback | Roles are not signed contracts or partnerships |
+| AI/planning innovation | Network-flow and capacity-closure runners | Data and technical review | Population-scale aggregate flow, capacity closure and air-candidate hard block | Synthetic pressure, satisfaction and capacity are not local performance |
+| Implementation feasibility | `responsibility-acceptance-contract.json`, M-09 contract | Operations and implementation review | P0/P1/P2 roles, fields, thresholds, stop and rollback paths | Operators, budget, procurement, permits and headways still need dated evidence |
+| Public interest/inclusion | One-page brief, M-09 evidence, `service-levels.json` | Residents, enterprises and accessibility review | Accessibility, care and night groups, non-digital access, public-route continuity and redress | No resident sample, consent record or field accessibility performance exists yet |
+| Risk/compliance | Network-flow, `assumptions.json`, `sources.json` | Compliance and safety review | Air fail-closed, data minimisation, provisional and not-authorized boundaries | Policy and papers do not replace professional, insurance or permit review |
+| Expression completeness | Bilingual proposals, offline HTML, visual, manifest | All readers | Human layer, boards, JSON audit layer, drawings and hash consistency as one package | The index is not an official score, CI result or implementation approval |
 
 The table reduces reviewer search across long evidence and repeated boundary statements without adding a new fact, metric or implementation promise [data:visual/assets/review-evidence-index.json].
 

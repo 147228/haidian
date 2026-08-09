@@ -89,3 +89,9 @@
 - Corrected the regional distance ledger: passenger kilometres are now separate from vehicle/service-unit kilometres; the earlier aggregate was not labelled precisely enough for metro, bus, bicycle and walking modes.
 - Added a machine-readable service-unit ledger for metro departures, bus departures, bicycle slots, continuous accessible-path slots, car vehicle equivalents and enterprise shuttle vehicles, including required units, available units, load ratio and synthetic unit-kilometres.
 - Added explicit runner checks for service-ledger completeness and service-unit-based vehicle-kilometre calculation, and refreshed the bilingual regional board and proposal readouts to v2.8.
+
+## v2.9 - 2026-08-09
+
+- Added an independent population-scale grouped departure-time choice screen: only the declared enterprise group can enter a synthetic 20-minute flex window, while residents, care/children, visitors, logistics/maintenance and night workers remain protected from unvalidated shifting.
+- Added full-population band conservation, protected-group and rescheduling-cost checks; the screen remains separate from O1/O2/O3/O4 ranking until local behaviour, headway and 15-minute capacity evidence is available.
+- Added bilingual `activity-choice-operations-board.svg` evidence boards pairing time-band redistribution with O4 metro/bus/bicycle/accessibility/car/shuttle service-unit loads, and synchronized the proposal readouts.

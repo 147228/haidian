@@ -117,6 +117,78 @@ function buildServiceLedger(modeCounts) {
   }));
 }
 
+function simulateDepartureTimeChoiceScreen(policyId, profileId) {
+  const bands = model.departure_time_choice.bands;
+  const bandById = Object.fromEntries(bands.map((band) => [band.id, band]));
+  const profile = model.mode_weights_by_group[profileId];
+  const bandCounts = Object.fromEntries(bands.map((band) => [band.id, 0]));
+  const groupBandCounts = Object.fromEntries(GROUPS.map((group) => [
+    group.id,
+    Object.fromEntries(bands.map((band) => [band.id, 0]))
+  ]));
+  const modeBandCounts = Object.fromEntries(MODES.map((mode) => [
+    mode,
+    Object.fromEntries(bands.map((band) => [band.id, 0]))
+  ]));
+  let processed = 0;
+  let shiftedEnterpriseAgents = 0;
+  let reschedulingCostPersonMinutes = 0;
+
+  for (const group of groupRanges()) {
+    const rule = model.departure_time_choice.group_rules[group.id];
+    for (let offset = 0; offset < group.count; offset += 1) {
+      const index = group.start + offset;
+      const mode = selectWeighted(profile[group.id], index, 61);
+      let bandId = rule.default_band;
+      const shiftEligible = profileId === 'O4'
+        && rule.shiftable
+        && unit(index, 67) < Number(rule.shift_share_O4 || 0);
+      if (shiftEligible) {
+        bandId = rule.shift_band;
+        shiftedEnterpriseAgents += 1;
+        reschedulingCostPersonMinutes += Math.abs(Number(bandById[bandId].offset_minutes || 0));
+      }
+      bandCounts[bandId] += 1;
+      groupBandCounts[group.id][bandId] += 1;
+      modeBandCounts[mode][bandId] += 1;
+      processed += 1;
+    }
+  }
+
+  const protectedGroupShiftCount = sum(GROUPS
+    .filter((group) => group.id !== 'enterprise_employee')
+    .map((group) => bands.reduce((total, band) => {
+      const defaultBand = model.departure_time_choice.group_rules[group.id].default_band;
+      return total + (band.id === defaultBand ? 0 : groupBandCounts[group.id][band.id]);
+    }, 0)));
+  const modeBandShares = Object.fromEntries(MODES.map((mode) => [
+    mode,
+    Object.fromEntries(bands.map((band) => [band.id, round(modeBandCounts[mode][band.id] / Math.max(processed, 1))]))
+  ]));
+
+  return {
+    policy_id: policyId,
+    profile_id: profileId,
+    model_class: model.departure_time_choice.model_class,
+    status: model.departure_time_choice.status,
+    agents_processed: processed,
+    all_agents_processed: processed === TOTAL,
+    mass_conservation: sum(Object.values(bandCounts)) === TOTAL,
+    band_counts: bandCounts,
+    band_shares: Object.fromEntries(bands.map((band) => [band.id, round(bandCounts[band.id] / Math.max(processed, 1))])),
+    group_band_counts: groupBandCounts,
+    mode_band_counts: modeBandCounts,
+    mode_band_shares: modeBandShares,
+    preferred_band_share: round(bandCounts.preferred / Math.max(processed, 1)),
+    shifted_enterprise_agents: shiftedEnterpriseAgents,
+    shifted_enterprise_share: round(shiftedEnterpriseAgents / Math.max(model.synthetic_population.groups.find((group) => group.id === 'enterprise_employee').count, 1)),
+    protected_group_shift_count: protectedGroupShiftCount,
+    rescheduling_cost_person_minutes_proxy: reschedulingCostPersonMinutes,
+    offset_minutes_by_band: Object.fromEntries(bands.map((band) => [band.id, band.offset_minutes])),
+    interpretation: 'synthetic grouped time-band sensitivity; not observed employee behaviour, arrival distribution or timetable performance'
+  };
+}
+
 function emptyHistogram() {
   return {"0-30": 0, "30-45": 0, "45-60": 0, "60-90": 0, "90+": 0};
 }
@@ -452,6 +524,8 @@ function compareCandidates(left, right) {
 const rankedCandidates = [...searchCandidates].sort(compareCandidates);
 const selectedPolicy = rankedCandidates[0];
 const returnLegReadout = simulateReturnLeg('O1', model.mode_weights_by_group[selectedPolicy.profile], selectedPolicy.id);
+const departureChoiceBaseline = simulateDepartureTimeChoiceScreen('B0_reference', 'B0');
+const departureChoiceSelected = simulateDepartureTimeChoiceScreen(selectedPolicy.id, selectedPolicy.profile);
 const optimizationSearch = {
   method: model.optimization_search.method,
   selection_order: model.optimization_search.selection_order,
@@ -498,6 +572,9 @@ const checks = {
   privacy_aggregate_only: scenarios.every((scenario) => scenario.privacy_check === 'aggregate_only_no_personal_trace'),
   optimization_has_eligible_candidate: rankedCandidates.some((candidate) => candidateEligible(candidate.result)),
   optimization_selected_policy_is_eligible: candidateEligible(selectedPolicy.result)
+  ,choice_screen_all_population_agents_processed: departureChoiceBaseline.all_agents_processed && departureChoiceSelected.all_agents_processed
+  ,choice_screen_mass_conservation: departureChoiceBaseline.mass_conservation && departureChoiceSelected.mass_conservation
+  ,choice_screen_protects_non_enterprise_groups: departureChoiceSelected.protected_group_shift_count === 0
 };
 
 const headlineOptimized = selectedPolicy.result;
@@ -531,7 +608,13 @@ const output = {
     vehicle_km_proxy: headlineOptimized.vehicle_km_proxy,
     person_km_proxy: headlineOptimized.person_km_proxy,
     vehicle_or_service_km_proxy: headlineOptimized.vehicle_or_service_km_proxy,
+    departure_time_choice_screen: departureChoiceSelected,
     route_flow_summary: headlineOptimized.route_flow_summary
+  },
+  departure_time_choice_screen: {
+    baseline: departureChoiceBaseline,
+    selected_policy: departureChoiceSelected,
+    selection_boundary: model.departure_time_choice.selection_boundary
   },
   scenarios,
   comparison: {

@@ -1,5 +1,5 @@
 {
-  "model_version": "2.8-regional-service-ledger",
+  "model_version": "2.9-regional-choice-operations",
   "simulation_class": "regional_population_scale_synthetic_two_peak_flow_not_local_OD",
   "generated_by": "node visual/assets/run-regional-commute-simulation.js",
   "scope": {
@@ -74,6 +74,36 @@
       "enterprise_shuttle": {"unit_type": "enterprise_shuttle_vehicle", "unit_label_zh": "企业接驳车", "unit_label_en": "enterprise shuttle vehicles", "vehicle_or_service": "vehicle", "capacity_persons_per_unit": 24, "person_trips": 191322, "available_units": 7500, "required_units": 7972, "unit_load_ratio": 1.0629, "vehicle_or_service_km_proxy": 127552}
     }
   },
+  "departure_time_choice_screen": {
+    "model_class": "grouped_discrete_time_band_sensitivity",
+    "selection_boundary": "This screen is a separate sensitivity readout and is not used to rank O1/O2/O3/O4 until local behaviour, timetable and capacity evidence is available.",
+    "baseline": {
+      "policy_id": "B0_reference",
+      "profile_id": "B0",
+      "agents_processed": 3122000,
+      "mass_conservation": true,
+      "band_counts": {"early": 0, "preferred": 2965900, "late": 156100},
+      "band_shares": {"early": 0, "preferred": 0.95, "late": 0.05},
+      "preferred_band_share": 0.95,
+      "shifted_enterprise_agents": 0,
+      "shifted_enterprise_share": 0,
+      "protected_group_shift_count": 0,
+      "rescheduling_cost_person_minutes_proxy": 0
+    },
+    "selected_policy": {
+      "policy_id": "O4_capacity_balanced",
+      "profile_id": "O4",
+      "agents_processed": 3122000,
+      "mass_conservation": true,
+      "band_counts": {"early": 218266, "preferred": 2747634, "late": 156100},
+      "band_shares": {"early": 0.0699, "preferred": 0.8801, "late": 0.05},
+      "preferred_band_share": 0.8801,
+      "shifted_enterprise_agents": 218266,
+      "shifted_enterprise_share": 0.1997,
+      "protected_group_shift_count": 0,
+      "rescheduling_cost_person_minutes_proxy": 4365320
+    }
+  },
   "checks": {
     "all_population_agents_processed": true,
     "declared_group_counts_sum_to_population": true,
@@ -83,6 +113,9 @@
     "return_population_agents_processed": true,
     "return_mass_conservation": true,
     "air_candidate_fail_closed": true,
-    "privacy_aggregate_only": true
+    "privacy_aggregate_only": true,
+    "choice_screen_all_population_agents_processed": true,
+    "choice_screen_mass_conservation": true,
+    "choice_screen_protects_non_enterprise_groups": true
   }
 }

@@ -118,7 +118,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "f13b218581f71b249be757030016b97443848812eeddd1f82736a664c07e5e8e"
+      "sha256": "61860914b42985d7f77734bed291d9e5760030291c55fadd82839184e2696d81"
     },
     {
       "path": "compliance_matrix.json",
@@ -228,14 +228,14 @@
       "required": true,
       "language": "en",
       "translation_of": "proposal.md",
-      "sha256": "d279bdb70bf08cd83039a432ad6af766b6af1794b0c82e26c587191fa817175a"
+      "sha256": "c9bdfd568ee395659273f05c40d341754b9ce8baef65e7f2676a645ef0e696df"
     },
     {
       "path": "proposal.md",
       "role": "narrative",
       "required": true,
       "language": "zh",
-      "sha256": "9321a1841c0aa42acafe8e659ba01218c5cfc04e2d1e50170c008ace3057bbd3"
+      "sha256": "08505a04daf38d6501012d4fd60008607fcf780e89a6c263178fd384cd60f764"
     },
     {
       "path": "report/copyright_statement.md",
@@ -254,14 +254,14 @@
       "required": true,
       "language": "en",
       "translation_of": "report/proposal.html",
-      "sha256": "14b993ecbbe62e8b471cee944781812f1691c47ed8ba6a7816b65b61526734be"
+      "sha256": "86541ccef0f63d68534c0213b215b43669eabb4363637a3e71ea345e405ce7ab"
     },
     {
       "path": "report/proposal.html",
       "role": "rendered_proposal_html",
       "required": true,
       "language": "zh",
-      "sha256": "fc3150a679cc3459a1aeaf7f52d1e9ee998917c8ef175eeb38618ce9bed54ff5"
+      "sha256": "384841b34ce701df07b85b72aeb3e7692d3bc455a9ce2c23283da142447b2ce7"
     },
     {
       "path": "self_check.json",
@@ -322,14 +322,14 @@
       "required": true,
       "language": "en",
       "translation_of": "visual/index.html",
-      "sha256": "acce83117bcd38350e9f1b21026bef5787bf2d2f03e5dabb92641e9f14028241"
+      "sha256": "e0b0522c0af049f225611c8308f2e2ea08d7982e0720611c53b045a9f647aa4b"
     },
     {
       "path": "visual/index.html",
       "role": "visualization",
       "required": true,
       "language": "zh",
-      "sha256": "98bc5600f3a1ebe7efa44d8db6358a19ac9cec48466381269b0b8d3020e7971d"
+      "sha256": "97541caeb7f1f5403c81609b3652d177975cb4c26a9c108ed8e39ec355122509"
     },
     {
       "path": "visual/assets/multimodal-network.json",
@@ -456,7 +456,7 @@
       "role": "proposal_figure",
       "required": true,
       "language": "zh",
-      "sha256": "88467b81c8f83ae6ac5d3e86714a69b70477ddf00c967efbc4bd5b58d7415da4"
+      "sha256": "53cadc58d555f15e5f167ed1edf4eb9fe08789291da13339f6a458094f4d2683"
     },
     {
       "path": "assets/figures/regional-scale-commute-board.en.svg",
@@ -464,25 +464,40 @@
       "required": true,
       "language": "en",
       "translation_of": "assets/figures/regional-scale-commute-board.svg",
-      "sha256": "f1c0fe192507f1981056c5fa4dd158ee0ec10b6d03fef376144b67eb3c5bd6d9"
+      "sha256": "c2c4904a634b3b1ca04ab0d63898a3d380f8b0af0ae3c38814132f0d3a0ed0de"
+    },
+    {
+      "path": "assets/figures/activity-choice-operations-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "4ff2c9b7ead06e5cb844698c5bbb993aafb709a61c29c2d5c906433f026e56f6"
+    },
+    {
+      "path": "assets/figures/activity-choice-operations-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/activity-choice-operations-board.svg",
+      "sha256": "530e55b7159f05ff78010ca42ca593f3659f8af094b2ca5fcf15c3c2002da8d3"
     },
     {
       "path": "visual/assets/regional-scale-commute.json",
       "role": "data",
       "required": true,
-      "sha256": "a8530806f9af840ae146ac266c10d556adc3fbdf98b85f5499de8d360b5b0ded"
+      "sha256": "c2a097157cedbddd0ac874b491aa4cf7dad65b8b1c0394ff507fbe90114e8ff5"
     },
     {
       "path": "visual/assets/run-regional-commute-simulation.js",
       "role": "script",
       "required": true,
-      "sha256": "dff4132b9f17f777a37e3853ac0e149742fada8a0c22c31db67db0e279571481"
+      "sha256": "bf3bc42f9edaf5de7cc688324ae69a66db5bc0f9a220919d71ff93c8459d14fe"
     },
     {
       "path": "visual/assets/regional-scale-commute-readout.json",
       "role": "data_readout",
       "required": true,
-      "sha256": "a97db6cbcfd6257f0a87d05bdbaef2b6e8f5a78d05ace7df8a365510206969b6"
+      "sha256": "b8a1055f8e623873901a8cc36a9330577ace0991991c7f4325301afbe78bf5a7"
     }
   ]
 }

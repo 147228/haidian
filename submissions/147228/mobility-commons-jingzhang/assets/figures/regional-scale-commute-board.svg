@@ -11,7 +11,7 @@
   </defs>
   <rect width="2400" height="1500" fill="url(#bg)"/>
   <circle cx="2240" cy="-80" r="360" fill="#1a6f76" opacity=".28"/><circle cx="2150" cy="1450" r="420" fill="#294575" opacity=".22"/>
-  <text x="130" y="100" class="sans teal" font-size="25" font-weight="800" letter-spacing="4">MOBILITY COMMONS / REGIONAL SCALE / v2.8</text>
+  <text x="130" y="100" class="sans teal" font-size="25" font-weight="800" letter-spacing="4">MOBILITY COMMONS / REGIONAL SCALE / v2.9</text>
   <text x="130" y="177" class="sans white" font-size="62" font-weight="800">区域人口规模通勤：早去晚回都做全量覆盖</text>
   <text x="130" y="228" class="sans muted" font-size="25">3,122,000 个合成代理 × AM 上班去程 + PM 返程屏查 × 地铁 / 公交 / 骑行 / 步行无障碍 / 汽车 / 企业接驳 · 只发布汇总流量</text>
   <rect x="1930" y="92" width="320" height="72" rx="36" fill="#173f50" stroke="#4de1bf" stroke-width="2"/><text x="2090" y="138" text-anchor="middle" class="sans teal" font-size="22" font-weight="800">ALL AGENTS PROCESSED</text>
@@ -65,5 +65,5 @@
     <path d="M1715 1333 H1815" class="arrow"/><polygon points="1815,1325 1835,1333 1815,1341" fill="#4de1bf"/>
     <rect x="1845" y="1305" width="340" height="56" rx="28" fill="#7b4d63"/><text x="2015" y="1341" text-anchor="middle" class="white">工作 / 服务目的地</text>
   </g>
-  <text x="175" y="1395" class="sans muted tiny">Source: regional-scale-commute.json + run-regional-commute-simulation.js · v2.8 service-unit ledger · AM/PM each 3.122M coverage · synthetic, not local observed performance</text>
+  <text x="175" y="1395" class="sans muted tiny">Source: regional-scale-commute.json + run-regional-commute-simulation.js · v2.9 service-unit ledger + time-band screen · AM/PM each 3.122M coverage · synthetic, not local observed performance</text>
 </svg>

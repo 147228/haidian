@@ -125,7 +125,11 @@ B1 asks whether enterprise arrival can be spread; B2 adds why a grouped travelle
 
 This is a calibratable behavioural contract, not a transfer of paper coefficients into Haidian. Dated mode shares, grouped departure times, headways/capacity, station and crossing counts, curb queues, door-to-door p50/p90 and accessible-route audits must be collected before local parameters are estimated. Flexible work schedules can change commute departure distributions, but flexibility, late-arrival penalties and care constraints must be validated by group rather than replaced by one average [source:FLEXTIME-DEPARTURE-CHOICE-2013] [source:MATRAM-ACTIVITY-ADAPTATION-2026].
 
+This pass makes B2 executable as a separate `departure_time_choice_screen`. It still processes all 3,122,000 synthetic agents, but only enterprise employees may enter a synthetic 20-minute early-flex window; residents, carers/children, visitors, logistics and maintenance, and night workers are not shifted by the model. The B0 preferred window is 95%; the O4 screen becomes 6.99% early, 88.01% preferred and 5% late, with 218,266 synthetic enterprise agents marked as adjustable, a 4.365M person-minute rescheduling-cost proxy, and zero protected-group shifts. This is not employee behaviour, an arrival distribution or timetable performance observation, and it is not used to rank O4. It makes the operating contract explicit—who may adjust, who cannot be sacrificed and how rescheduling cost is recorded—pending employee acceptance, headway and 15-minute capacity evidence [source:JOINT-MODE-TIME-CROWDING-2020] [source:DTUE-PT-2025].
+
 ![Cross-boundary commute and people flow: mode-choice contract](assets/figures/multimodal-choice-board.en.svg)
+
+![Departure-time choice and service-unit ledger: population-scale agents, enterprise flexibility and mode load](assets/figures/activity-choice-operations-board.en.svg)
 
 #### B3 Disruption, weather and the slowest group: efficiency must recover
 

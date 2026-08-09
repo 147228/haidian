@@ -3,6 +3,18 @@
   "simulation_class": "regional_population_scale_synthetic_two_peak_flow_not_local_OD",
   "status": "transparent_sandbox_before_field_calibration",
   "purpose": "Process one synthetic morning work/service chain and one separate synthetic return-leg coverage screen for every person in the regional population reference, compare a current-like stress case with an optimized multimodal operating case, and expose the mode-by-time-slice service, boarding and residual-queue ledger as aggregate evidence.",
+  "evidence_chain": {
+    "id": "regional-runner-five-readouts-v1",
+    "source_runner": "visual/assets/run-regional-commute-simulation.js",
+    "readouts": [
+      {"id": "regional_scale", "label_zh": "区域覆盖", "label_en": "regional scale", "artifact": "assets/figures/regional-scale-commute-board.svg", "question_zh": "所有声明代理是否被处理并守恒", "question_en": "were all declared agents processed and conserved"},
+      {"id": "network_flow", "label_zh": "网络边节点", "label_en": "network flow", "artifact": "assets/figures/network-flow-board.svg", "question_zh": "人经过哪些关系边和换乘节点", "question_en": "which relationship edges and transfer nodes carry people"},
+      {"id": "capacity_gap", "label_zh": "运力缺口", "label_en": "capacity gap", "artifact": "assets/figures/capacity-closure-board.svg", "question_zh": "哪些声明服务单元仍未闭合", "question_en": "which declared service units remain open"},
+      {"id": "resource_sensitivity", "label_zh": "资源敏感性", "label_en": "resource sensitivity", "artifact": "assets/figures/resource-pressure-board.svg", "question_zh": "已知方式的相对压力如何变化", "question_en": "how relative pressure changes for known modes"},
+      {"id": "robustness", "label_zh": "稳健性", "label_en": "robustness", "artifact": "assets/figures/robustness-screen-board.svg", "question_zh": "扰动下谁变慢以及何时停止", "question_en": "who slows under disruption and when to stop"}
+    ],
+    "interpretation": "These five boards are different projections of one aggregate synthetic runner. They do not represent five independent field measurements, and they must be replaced together when dated OD, capacity, accessibility and operational evidence arrives."
+  },
   "regional_scope": {
     "population_reference": 3122000,
     "population_reference_label": "Haidian permanent residents at the end of 2024",

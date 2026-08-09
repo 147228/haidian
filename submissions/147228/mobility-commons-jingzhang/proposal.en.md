@@ -109,6 +109,14 @@ Without moving resident, care/child, visitor, logistics/maintenance or night-wor
 
 ![Enterprise arrival sensitivity: B1 flex-window effect](assets/figures/activity-adaptation.en.svg)
 
+#### B2 Mode and departure-time choice: one ledger for external commuting and people flow
+
+B1 asks whether enterprise arrival can be spread; B2 adds why a grouped traveller chooses a mode and time. Each alternative carries door-to-door time, arrival flexibility, waiting and transfer reliability, station crowding, curb/parking friction, fare/energy and the slowest-group gap. Fire, accessibility, public-transport, privacy and human-service gates are screened first. Enterprise employees may adjust an arrival window, while residents, carers, children, logistics and night workers keep their own activity chains and human fallback; cross-boundary commuting enters as grouped OD, never as a personal trajectory [source:JOINT-MODE-TIME-CROWDING-2020] [source:DTUE-PT-2025].
+
+This is a calibratable behavioural contract, not a transfer of paper coefficients into Haidian. Dated mode shares, grouped departure times, headways/capacity, station and crossing counts, curb queues, door-to-door p50/p90 and accessible-route audits must be collected before local parameters are estimated. Flexible work schedules can change commute departure distributions, but flexibility, late-arrival penalties and care constraints must be validated by group rather than replaced by one average [source:FLEXTIME-DEPARTURE-CHOICE-2013] [source:MATRAM-ACTIVITY-ADAPTATION-2026].
+
+![Cross-boundary commute and people flow: mode-choice contract](assets/figures/multimodal-choice-board.en.svg)
+
 ## Blue-Green Network, Public Space, and Urban Character
 
 Blue-green space provides shade, rest, rain fallback and a safer night interface. The conceptual green ratio is about 12.34% and public-space ratio about 7.33%; neither proves ecological, thermal or drainage performance [metric:green_ratio] [metric:public_space_ratio]. Public counters, transit entrances, waiting, bicycle parking and green edges should share shelter, seats, lighting, water and accessible information without blocking wheelchair turns or fire access.
@@ -144,5 +152,7 @@ Government and tender sources establish policy and responsibility frameworks; pa
 The source register records access date, use and non-use boundaries for the official transport plan, Haidian tender and planning evidence, employer TDM research, curb-management research, shared-mobility research, multimodal simulation documentation, air-mobility methods and the public site package [source:SOURCE-REGISTRY] [source:OSM-TRANSPORT-CONTEXT].
 
 Additional method and policy entries are `BEIJING-LOW-AIR-ECONOMY-2024`, `CAAC-UAV-REGULATION-2024`, `SUMO-MULTIMODAL-DOCS`, `MULTIMODAL-TRAFFIC-REALITY-2025`, `UAM-BEIJING-MULTIMODAL-2024` and `UAM-PUBLIC-TRANSIT-2023`; they are not local baselines or permissions.
+
+The choice-contract references are `JOINT-MODE-TIME-CROWDING-2020`, `DTUE-PT-2025`, `FLEXTIME-DEPARTURE-CHOICE-2013` and `UAM-TOD-VERTIPORT-2026`; they define calibration questions and safety boundaries, not imported coefficients, capacity or a local air route.
 
 **Boundary statement:** this is an auditable concept and reversible pilot framework for enterprise–resident mobility. It is not an approved plan, road-opening announcement, parking permit, enterprise agreement, capacity proof, health claim or construction commitment. The existing first-place project remains untouched.

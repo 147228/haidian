@@ -224,6 +224,7 @@ const agentCount = sum(spec.agent_types.map((item) => item.design_unit_count));
 const objects = serviceObjects();
 const demandByScenario = model.model_analysis.mode_demand_by_scenario;
 const behavioralSensitivity = runBehavioralSensitivity(demandByScenario, objects);
+const behavioralChoiceContract = model.behavioral_choice_contract;
 const enterpriseAgentCount = spec.agent_types.find((item) => item.id === model.behavioral_sensitivity.eligible_agent_group).design_unit_count;
 const eligibleEnterpriseDemand = sum(Object.values(model.behavioral_sensitivity.eligible_demand_by_mode));
 const checks = [
@@ -248,6 +249,19 @@ const checks = [
     pass: behavioralSensitivity.shifted_enterprise_units === Math.round(eligibleEnterpriseDemand * model.behavioral_sensitivity.policy.eligible_fraction_shifted),
     observed: behavioralSensitivity.shifted_enterprise_units,
     expected: Math.round(eligibleEnterpriseDemand * model.behavioral_sensitivity.policy.eligible_fraction_shifted)
+  },
+  {
+    id: 'behavioral_choice_contract_declared',
+    pass: Boolean(
+      behavioralChoiceContract
+      && behavioralChoiceContract.model_class
+      && behavioralChoiceContract.choice_set.includes('metro')
+      && behavioralChoiceContract.choice_set.includes('air_candidate')
+      && behavioralChoiceContract.external_commute_contract
+      && behavioralChoiceContract.external_commute_contract.required_records.includes('door_to_door_time_p50_p90')
+    ),
+    observed: behavioralChoiceContract ? behavioralChoiceContract.model_class : null,
+    expected: 'grouped_mode_and_departure_time_choice_with_activity_chain'
   }
 ];
 
@@ -261,6 +275,7 @@ const result = {
   status: pass ? 'PASS' : 'FAIL',
   disclaimer: 'Synthetic design-unit recalculation only; not a local Haidian performance claim.',
   checks,
+  behavioral_choice_contract: behavioralChoiceContract,
   scenario_outputs: scenarioOutputs,
   behavioral_sensitivity: behavioralSensitivity,
   next_calibration: model.model_spec.calibration_metrics

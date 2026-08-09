@@ -35,3 +35,9 @@
 ## v1.7 - 2026-08-09
 
 - Added explicit B1 guardrails and calibration fields for employee schedule acceptance, rescheduling cost, transit timetable compatibility and grouped mode-share change; queue reduction alone is not treated as an operational optimum.
+
+## v1.8 - 2026-08-09
+
+- Added a machine-readable behavioural choice contract for grouped mode/departure-time choice, cross-boundary OD, generalized-cost components and hard-gate ordering; it imports no paper coefficients.
+- Added bilingual `multimodal-choice-board.svg` evidence boards for enterprise, resident, care, logistics and night-worker journeys, with the air candidate visibly blocked until review gates pass.
+- Added current departure-time/crowding and transit-oriented UAM method references; the B1 board now identifies the JSON model version consistently.

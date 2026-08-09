@@ -29,6 +29,57 @@
     "assumption_note": "Demand is a normalized 1000-person design unit with no local count claim; replace with dated grouped OD and field observations."
   },
   "score_formula": "efficiency_index is a 0-100 illustrative weighted comparison after hard-gate screening: cost 30%, transfer 20%, people-flow 20%, external-car reduction 15%, worst-group equity 15%.",
+  "behavioral_choice_contract": {
+    "model_class": "grouped_mode_and_departure_time_choice_with_activity_chain",
+    "status": "method_contract_only_before_local_calibration",
+    "choice_set": [
+      "metro",
+      "bus",
+      "bicycle",
+      "walking_wheelchair",
+      "car",
+      "enterprise_shuttle",
+      "air_candidate"
+    ],
+    "generalized_cost_components": [
+      "door_to_door_time",
+      "schedule_delay_and_arrival_flexibility",
+      "transfer_wait_and_reliability",
+      "crowding_and_station_gate_friction",
+      "curb_parking_and_loading_time",
+      "fare_and_energy_cost",
+      "accessibility_and_worst_group_gap"
+    ],
+    "decision_order": [
+      "apply_fire_emergency_accessibility_public_transport_privacy_and_human_service_gates",
+      "compare_grouped_mode_and_departure_time_alternatives_by_generalized_cost",
+      "recheck_people_flow_conflicts_external_car_inflow_and_worst_group_gap",
+      "publish_aggregate_readout_and_keep_a_ground_fallback"
+    ],
+    "grouped_replanning": {
+      "enterprise_employee": ["arrival_window", "mode", "transfer_chain"],
+      "resident": ["service_window", "accessible_route", "mode"],
+      "carer_or_child": ["care_stop_chain", "human_assistance", "mode"],
+      "visitor": ["wayfinding", "event_window", "mode"],
+      "logistics_and_maintenance": ["service_window", "curb_state", "vehicle_route"],
+      "night_worker": ["low_frequency_transit", "human_backup", "safe_return"]
+    },
+    "external_commute_contract": {
+      "boundary": "cross_boundary_grouped_OD",
+      "required_records": [
+        "origin_zone_group",
+        "destination_zone_group",
+        "boundary_direction",
+        "arrival_departure_window",
+        "mode_and_transfer_chain",
+        "park_and_ride_or_curb_use",
+        "door_to_door_time_p50_p90"
+      ],
+      "privacy": "no_personal_trace; suppress small cells and publish aggregate changes only"
+    },
+    "air_candidate_rule": "air_candidate_is_not a choice alternative until airspace_airworthiness_operator_insurance_weather_noise_emergency_and_public_review gates pass",
+    "coefficient_rule": "do not import coefficients or local effects from papers; estimate grouped parameters from dated local observations"
+  },
   "hard_gates": [
     "fire_emergency",
     "accessibility_continuity",

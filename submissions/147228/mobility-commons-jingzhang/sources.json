@@ -227,6 +227,34 @@
       "usage": "Multimodal public-transport and bicycle efficiency/equity method reference; no local outcome is imported.",
       "url": "https://portal.fis.tum.de/en/publications/efficiency-and-equality-of-the-multimodal-travel-between-public-t",
       "accessed_date": "2026-08-09"
+    },
+    {
+      "id": "JOINT-MODE-TIME-CROWDING-2020",
+      "source_type": "academic_public",
+      "usage": "Joint mode and time-of-day choice method including arrival flexibility, reliability and public-transport crowding; no local coefficients are imported.",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0966692320301290",
+      "accessed_date": "2026-08-09"
+    },
+    {
+      "id": "DTUE-PT-2025",
+      "source_type": "academic_public_preprint",
+      "usage": "Departure-time choice equilibrium for schedule-based public transport with hard capacity constraints; method reference only.",
+      "url": "https://arxiv.org/abs/2505.18202",
+      "accessed_date": "2026-08-09"
+    },
+    {
+      "id": "FLEXTIME-DEPARTURE-CHOICE-2013",
+      "source_type": "academic_public",
+      "usage": "Evidence on flexible work schedules and commute departure-time choice; regional effect sizes are not transferred to Haidian.",
+      "url": "https://doi.org/10.1016/j.tranpol.2012.11.003",
+      "accessed_date": "2026-08-09"
+    },
+    {
+      "id": "UAM-TOD-VERTIPORT-2026",
+      "source_type": "academic_public",
+      "usage": "Transit-oriented conditional vertiport siting method; supports ground-first integration logic and does not establish a local route, site or permit.",
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/S096969972500225X",
+      "accessed_date": "2026-08-09"
     }
   ]
 }

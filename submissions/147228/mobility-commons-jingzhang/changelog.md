@@ -31,3 +31,7 @@
 ## v1.6 - 2026-08-09
 
 - Added bilingual `activity-adaptation.svg` evidence boards so the B1 enterprise flex-window readout is visible in the proposal, not only in the JSON runner output.
+
+## v1.7 - 2026-08-09
+
+- Added explicit B1 guardrails and calibration fields for employee schedule acceptance, rescheduling cost, transit timetable compatibility and grouped mode-share change; queue reduction alone is not treated as an operational optimum.

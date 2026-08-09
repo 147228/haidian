@@ -211,6 +211,11 @@ function runBehavioralSensitivity(demandByScenario, objects) {
       Object.keys(baselineSummary).map((key) => [key, adaptiveSummary[key] - baselineSummary[key]])
     ),
     mode_outputs: modeOutputs,
+    operational_guard: {
+      transit_coordination_required: sensitivity.policy.transit_coordination_required,
+      rescheduling_cost_must_be_measured: sensitivity.policy.rescheduling_cost_must_be_measured
+    },
+    required_calibration: sensitivity.required_calibration,
     disclaimer: 'Synthetic schedule-spreading sensitivity only; not a local employer response or measured effect.'
   };
 }

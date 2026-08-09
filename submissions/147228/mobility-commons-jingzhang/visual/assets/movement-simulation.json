@@ -301,26 +301,36 @@
       "logistics_and_maintenance",
       "night_worker"
     ],
-    "policy": {
-      "name": "employer_staggered_arrival_window",
-      "trigger": "synthetic_peak_queue_or_station_gate_screen",
-      "eligible_fraction_shifted": 0.2,
-      "shift_minutes": 20,
+      "policy": {
+        "name": "employer_staggered_arrival_window",
+        "trigger": "synthetic_peak_queue_or_station_gate_screen",
+        "eligible_fraction_shifted": 0.2,
+        "shift_minutes": 20,
       "adaptive_profile": {
         "peak_minute": 55,
         "spread_minutes": 30,
         "peak_concentration": 0.5
+        },
+        "resident_rule": "do_not_shift_resident_or_care_demand_without_grouped_evidence_and_consent",
+        "privacy_rule": "publish_grouped_schedule_effects_only; never expose employee-level arrival times",
+        "transit_coordination_required": true,
+        "rescheduling_cost_must_be_measured": true
       },
-      "resident_rule": "do_not_shift_resident_or_care_demand_without_grouped_evidence_and_consent",
-      "privacy_rule": "publish_grouped_schedule_effects_only; never expose employee-level arrival times"
-    },
-    "outputs": [
-      "peak_queue_change_by_mode",
-      "mean_queue_change_by_mode",
-      "station_and_vehicle_load_change",
-      "curb_queue_change",
-      "shifted_enterprise_units"
-    ],
+      "outputs": [
+        "peak_queue_change_by_mode",
+        "mean_queue_change_by_mode",
+        "station_and_vehicle_load_change",
+        "curb_queue_change",
+        "shifted_enterprise_units",
+        "rescheduling_cost_not_estimated"
+      ],
+      "required_calibration": [
+        "employee_schedule_acceptance_by_group",
+        "rescheduling_cost_person_minutes",
+        "transit_schedule_compatibility",
+        "mode_share_change_by_group",
+        "peak_station_and_curb_counts"
+      ],
     "status": "illustrative_sensitivity_not_local_effect"
   },
   "reproducibility": {

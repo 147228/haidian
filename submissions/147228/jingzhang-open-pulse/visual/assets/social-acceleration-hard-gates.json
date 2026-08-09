@@ -1,0 +1,81 @@
+{
+  "schema_version": "0.1.0-research",
+  "title_zh": "OpenPulse v3.1 社会科技加速度四道总闸门",
+  "author": "许丙南 / OpenAI GPT-5 family via Codex",
+  "status": "research_agenda_not_scoring_evidence",
+  "package_integration_status": "research_branch_only_not_in_manifest",
+  "gates": [
+    {
+      "gate_id": "G-SA-01",
+      "name_zh": "AI 必要性与比例原则",
+      "question": "这个问题是否真的需要 AI，还是空间改造、流程调整、规则系统或人工服务更可靠？",
+      "required_comparators": [
+        "no_intervention_baseline",
+        "spatial_or_operational_low_tech",
+        "rules_based_non_model_system",
+        "human_service",
+        "proposed_ai_system"
+      ],
+      "pass_rule": "AI 方案只有在公共结果、群体公平、全生命周期成本、资源消耗、故障恢复和权利影响的综合证据优于可行的非 AI 路径时才可扩散；否则采用更简单路径。",
+      "evidence_status": "unknown_until_comparative_pilot"
+    },
+    {
+      "gate_id": "G-SA-02",
+      "name_zh": "模拟、实测与因果结论分离",
+      "question": "当前结果究竟是设计假设、模拟筛选、现场实测，还是能够归因于方案的因果效果？",
+      "evidence_ladder": [
+        "conceptual_assumption",
+        "simulation_screening",
+        "sandbox_observation",
+        "field_pilot_measurement",
+        "counterfactual_or_staggered_evaluation",
+        "independent_replication"
+      ],
+      "pass_rule": "模拟只能筛选低遗憾方案，不能替代基线、对照、预注册结果、分组影响和长期复测；任何影响结论必须标明证据层级。",
+      "candidate_methods": [
+        "matched_comparison_area",
+        "staggered_rollout",
+        "difference_in_differences",
+        "interrupted_time_series",
+        "synthetic_control_when_fit_for_purpose",
+        "pre_registered_post_occupancy_evaluation"
+      ]
+    },
+    {
+      "gate_id": "G-SA-03",
+      "name_zh": "数据与空间不确定性传播",
+      "question": "边界、权属、人口、租金、交通、气候、管网和行为数据的不确定性是否真实传递到了结果区间？",
+      "required_tests": [
+        "multiple_plausible_boundary_ensembles",
+        "missing_data_scenarios",
+        "measurement_error_sensitivity",
+        "structural_model_alternatives",
+        "out_of_sample_or_naive_baseline",
+        "ranking_flip_conditions"
+      ],
+      "pass_rule": "不能只对权重加噪声而把未知输入当作确定值；报告区间、P05、CVaR、最大遗憾、最差群体和排序翻转条件。"
+    },
+    {
+      "gate_id": "G-SA-04",
+      "name_zh": "反过时、可逆与权利退出",
+      "question": "当技术周期反转、企业退出、模型退役、预算下降或 AI 热潮消退时，空间和设施能否低成本转成普通城市用途？",
+      "required_tests": [
+        "provider_exit",
+        "fifty_percent_vacancy",
+        "maintenance_budget_cut",
+        "model_or_hardware_obsolescence",
+        "cloud_and_network_outage",
+        "conversion_to_non_ai_public_use"
+      ],
+      "candidate_metrics": [
+        "space_conversion_time_and_cost",
+        "stranded_asset_value_at_risk",
+        "repairability_and_spare_availability",
+        "open_documentation_coverage",
+        "ordinary_public_use_recovery_time"
+      ],
+      "pass_rule": "没有普通用途、开放文档、维护责任、迁移和拆除/回收路径的专用设施不得成为不可逆的大额固定投入。"
+    }
+  ],
+  "integration_note": "四道总闸门应位于所有六个社会科技加速度维度之前，作为场景、空间构件、采购和扩散的共同前置条件。"
+}

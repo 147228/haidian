@@ -1,5 +1,5 @@
 {
-  "version": "2.10-regional-time-slice-operations",
+  "version": "2.11-regional-adaptive-recourse",
   "simulation_class": "regional_population_scale_synthetic_two_peak_flow_not_local_OD",
   "status": "transparent_sandbox_before_field_calibration",
   "purpose": "Process one synthetic morning work/service chain and one separate synthetic return-leg coverage screen for every person in the regional population reference, compare a current-like stress case with an optimized multimodal operating case, and expose the mode-by-time-slice service, boarding and residual-queue ledger as aggregate evidence.",
@@ -194,6 +194,47 @@
       "vehicle_fleet_and_service_distance_by_operator"
     ],
     "privacy": "Publish only mode × time-slice × service-unit aggregates; never publish employee-level schedules, vehicle identifiers or individual traces."
+  },
+  "adaptive_recourse": {
+    "model_class": "aggregate_grouped_mode_recourse_screen",
+    "status": "synthetic_recourse_sensitivity_not_observed_behavior",
+    "purpose": "When a primary mode has residual queue, test bounded alternate-mode recourse against spare service capacity while preserving accessibility, night-worker and resident protections.",
+    "priority_group_order": ["carer_or_child", "night_worker", "logistics_and_maintenance", "resident_worker", "enterprise_employee", "visitor_service"],
+    "fallback_priority_by_mode": {
+      "metro": ["bus", "enterprise_shuttle", "car"],
+      "bus": ["metro", "enterprise_shuttle", "car"],
+      "bicycle": ["bus", "walking_wheelchair", "car"],
+      "walking_wheelchair": [],
+      "car": ["enterprise_shuttle", "bus", "metro"],
+      "enterprise_shuttle": ["bus", "metro", "car"]
+    },
+    "max_recourse_share_by_group": {
+      "enterprise_employee": 0.20,
+      "resident_worker": 0.10,
+      "carer_or_child": 0.05,
+      "visitor_service": 0.15,
+      "logistics_and_maintenance": 0.05,
+      "night_worker": 0.10
+    },
+    "blocked_source_modes": ["walking_wheelchair"],
+    "outputs": [
+      "group_mode_band_demand",
+      "primary_boarding_by_mode",
+      "alternate_mode_recourse_flows",
+      "recourse_share_by_group",
+      "recourse_cost_person_minutes_proxy",
+      "residual_queue_after_recourse",
+      "capacity_and_mass_conservation_checks"
+    ],
+    "selection_boundary": "This is a separate adaptive-recourse sensitivity screen. It may reveal a bounded fallback direction, but it is not a local route-choice estimate or a policy-ranking input until observed denied-boarding, alternate-mode acceptance, accessibility, timetable and capacity evidence are available.",
+    "calibration_required": [
+      "grouped_alternate_mode_acceptance_by_activity",
+      "denied_boarding_and_queue_transfer_observations",
+      "accessible_and_care_trip_fallback_constraints",
+      "operator_headway_and_spare_capacity_by_15min",
+      "recourse_time_and_reliability_cost_by_mode_pair"
+    ],
+    "privacy": "Publish only group × source-mode × target-mode × time-slice aggregates; never publish a personal alternate route or vehicle identifier."
   },
   "route_templates": {
     "metro": "home → walk/access → metro backbone → walk/access → work/service",

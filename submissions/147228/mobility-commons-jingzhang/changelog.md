@@ -102,3 +102,10 @@
 - Added boarded trips, failed-boarding attempts, residual queue, queue person-minutes and scheduled service-kilometre outputs for the full 3,122,000-agent screen; mass conservation and declared service-unit totals are checked.
 - Kept the operations gate separate from policy ranking and made the current synthetic result fail closed (`3.2431x` peak slice load, `452,668` end-of-window residual queue), so the candidate cannot be described as an operable timetable before dated supply, capacity and boarding evidence exists.
 - Added bilingual `service-time-operations-board.svg`, updated the proposal/report/offline visual pages, and recorded schedule-based capacity-constrained transit assignment sources.
+
+## v2.11 - 2026-08-09
+
+- Added an independent bounded adaptive-recourse screen that tests group-constrained alternate-mode movement against same-slice spare capacity after primary FIFO boarding, while carrying unresolved queues forward.
+- Added group × source-mode × target-mode × time-slice flows, recourse person-minute cost, residual queues by mode/group, share-limit checks, mode-capacity checks and an explicit protected walking/accessibility source guard.
+- Under the synthetic O4 inputs, 68,814.9 trips move from metro to car within declared bounds; the end-of-window queue falls to 383,853.1, but the 3.2431x peak and non-zero queue keep the operations gate failed closed. The recourse screen remains outside policy ranking and local route-choice claims.
+- Added bilingual `adaptive-recourse-board.svg`, refreshed proposal/readout/offline visual pages, and made denied-boarding transfer, alternate-mode acceptance, accessible/care constraints and spare-capacity observations explicit calibration requirements.

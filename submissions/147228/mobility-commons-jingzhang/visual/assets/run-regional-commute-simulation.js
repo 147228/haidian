@@ -130,6 +130,13 @@ function simulateDepartureTimeChoiceScreen(policyId, profileId) {
     mode,
     Object.fromEntries(bands.map((band) => [band.id, 0]))
   ]));
+  const groupModeBandCounts = Object.fromEntries(GROUPS.map((group) => [
+    group.id,
+    Object.fromEntries(MODES.map((mode) => [
+      mode,
+      Object.fromEntries(bands.map((band) => [band.id, 0]))
+    ]))
+  ]));
   let processed = 0;
   let shiftedEnterpriseAgents = 0;
   let reschedulingCostPersonMinutes = 0;
@@ -151,6 +158,7 @@ function simulateDepartureTimeChoiceScreen(policyId, profileId) {
       bandCounts[bandId] += 1;
       groupBandCounts[group.id][bandId] += 1;
       modeBandCounts[mode][bandId] += 1;
+      groupModeBandCounts[group.id][mode][bandId] += 1;
       processed += 1;
     }
   }
@@ -178,6 +186,7 @@ function simulateDepartureTimeChoiceScreen(policyId, profileId) {
     band_shares: Object.fromEntries(bands.map((band) => [band.id, round(bandCounts[band.id] / Math.max(processed, 1))])),
     group_band_counts: groupBandCounts,
     mode_band_counts: modeBandCounts,
+    group_mode_band_counts: groupModeBandCounts,
     mode_band_shares: modeBandShares,
     preferred_band_share: round(bandCounts.preferred / Math.max(processed, 1)),
     shifted_enterprise_agents: shiftedEnterpriseAgents,
@@ -305,6 +314,240 @@ function simulateTimeSlicedServiceOperations(policyId, profileId, choiceScreen =
     operations_screen_pass: unresolvedQueuePersonTrips === 0 && peakSliceLoadRatio <= gate.maximum_peak_mode_load_ratio,
     selection_boundary: operations.selection_boundary,
     interpretation: 'synthetic aggregate time-slice operations screen; use non-zero residual queue to trigger timetable, capacity and boarding-data calibration'
+  };
+}
+
+function simulateAdaptiveRecourseScreen(policyId, profileId, serviceOperations, choiceScreen = null) {
+  const recourse = model.adaptive_recourse;
+  const operations = model.service_time_operations;
+  const slices = operations.time_slices;
+  const choice = choiceScreen || simulateDepartureTimeChoiceScreen(policyId, profileId);
+  const supply = operations.service_supply_units_by_profile[profileId]
+    || operations.service_supply_units_by_profile.B0;
+  const groupIds = GROUPS.map((group) => group.id);
+  const priorityGroups = recourse.priority_group_order.filter((groupId) => groupIds.includes(groupId));
+  const blockedSourceModes = new Set(recourse.blocked_source_modes || []);
+  const queue = Object.fromEntries(MODES.map((mode) => [
+    mode,
+    Object.fromEntries(groupIds.map((groupId) => [groupId, 0]))
+  ]));
+  const totalGroupDemand = Object.fromEntries(groupIds.map((groupId) => [groupId, 0]));
+  const primaryBoardedByGroup = Object.fromEntries(groupIds.map((groupId) => [groupId, 0]));
+  const recourseMovedByGroup = Object.fromEntries(groupIds.map((groupId) => [groupId, 0]));
+  const recourseByMode = Object.fromEntries(MODES.map((mode) => [mode, 0]));
+  const primaryBoardedByMode = Object.fromEntries(MODES.map((mode) => [mode, 0]));
+  const residualQueueByMode = Object.fromEntries(MODES.map((mode) => [mode, 0]));
+  const residualQueueByGroup = Object.fromEntries(groupIds.map((groupId) => [groupId, 0]));
+  const recourseBySourceTarget = {};
+  const recourseFlows = [];
+  const modeSliceRows = {};
+  let demandProcessed = 0;
+  let primaryBoardedPersonTrips = 0;
+  let recourseBoardedPersonTrips = 0;
+  let failedBoardingAttempts = 0;
+  let queuePersonMinutesProxy = 0;
+  let peakSliceLoadRatio = 0;
+
+  for (const groupId of groupIds) {
+    for (const mode of MODES) {
+      for (const slice of slices) {
+        totalGroupDemand[groupId] += Number(choice.group_mode_band_counts[groupId][mode][slice.id] || 0);
+      }
+    }
+  }
+
+  for (const slice of slices) {
+    const queueBeforeByMode = Object.fromEntries(MODES.map((mode) => [mode, sum(Object.values(queue[mode]))]));
+    const demandByMode = Object.fromEntries(MODES.map((mode) => [mode, 0]));
+    const primaryArrivalsByMode = Object.fromEntries(MODES.map((mode) => [mode, 0]));
+    const primaryBoardedInSlice = Object.fromEntries(MODES.map((mode) => [mode, 0]));
+    const primaryFailedInSlice = Object.fromEntries(MODES.map((mode) => [mode, 0]));
+    const recourseReceivedInSlice = Object.fromEntries(MODES.map((mode) => [mode, 0]));
+    const recourseSentInSlice = Object.fromEntries(MODES.map((mode) => [mode, 0]));
+    const spareCapacityByMode = {};
+    const capacityByMode = {};
+
+    for (const mode of MODES) {
+      for (const groupId of groupIds) {
+        const demand = Number(choice.group_mode_band_counts[groupId][mode][slice.id] || 0);
+        queue[mode][groupId] += demand;
+        demandByMode[mode] += demand;
+        demandProcessed += demand;
+      }
+      const serviceUnit = model.mode_parameters[mode].service_unit;
+      const availableUnits = Number(supply[mode][slice.id] || 0);
+      const availablePersonCapacity = availableUnits * Number(serviceUnit.capacity_persons_per_unit);
+      capacityByMode[mode] = availablePersonCapacity;
+      primaryArrivalsByMode[mode] = sum(Object.values(queue[mode]));
+      let capacityLeft = availablePersonCapacity;
+      for (const groupId of priorityGroups) {
+        const boarded = Math.min(queue[mode][groupId], capacityLeft);
+        queue[mode][groupId] -= boarded;
+        capacityLeft -= boarded;
+        primaryBoardedInSlice[mode] += boarded;
+        primaryBoardedByMode[mode] += boarded;
+        primaryBoardedByGroup[groupId] += boarded;
+      }
+      primaryFailedInSlice[mode] = Math.max(0, primaryArrivalsByMode[mode] - primaryBoardedInSlice[mode]);
+      spareCapacityByMode[mode] = Math.max(0, capacityLeft);
+      peakSliceLoadRatio = Math.max(
+        peakSliceLoadRatio,
+        capacityByMode[mode] > 0 ? primaryArrivalsByMode[mode] / capacityByMode[mode] : (primaryArrivalsByMode[mode] > 0 ? Infinity : 0)
+      );
+    }
+
+    for (const sourceMode of MODES) {
+      if (blockedSourceModes.has(sourceMode)) continue;
+      const fallbackModes = recourse.fallback_priority_by_mode[sourceMode] || [];
+      for (const targetMode of fallbackModes) {
+        if (!MODES.includes(targetMode) || spareCapacityByMode[targetMode] <= 0) continue;
+        for (const groupId of priorityGroups) {
+          const maxShare = Number(recourse.max_recourse_share_by_group[groupId] || 0);
+          const groupAllowance = Math.max(0, totalGroupDemand[groupId] * maxShare - recourseMovedByGroup[groupId]);
+          const moved = Math.min(queue[sourceMode][groupId], spareCapacityByMode[targetMode], groupAllowance);
+          if (moved <= 0) continue;
+          queue[sourceMode][groupId] -= moved;
+          spareCapacityByMode[targetMode] -= moved;
+          recourseMovedByGroup[groupId] += moved;
+          recourseByMode[targetMode] += moved;
+          recourseReceivedInSlice[targetMode] += moved;
+          recourseSentInSlice[sourceMode] += moved;
+          const sourceMinutes = Number(model.mode_parameters[sourceMode].base_minutes);
+          const targetMinutes = Number(model.mode_parameters[targetMode].base_minutes);
+          const costPersonMinutesProxy = moved * (Math.abs(targetMinutes - sourceMinutes) + 5);
+          const flow = {
+            time_slice: slice.id,
+            source_mode: sourceMode,
+            target_mode: targetMode,
+            group: groupId,
+            moved_person_trips: round(moved, 2),
+            cost_person_minutes_proxy: round(costPersonMinutesProxy, 2),
+            interpretation: 'synthetic bounded alternate-mode transfer; not an observed passenger choice or route assignment'
+          };
+          recourseFlows.push(flow);
+          const pairKey = `${sourceMode}→${targetMode}`;
+          if (!recourseBySourceTarget[pairKey]) {
+            recourseBySourceTarget[pairKey] = {
+              source_mode: sourceMode,
+              target_mode: targetMode,
+              moved_person_trips: 0,
+              cost_person_minutes_proxy: 0
+            };
+          }
+          recourseBySourceTarget[pairKey].moved_person_trips += moved;
+          recourseBySourceTarget[pairKey].cost_person_minutes_proxy += costPersonMinutesProxy;
+          if (spareCapacityByMode[targetMode] <= 0) break;
+        }
+      }
+    }
+
+    for (const mode of MODES) {
+      const residualQueue = sum(Object.values(queue[mode]));
+      const serviceUnit = model.mode_parameters[mode].service_unit;
+      const totalBoardedInSlice = primaryBoardedInSlice[mode] + recourseReceivedInSlice[mode];
+      const loadRatioAfterRecourse = capacityByMode[mode] > 0
+        ? totalBoardedInSlice / capacityByMode[mode]
+        : (totalBoardedInSlice > 0 ? Infinity : 0);
+      modeSliceRows[mode] = modeSliceRows[mode] || [];
+      modeSliceRows[mode].push({
+        mode,
+        time_slice: slice.id,
+        demand_person_trips: round(demandByMode[mode], 2),
+        queue_before_person_trips: round(queueBeforeByMode[mode], 2),
+        arrivals_including_queue: round(primaryArrivalsByMode[mode], 2),
+        available_service_units: Number(supply[mode][slice.id] || 0),
+        available_person_capacity: round(capacityByMode[mode], 2),
+        primary_boarded_person_trips: round(primaryBoardedInSlice[mode], 2),
+        failed_boarding_attempts_before_recourse: round(primaryFailedInSlice[mode], 2),
+        recourse_sent_person_trips: round(recourseSentInSlice[mode], 2),
+        recourse_received_person_trips: round(recourseReceivedInSlice[mode], 2),
+        boarded_person_trips_after_recourse: round(totalBoardedInSlice, 2),
+        residual_queue_after_recourse: round(residualQueue, 2),
+        load_ratio_after_recourse: round(loadRatioAfterRecourse),
+        queue_person_minutes_proxy: round(residualQueue * Number(slice.duration_minutes), 2),
+        interpretation: 'synthetic FIFO primary boarding plus bounded recourse; residual queue remains a calibration stop signal'
+      });
+      residualQueueByMode[mode] = residualQueue;
+      queuePersonMinutesProxy += residualQueue * Number(slice.duration_minutes);
+      primaryBoardedPersonTrips += primaryBoardedInSlice[mode];
+      recourseBoardedPersonTrips += recourseReceivedInSlice[mode];
+      failedBoardingAttempts += primaryFailedInSlice[mode];
+    }
+  }
+
+  for (const mode of MODES) {
+    residualQueueByMode[mode] = round(residualQueueByMode[mode], 2);
+    for (const groupId of groupIds) residualQueueByGroup[groupId] += queue[mode][groupId];
+  }
+  for (const groupId of groupIds) residualQueueByGroup[groupId] = round(residualQueueByGroup[groupId], 2);
+
+  const recourseByGroup = Object.fromEntries(groupIds.map((groupId) => {
+    const demand = totalGroupDemand[groupId];
+    const moved = recourseMovedByGroup[groupId];
+    const maxShare = Number(recourse.max_recourse_share_by_group[groupId] || 0);
+    return [groupId, {
+      group: groupId,
+      demand_person_trips: demand,
+      moved_person_trips: round(moved, 2),
+      max_recourse_share: maxShare,
+      recourse_share: round(moved / Math.max(demand, 1)),
+      share_limit_person_trips: round(demand * maxShare, 2),
+      constraint_pass: moved <= demand * maxShare + 0.01
+    }];
+  }));
+  const groupMassConservation = Object.fromEntries(groupIds.map((groupId) => [
+    groupId,
+    Math.abs(totalGroupDemand[groupId] - (primaryBoardedByGroup[groupId] + recourseMovedByGroup[groupId] + residualQueueByGroup[groupId])) < 0.01
+  ]));
+  const totalCapacityByMode = Object.fromEntries(MODES.map((mode) => [
+    mode,
+    slices.reduce((total, slice) => total + Number(supply[mode][slice.id] || 0) * Number(model.mode_parameters[mode].service_unit.capacity_persons_per_unit), 0)
+  ]));
+  const modeCapacityNotExceeded = MODES.every((mode) => primaryBoardedByMode[mode] + recourseByMode[mode] <= totalCapacityByMode[mode] + 0.01);
+  const recourseShareConstraintsPass = Object.values(recourseByGroup).every((row) => row.constraint_pass);
+  const blockedSourceModesUntouched = [...blockedSourceModes].every((mode) => recourseFlows.every((flow) => flow.source_mode !== mode));
+  const totalCostPersonMinutesProxy = sum(recourseFlows.map((flow) => flow.cost_person_minutes_proxy));
+  const unresolvedQueuePersonTrips = sum(Object.values(residualQueueByMode));
+  const demandMassConservation = demandProcessed === primaryBoardedPersonTrips + recourseBoardedPersonTrips + unresolvedQueuePersonTrips;
+  const gate = model.optimization_search.hard_gate_constraints;
+  return {
+    policy_id: policyId,
+    profile_id: profileId,
+    model_class: recourse.model_class,
+    status: recourse.status,
+    agents_processed: demandProcessed,
+    all_agents_processed: demandProcessed === TOTAL,
+    primary_boarded_person_trips: round(primaryBoardedPersonTrips, 2),
+    recourse_boarded_person_trips: round(recourseBoardedPersonTrips, 2),
+    total_boarded_person_trips: round(primaryBoardedPersonTrips + recourseBoardedPersonTrips, 2),
+    unresolved_queue_person_trips: round(unresolvedQueuePersonTrips, 2),
+    failed_boarding_attempts: round(failedBoardingAttempts, 2),
+    queue_person_minutes_proxy: round(queuePersonMinutesProxy, 2),
+    recourse_cost_person_minutes_proxy: round(totalCostPersonMinutesProxy, 2),
+    peak_slice_load_ratio_after_recourse: round(peakSliceLoadRatio),
+    peak_load_gate_ratio: gate.maximum_peak_mode_load_ratio,
+    demand_mass_conservation: demandMassConservation,
+    group_mass_conservation: groupMassConservation,
+    mode_capacity_not_exceeded: modeCapacityNotExceeded,
+    recourse_share_constraints_pass: recourseShareConstraintsPass,
+    blocked_source_modes: [...blockedSourceModes],
+    blocked_source_modes_untouched: blockedSourceModesUntouched,
+    walking_accessibility_recourse_count: recourseFlows.filter((flow) => flow.source_mode === 'walking_wheelchair').length,
+    primary_boarded_by_mode: Object.fromEntries(MODES.map((mode) => [mode, round(primaryBoardedByMode[mode], 2)])),
+    recourse_boarded_by_target_mode: Object.fromEntries(MODES.map((mode) => [mode, round(recourseByMode[mode], 2)])),
+    residual_queue_by_mode: residualQueueByMode,
+    residual_queue_by_group: residualQueueByGroup,
+    recourse_by_group: recourseByGroup,
+    recourse_by_source_target: Object.fromEntries(Object.entries(recourseBySourceTarget).map(([key, row]) => [key, {
+      ...row,
+      moved_person_trips: round(row.moved_person_trips, 2),
+      cost_person_minutes_proxy: round(row.cost_person_minutes_proxy, 2)
+    }])),
+    recourse_flows: recourseFlows,
+    mode_slice_rows: modeSliceRows,
+    operations_screen_pass_after_recourse: unresolvedQueuePersonTrips === 0 && peakSliceLoadRatio <= gate.maximum_peak_mode_load_ratio,
+    selection_boundary: recourse.selection_boundary,
+    interpretation: 'synthetic aggregate recourse screen; alternate-mode movement is bounded by declared group shares and spare slice capacity, not observed behaviour'
   };
 }
 
@@ -647,6 +890,8 @@ const departureChoiceBaseline = simulateDepartureTimeChoiceScreen('B0_reference'
 const departureChoiceSelected = simulateDepartureTimeChoiceScreen(selectedPolicy.id, selectedPolicy.profile);
 const serviceOperationsBaseline = simulateTimeSlicedServiceOperations('B0_reference', 'B0', departureChoiceBaseline);
 const serviceOperationsSelected = simulateTimeSlicedServiceOperations(selectedPolicy.id, selectedPolicy.profile, departureChoiceSelected);
+const adaptiveRecourseBaseline = simulateAdaptiveRecourseScreen('B0_reference', 'B0', serviceOperationsBaseline, departureChoiceBaseline);
+const adaptiveRecourseSelected = simulateAdaptiveRecourseScreen(selectedPolicy.id, selectedPolicy.profile, serviceOperationsSelected, departureChoiceSelected);
 const optimizationSearch = {
   method: model.optimization_search.method,
   selection_order: model.optimization_search.selection_order,
@@ -699,6 +944,14 @@ const checks = {
   service_time_screen_all_population_agents_processed: serviceOperationsBaseline.all_agents_processed && serviceOperationsSelected.all_agents_processed,
   service_time_screen_mass_conservation: serviceOperationsBaseline.demand_mass_conservation && serviceOperationsSelected.demand_mass_conservation,
   service_time_screen_mode_mass_conservation: serviceOperationsBaseline.mode_slice_mass_conservation && serviceOperationsSelected.mode_slice_mass_conservation,
+  adaptive_recourse_all_population_agents_processed: adaptiveRecourseBaseline.all_agents_processed && adaptiveRecourseSelected.all_agents_processed,
+  adaptive_recourse_mass_conservation: adaptiveRecourseBaseline.demand_mass_conservation && adaptiveRecourseSelected.demand_mass_conservation,
+  adaptive_recourse_group_mass_conservation: Object.values(adaptiveRecourseBaseline.group_mass_conservation).every(Boolean)
+    && Object.values(adaptiveRecourseSelected.group_mass_conservation).every(Boolean),
+  adaptive_recourse_share_constraints_pass: adaptiveRecourseBaseline.recourse_share_constraints_pass && adaptiveRecourseSelected.recourse_share_constraints_pass,
+  adaptive_recourse_preserves_accessible_source: adaptiveRecourseBaseline.blocked_source_modes_untouched && adaptiveRecourseSelected.blocked_source_modes_untouched
+    && adaptiveRecourseBaseline.walking_accessibility_recourse_count === 0 && adaptiveRecourseSelected.walking_accessibility_recourse_count === 0,
+  adaptive_recourse_mode_capacity_not_exceeded: adaptiveRecourseBaseline.mode_capacity_not_exceeded && adaptiveRecourseSelected.mode_capacity_not_exceeded,
   service_supply_reconciles_to_declared_capacity: MODES.every((mode) => {
     const parameters = model.mode_parameters[mode];
     const capacityPerUnit = Number(parameters.service_unit.capacity_persons_per_unit);
@@ -740,6 +993,7 @@ const output = {
     vehicle_or_service_km_proxy: headlineOptimized.vehicle_or_service_km_proxy,
     departure_time_choice_screen: departureChoiceSelected,
     service_time_operations: serviceOperationsSelected,
+    adaptive_recourse_screen: adaptiveRecourseSelected,
     route_flow_summary: headlineOptimized.route_flow_summary
   },
   departure_time_choice_screen: {
@@ -751,6 +1005,11 @@ const output = {
     baseline: serviceOperationsBaseline,
     selected_policy: serviceOperationsSelected,
     selection_boundary: model.service_time_operations.selection_boundary
+  },
+  adaptive_recourse_screen: {
+    baseline: adaptiveRecourseBaseline,
+    selected_policy: adaptiveRecourseSelected,
+    selection_boundary: model.adaptive_recourse.selection_boundary
   },
   scenarios,
   comparison: {

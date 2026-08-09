@@ -1,5 +1,5 @@
 {
-  "model_version": "2.10-regional-time-slice-operations",
+  "model_version": "2.11-regional-adaptive-recourse",
   "simulation_class": "regional_population_scale_synthetic_two_peak_flow_not_local_OD",
   "generated_by": "node visual/assets/run-regional-commute-simulation.js",
   "scope": {
@@ -140,6 +140,44 @@
       }
     }
   },
+  "adaptive_recourse_screen": {
+    "model_class": "aggregate_grouped_mode_recourse_screen",
+    "selection_boundary": "This is a separate adaptive-recourse sensitivity screen. It may reveal a bounded fallback direction, but it is not a local route-choice estimate or a policy-ranking input until observed denied-boarding, alternate-mode acceptance, accessibility, timetable and capacity evidence are available.",
+    "baseline": {
+      "policy_id": "B0_reference",
+      "agents_processed": 3122000,
+      "demand_mass_conservation": true,
+      "primary_boarded_person_trips": 2664264.9,
+      "recourse_boarded_person_trips": 28075,
+      "unresolved_queue_person_trips": 429660.1,
+      "queue_person_minutes_proxy": 12130996.5,
+      "recourse_cost_person_minutes_proxy": 291246,
+      "peak_slice_load_ratio_after_recourse": 39.6035,
+      "operations_screen_pass_after_recourse": false,
+      "recourse_by_source_target": {"car→bus": 3264, "car→metro": 19953, "bus→metro": 4858},
+      "recourse_by_group": {"resident_worker": 23217, "night_worker": 4858},
+      "residual_queue_by_mode": {"metro": 0, "bus": 21977, "bicycle": 0, "walking_wheelchair": 0, "car": 405371.1, "enterprise_shuttle": 2312}
+    },
+    "selected_policy": {
+      "policy_id": "O4_capacity_balanced",
+      "agents_processed": 3122000,
+      "demand_mass_conservation": true,
+      "primary_boarded_person_trips": 2669332,
+      "recourse_boarded_person_trips": 68814.9,
+      "unresolved_queue_person_trips": 383853.1,
+      "queue_person_minutes_proxy": 14783806.5,
+      "recourse_cost_person_minutes_proxy": 550519.2,
+      "peak_slice_load_ratio_after_recourse": 3.2431,
+      "operations_screen_pass_after_recourse": false,
+      "mode_capacity_not_exceeded": true,
+      "recourse_share_constraints_pass": true,
+      "blocked_source_modes_untouched": true,
+      "walking_accessibility_recourse_count": 0,
+      "recourse_by_source_target": {"metro→car": 68814.9},
+      "recourse_by_group": {"enterprise_employee": 28354, "visitor_service": 40460.9},
+      "residual_queue_by_mode": {"metro": 52839.1, "bus": 57436, "bicycle": 93102, "walking_wheelchair": 157016, "car": 0, "enterprise_shuttle": 23460}
+    }
+  },
   "checks": {
     "all_population_agents_processed": true,
     "declared_group_counts_sum_to_population": true,
@@ -156,6 +194,12 @@
     "service_time_screen_all_population_agents_processed": true,
     "service_time_screen_mass_conservation": true,
     "service_time_screen_mode_mass_conservation": true,
+    "adaptive_recourse_all_population_agents_processed": true,
+    "adaptive_recourse_mass_conservation": true,
+    "adaptive_recourse_group_mass_conservation": true,
+    "adaptive_recourse_share_constraints_pass": true,
+    "adaptive_recourse_preserves_accessible_source": true,
+    "adaptive_recourse_mode_capacity_not_exceeded": true,
     "service_supply_reconciles_to_declared_capacity": true
   }
 }

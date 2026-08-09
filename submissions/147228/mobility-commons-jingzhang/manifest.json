@@ -118,7 +118,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "43a32d2e9e2395f28a11c6213b6e3210d6606154155a88253fc5d6d7a7b6b6e5"
+      "sha256": "6d964521f9333a5ff95bfb6e87b613d9b188c1f91504a94246e0ccc6f8b67212"
     },
     {
       "path": "compliance_matrix.json",
@@ -228,14 +228,14 @@
       "required": true,
       "language": "en",
       "translation_of": "proposal.md",
-      "sha256": "9abd40776890c42c218617a88e5dc52731fdaccef8948af2d25f4d3399ab2e26"
+      "sha256": "4358706c0be0e5f0b1e1fc88fc45053392d8a41c301abef9425345beeac54eda"
     },
     {
       "path": "proposal.md",
       "role": "narrative",
       "required": true,
       "language": "zh",
-      "sha256": "62eb5eb631413181e96f09366f65dc44d6448b99b6be9b314db90d8c0a76056f"
+      "sha256": "eeb0c07ef8c591d89dcb06bfb8828c86fd53007c8663336d8e68c42815457939"
     },
     {
       "path": "report/copyright_statement.md",
@@ -254,14 +254,14 @@
       "required": true,
       "language": "en",
       "translation_of": "report/proposal.html",
-      "sha256": "6091d037b38f7c3ca1248d8c58e2637cf1aa381af3ece2791966055559227ca4"
+      "sha256": "3f907e35f8d02a552cc6a46c8bf22bea0845a81033cfd2d212ddb438f0fcff8f"
     },
     {
       "path": "report/proposal.html",
       "role": "rendered_proposal_html",
       "required": true,
       "language": "zh",
-      "sha256": "04ff8c42fd92bc4657a81ceb5e2d2fa3c0ce584a63fae0702b85a76a7724d8be"
+      "sha256": "a731748209d2e3bc34a491d06f04801047ece6007d4d290e7af529c6a27ede96"
     },
     {
       "path": "self_check.json",
@@ -746,7 +746,19 @@
       "path": "visual/assets/review-evidence-index.json",
       "role": "review_navigation",
       "required": false,
-      "sha256": "e56ea9f485469fcde656185263f18da36f6a8288647429933a866644fd720d4d"
+      "sha256": "b5ca55337df179ab54d89c404c5085fbbb6a9d0c27073ff321059ddead46c20b"
+    },
+    {
+      "path": "visual/assets/claim-audit.json",
+      "role": "data",
+      "required": true,
+      "sha256": "15714522286f6b912467ac22df1d186360990c1a945ef9d65a0ec2b6d02787eb"
+    },
+    {
+      "path": "visual/assets/run-claim-audit.js",
+      "role": "script",
+      "required": true,
+      "sha256": "4e0f6eb5a1c9c0a30d80a3207226b60aa73f6aa19b5d5f6a60b656881ec56269"
     }
   ]
 }

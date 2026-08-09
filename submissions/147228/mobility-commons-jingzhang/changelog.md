@@ -1,5 +1,12 @@
 # 方案迭代记录
 
+## v2.23 - 2026-08-10
+
+- 将 headline 数字统一改称“综合出行压力代理分”或明确的合成屏查读数，避免把模型字段 `satisfaction_proxy` 读成居民调查或公众接受。
+- 新增 `visual/assets/claim-audit.json` 与 `run-claim-audit.js`，对中英文正文中的 9 个关键数字检查状态标签、同段边界、来源 runner 和禁止的居民满意度 headline。
+- 在双语 proposal 前置四类读数标签，补充一份评审可以在短时间内复核的主张披露入口；不改变任何模型输入、数值、候选排名或现场证据边界。
+- 保留“合成、设计闸门、文件已知、待正式数据补齐”的区分；claim audit 是披露自审，不是模型有效性、居民满意度、专业审批或实施授权证明。
+
 ## v2.22 - 2026-08-10
 
 - Replayed the full population-scale mobility evidence package onto the current mainline and kept the regional, capacity, network-flow, resource-pressure and resilience readouts together.

@@ -10,7 +10,8 @@
     "visual/assets/network-flow-readout.json",
     "visual/assets/regional-scale-commute-readout.json",
     "visual/assets/capacity-closure-screen.json",
-    "visual/assets/mobility-tabletop-evidence.json"
+    "visual/assets/mobility-tabletop-evidence.json",
+    "visual/assets/claim-audit.json"
   ],
   "dimensions": [
     {
@@ -31,7 +32,7 @@
       "id": "ai_planning_innovation",
       "label_zh": "AI 与城市规划创新性",
       "start_here": ["visual/assets/regional-scale-commute-readout.json", "visual/assets/run-regional-commute-simulation.js", "visual/assets/run-capacity-closure-screen.js", "visual/assets/network-flow-readout.json"],
-      "strongest_evidence": "持久化的 O1/O2/O3/O4 候选排名与鲁棒性排序，加上全量聚合网络流、容量闭合和空中候选 fail-closed，共同展示方式选择如何被硬门槛约束",
+      "strongest_evidence": "持久化的 O1/O2/O3/O4 候选排名与鲁棒性排序，加上全量聚合网络流、容量闭合、空中候选 fail-closed 和 headline claim audit，共同展示方式选择如何被硬门槛约束",
       "boundary": "输入是合成反事实；满意度、容量和网络压力不是本地绩效。"
     },
     {

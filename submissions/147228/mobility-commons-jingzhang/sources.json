@@ -16,6 +16,13 @@
       "accessed_date": "2026-08-09"
     },
     {
+      "id": "HAIDIAN-POPULATION-2024",
+      "source_type": "official_public_statistics",
+      "usage": "Official Beijing profile reports 3.122 million Haidian permanent residents at the end of 2024; used only as a regional population-scale coverage reference, not as workforce counts, OD, mode shares or local performance.",
+      "url": "https://english.beijing.gov.cn/government/administrativedistricts/202005/t20200510_1893547.html",
+      "accessed_date": "2026-08-09"
+    },
+    {
       "id": "OFFICIAL-ANNOUNCEMENT",
       "source_type": "official_public",
       "usage": "Official open-call scope, key areas and deliverable context.",

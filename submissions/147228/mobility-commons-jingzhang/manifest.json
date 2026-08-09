@@ -19,7 +19,7 @@
     "model_family": "gpt",
     "model_detail": "OpenAI GPT-5 family via Codex"
   },
-  "generated_at": "2026-08-09T11:02:00+08:00",
+  "generated_at": "2026-08-09T12:00:00+08:00",
   "files": [
     {
       "path": "manifest.json",
@@ -118,7 +118,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "88798d1f055acc8506d61709c1b1da776df02df0379268d3a62c524cdb885da1"
+      "sha256": "86eacefe440423f5c3ea51944054cb8ebf3eea3c16f503751a612abf6a5fe0e0"
     },
     {
       "path": "compliance_matrix.json",
@@ -228,14 +228,14 @@
       "required": true,
       "language": "en",
       "translation_of": "proposal.md",
-      "sha256": "0fbd8d067d38de5bb4a6265a65c032b7af78aaeef8718b0223ce3b8ee54eee72"
+      "sha256": "8af50d968f22f42657f7a76f64cf23d3a37289e1a257af69ce7dd4d6cfa3c11d"
     },
     {
       "path": "proposal.md",
       "role": "narrative",
       "required": true,
       "language": "zh",
-      "sha256": "6f5ffd5684af5328ef61071e80f6532fa1dc03996619e402cc868a84496d4e55"
+      "sha256": "3e6c79f944c9f67247eab0cac8153c6ad53a960315e6518904a4316bb21d036f"
     },
     {
       "path": "report/copyright_statement.md",
@@ -254,14 +254,14 @@
       "required": true,
       "language": "en",
       "translation_of": "report/proposal.html",
-      "sha256": "32e2aab64303dc116b4763f03b7862fa3ae0949216ac119f9b82a849005c0c7a"
+      "sha256": "4c5e97babbdc042c2c00b638834237d30f34f93174755350284dfa7af1325b86"
     },
     {
       "path": "report/proposal.html",
       "role": "rendered_proposal_html",
       "required": true,
       "language": "zh",
-      "sha256": "15cafe659d0f347fb6583b1abe7c540de0017ba09125bb5dc8c289ebe9aba844"
+      "sha256": "9795ca96cc6a5013ded85a950c29bcbb0c8f5cda617090d1fb616d0b45a6fa6b"
     },
     {
       "path": "self_check.json",
@@ -273,7 +273,7 @@
       "path": "sources.json",
       "role": "data",
       "required": true,
-      "sha256": "45b8e63af70c463313e84276fd1bc498926367ab06f1d87ef25ee839692c89dc"
+      "sha256": "2610857284573206f1b5f5260e62b2842bccd0fb162b790764ff7fd460b04127"
     },
     {
       "path": "standard_matrix.json",
@@ -322,14 +322,14 @@
       "required": true,
       "language": "en",
       "translation_of": "visual/index.html",
-      "sha256": "ecb90e734ec5780f99f879c8d85d3ee80758985aa92e9809061ecbe9f15bafda"
+      "sha256": "cb9d8b6b4f03ce73700bbb99cb8edc0b90234475d514d849b7d09d7a40687a26"
     },
     {
       "path": "visual/index.html",
       "role": "visualization",
       "required": true,
       "language": "zh",
-      "sha256": "2dbdd871a96e6c086ae9b7816bf589488e67777a42de2bb63e43a7bbe9319364"
+      "sha256": "0ec2c58f04b33c0c0e45f2a11b08d8c8924a0e568e24e87c49696a29522fd6d3"
     },
     {
       "path": "visual/assets/multimodal-network.json",
@@ -341,7 +341,7 @@
       "path": "visual/assets/movement-simulation.json",
       "role": "data",
       "required": false,
-      "sha256": "0b9121adae83b7d5fb497cf3094b9de46a8a3387cb83ca03d27ab94f767e21e4"
+      "sha256": "a75f8cb9fc9be8ccf1bfb2082dfb73f494ee9242a1ca9209f5988a7f336a38d0"
     },
     {
       "path": "visual/assets/run-mobility-simulation.js",
@@ -450,6 +450,33 @@
       "language": "en",
       "translation_of": "assets/figures/system-efficiency-board.svg",
       "sha256": "d63fdaa801a73085160a3e1e8473862fa85475bd24c58c49a02a65a9c76db0ce"
+    },
+    {
+      "path": "assets/figures/regional-scale-commute-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "011cbe8c677cb4da92ef80707cabe726e0e4283a09a67528cdc680268462326a"
+    },
+    {
+      "path": "assets/figures/regional-scale-commute-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/regional-scale-commute-board.svg",
+      "sha256": "079e24e4e930db49e73d16e38723cc45113800d59b9698debec180057b7864f8"
+    },
+    {
+      "path": "visual/assets/regional-scale-commute.json",
+      "role": "data",
+      "required": true,
+      "sha256": "908142e0a28b4e61f4f480b6c12630f814f16dd854fe33d6ef5c82838cfa93fa"
+    },
+    {
+      "path": "visual/assets/run-regional-commute-simulation.js",
+      "role": "script",
+      "required": true,
+      "sha256": "06e078707e42d1e0d6fca90601e88e030084a76443e6d88bfe1022681571116d"
     }
   ]
 }

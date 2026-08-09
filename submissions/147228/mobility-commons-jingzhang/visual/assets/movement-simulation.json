@@ -490,6 +490,15 @@
     },
     "behavioral_boundary": "No imported mode-choice coefficient or local effect size; B1 is a declared schedule-spreading sensitivity only. Employer incentives, shared rides and feeder services require observed grouped OD, mode-share data and a separate review."
   },
+  "regional_scale_extension": {
+    "configuration": "visual/assets/regional-scale-commute.json",
+    "runner": "visual/assets/run-regional-commute-simulation.js",
+    "population_reference": 3122000,
+    "coverage_ratio": 1,
+    "status": "population-scale_synthetic_aggregate_stress_test_not_local_OD",
+    "privacy": "all-agent processing with aggregate counters only; no personal trajectory",
+    "satisfaction_boundary": "The regional runner reports a synthetic satisfaction proxy; actual resident and employee satisfaction remains unknown until survey/intercept evidence."
+  },
   "scenarios": [
     {
       "id": "S0_peak_unmanaged",

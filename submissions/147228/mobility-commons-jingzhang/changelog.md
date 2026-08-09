@@ -71,3 +71,11 @@
 ## v2.4 - 2026-08-09
 
 - Removed the last hard-coded O1 selection phrase from the regional runner; the interpretation now reports the policy actually selected by the full replay.
+
+## v2.5 - 2026-08-09
+
+- Added candidate-level peak mode-load ratios and capacity-overflow person-trips to the population-scale replay output and selected-policy readout, making congestion/capacity evidence inspectable before adding a capacity-balanced policy.
+
+## v2.6 - 2026-08-09
+
+- Added O4 capacity-balanced policy search and a declared 1.35x maximum peak mode-load hard gate; the selected policy must now satisfy capacity, accessibility, privacy, mass-conservation and air-candidate gates before satisfaction ranking.

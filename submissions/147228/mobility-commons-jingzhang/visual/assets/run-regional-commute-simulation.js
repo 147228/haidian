@@ -195,6 +195,8 @@ function simulateScenario(scenarioId, weightsOverride = null, policyId = scenari
 
   const modeShares = Object.fromEntries(MODES.map((mode) => [mode, round(modeCounts[mode] / processed)]));
   const modeLoadRatios = Object.fromEntries(MODES.map((mode) => [mode, round(modeCounts[mode] / model.mode_parameters[mode].capacity_person_trips)]));
+  const capacityOverflowPersonTrips = sum(MODES.map((mode) => Math.max(0, modeCounts[mode] - model.mode_parameters[mode].capacity_person_trips)));
+  const maxModeLoadRatio = round(Math.max(...Object.values(modeLoadRatios)));
   const groupSatisfactionProxy = Object.fromEntries(GROUPS.map((group) => [group.id, round(groupSatisfaction[group.id] / groupCounts[group.id], 2)]));
   const groupAccessibilityCompletion = Object.fromEntries(GROUPS.map((group) => [group.id, round(groupAccessibility[group.id] / groupCounts[group.id], 4)]));
   const satisfactionValues = Object.values(groupSatisfactionProxy);
@@ -216,6 +218,8 @@ function simulateScenario(scenarioId, weightsOverride = null, policyId = scenari
     mode_counts: modeCounts,
     mode_shares: modeShares,
     mode_load_ratios: modeLoadRatios,
+    max_mode_load_ratio: maxModeLoadRatio,
+    capacity_overflow_person_trips: capacityOverflowPersonTrips,
     total_trips: processed,
     completed_trips: processed,
     p50_travel_time_proxy_minutes: percentileFromHistogram(timeHistogram, 0.50, processed),
@@ -261,6 +265,7 @@ function candidateEligible(result) {
     && result.mass_conservation
     && result.accessibility_completion_proxy >= gate.minimum_accessibility_completion_proxy
     && result.worst_group_accessibility_gap_proxy_points <= gate.maximum_worst_group_accessibility_gap_proxy_points
+    && result.max_mode_load_ratio <= gate.maximum_peak_mode_load_ratio
     && result.air_candidate === 'blocked';
 }
 
@@ -308,6 +313,9 @@ const optimizationSearch = {
     people_flow_conflict_rate_per_1000_proxy: candidate.result.people_flow_conflict_rate_per_1000_proxy,
     external_car_inflow_ratio: candidate.result.external_car_inflow_ratio,
     vehicle_km_proxy: candidate.result.vehicle_km_proxy,
+    mode_load_ratios: candidate.result.mode_load_ratios,
+    max_mode_load_ratio: candidate.result.max_mode_load_ratio,
+    capacity_overflow_person_trips: candidate.result.capacity_overflow_person_trips,
     accessibility_completion_proxy: candidate.result.accessibility_completion_proxy,
     worst_group_accessibility_gap_proxy_points: candidate.result.worst_group_accessibility_gap_proxy_points
   })),
@@ -323,6 +331,7 @@ const checks = {
   optimized_generalized_cost_proxy_not_higher: selectedPolicy.result.average_generalized_cost_proxy <= baseline.average_generalized_cost_proxy,
   optimized_conflict_proxy_not_higher: selectedPolicy.result.people_flow_conflict_rate_per_1000_proxy <= baseline.people_flow_conflict_rate_per_1000_proxy,
   optimized_external_car_inflow_not_higher: selectedPolicy.result.external_car_inflow_ratio <= baseline.external_car_inflow_ratio,
+  optimized_peak_mode_capacity_screen_pass: selectedPolicy.result.max_mode_load_ratio <= model.optimization_search.hard_gate_constraints.maximum_peak_mode_load_ratio,
   air_candidate_fail_closed: scenarios.every((scenario) => scenario.air_candidate === 'blocked'),
   privacy_aggregate_only: scenarios.every((scenario) => scenario.privacy_check === 'aggregate_only_no_personal_trace'),
   optimization_has_eligible_candidate: rankedCandidates.some((candidate) => candidateEligible(candidate.result)),
@@ -345,6 +354,9 @@ const output = {
     policy_id: selectedPolicy.id,
     mode_counts: headlineOptimized.mode_counts,
     mode_shares: headlineOptimized.mode_shares,
+    mode_load_ratios: headlineOptimized.mode_load_ratios,
+    max_mode_load_ratio: headlineOptimized.max_mode_load_ratio,
+    capacity_overflow_person_trips: headlineOptimized.capacity_overflow_person_trips,
     satisfaction_proxy: headlineOptimized.satisfaction_proxy,
     average_generalized_cost_proxy: headlineOptimized.average_generalized_cost_proxy,
     p50_travel_time_proxy_minutes: headlineOptimized.p50_travel_time_proxy_minutes,

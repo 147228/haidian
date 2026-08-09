@@ -1,5 +1,5 @@
 {
-  "version": "2.0-regional-scale",
+  "version": "2.6-regional-scale",
   "simulation_class": "regional_population_scale_synthetic_morning_flow_not_local_OD",
   "status": "transparent_sandbox_before_field_calibration",
   "purpose": "Process one synthetic morning movement chain for every person in the regional population reference, compare a current-like stress case with an optimized multimodal operating case, and publish only aggregate flows.",
@@ -74,28 +74,38 @@
       "visitor_service": {"metro": 0.30, "bus": 0.20, "bicycle": 0.23, "walking_wheelchair": 0.22, "car": 0.01, "enterprise_shuttle": 0.04},
       "logistics_and_maintenance": {"metro": 0.04, "bus": 0.05, "bicycle": 0.04, "walking_wheelchair": 0.03, "car": 0.77, "enterprise_shuttle": 0.07},
       "night_worker": {"metro": 0.22, "bus": 0.29, "bicycle": 0.10, "walking_wheelchair": 0.24, "car": 0.08, "enterprise_shuttle": 0.07}
+    },
+    "O4": {
+      "enterprise_employee": {"metro": 0.40, "bus": 0.18, "bicycle": 0.14, "walking_wheelchair": 0.12, "car": 0.08, "enterprise_shuttle": 0.08},
+      "resident_worker": {"metro": 0.32, "bus": 0.18, "bicycle": 0.18, "walking_wheelchair": 0.21, "car": 0.06, "enterprise_shuttle": 0.05},
+      "carer_or_child": {"metro": 0.16, "bus": 0.24, "bicycle": 0.06, "walking_wheelchair": 0.45, "car": 0.04, "enterprise_shuttle": 0.05},
+      "visitor_service": {"metro": 0.31, "bus": 0.21, "bicycle": 0.18, "walking_wheelchair": 0.24, "car": 0.02, "enterprise_shuttle": 0.04},
+      "logistics_and_maintenance": {"metro": 0.05, "bus": 0.06, "bicycle": 0.03, "walking_wheelchair": 0.03, "car": 0.76, "enterprise_shuttle": 0.07},
+      "night_worker": {"metro": 0.23, "bus": 0.32, "bicycle": 0.08, "walking_wheelchair": 0.22, "car": 0.08, "enterprise_shuttle": 0.07}
     }
   },
   "optimization_search": {
-    "method": "full_population_replay_lexicographic_policy_search",
+    "method": "full_population_replay_capacity_gated_lexicographic_policy_search",
     "candidate_profiles": [
       {"id": "O1_transit_priority", "weight_profile": "O1", "label_zh": "O1 公共交通优先", "label_en": "O1 transit priority"},
       {"id": "O2_equity_balanced", "weight_profile": "O2", "label_zh": "O2 公平平衡", "label_en": "O2 equity balanced"},
-      {"id": "O3_active_first", "weight_profile": "O3", "label_zh": "O3 慢行优先", "label_en": "O3 active-first"}
+      {"id": "O3_active_first", "weight_profile": "O3", "label_zh": "O3 慢行优先", "label_en": "O3 active-first"},
+      {"id": "O4_capacity_balanced", "weight_profile": "O4", "label_zh": "O4 容量平衡", "label_en": "O4 capacity-balanced"}
     ],
     "hard_gate_constraints": {
       "minimum_accessibility_completion_proxy": 0.92,
       "maximum_worst_group_accessibility_gap_proxy_points": 5,
       "require_mass_conservation": true,
       "require_all_agents_processed": true,
-      "air_candidate_must_remain_blocked": true
+      "air_candidate_must_remain_blocked": true,
+      "maximum_peak_mode_load_ratio": 1.35
     },
     "selection_order": ["hard_gate_pass", "satisfaction_proxy_max", "average_generalized_cost_proxy_min", "p90_travel_time_proxy_minutes_min", "people_flow_conflict_rate_per_1000_proxy_min", "external_car_inflow_ratio_min", "vehicle_km_proxy_min"],
-    "interpretation": "The selected policy is a synthetic candidate from a declared finite policy set; it is not a calibrated local optimum until OD, capacity, accessibility and satisfaction observations replace the assumptions."
+    "interpretation": "The selected policy is a synthetic candidate from a declared finite policy set; capacity gates prevent a paper-optimal but overloaded mode from winning, and the result is not a calibrated local optimum until OD, capacity, accessibility and satisfaction observations replace the assumptions."
   },
   "optimization_objective": {
     "order": ["hard_gates", "mass_conservation", "accessibility_continuity", "satisfaction_proxy_max", "generalized_cost_min", "p90_time_proxy_min", "people_flow_conflict_min", "external_car_inflow_min", "vehicle_km_proxy_min"],
-    "hard_gates": ["fire_and_emergency_access", "accessible_route_continuity", "public_transport_backbone_protection", "privacy_aggregate_only", "human_service_equivalence", "air_candidate_blocked"],
+    "hard_gates": ["fire_and_emergency_access", "accessible_route_continuity", "public_transport_backbone_protection", "peak_mode_capacity_screen", "privacy_aggregate_only", "human_service_equivalence", "air_candidate_blocked"],
     "soft_objective_weights": {"satisfaction_proxy": 0.30, "generalized_cost": 0.25, "p90_time_proxy": 0.15, "reliability": 0.12, "people_flow_conflict": 0.08, "external_car_inflow": 0.05, "vehicle_km_proxy": 0.05},
     "satisfaction_boundary": "Synthetic satisfaction proxy from time, reliability, accessibility and conflict; actual resident satisfaction remains unknown until survey/intercept evidence."
   },
@@ -110,6 +120,7 @@
   "scenarios": [
     {"id": "B0", "label_zh": "B0 现状式压力场景", "label_en": "B0 current-like stress case", "status": "synthetic_reference", "description": "Declared baseline-like weights with concentrated arrivals and weak curb/transit coordination."},
     {"id": "O1", "label_zh": "O1 整体优化候选", "label_en": "O1 optimized operating candidate", "status": "synthetic_candidate_subject_to_calibration", "description": "Flexible enterprise windows, protected walking/accessibility, transit priority, managed curb and grouped route reassignment."},
+    {"id": "O4", "label_zh": "O4 容量平衡候选", "label_en": "O4 capacity-balanced candidate", "status": "synthetic_candidate_subject_to_calibration", "description": "Balances metro, bus, bicycle, walking/accessibility, car and enterprise-shuttle demand under the declared peak mode-load gate."},
     {"id": "R1", "label_zh": "R1 地铁中断回退", "label_en": "R1 metro disruption fallback", "status": "synthetic_resilience_screen", "description": "O1 with metro reliability suppressed and a declared bus/ground fallback; not an incident prediction."}
   ],
   "calibration_required_before_local_decision": [

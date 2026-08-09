@@ -1,0 +1,190 @@
+{
+  "schema_version": "0.1.0-research",
+  "title_zh": "OpenPulse v3.1 社会科技加速度框架",
+  "author": "许丙南 / OpenAI GPT-5 family via Codex",
+  "status": "research_agenda_not_scoring_evidence",
+  "package_integration_status": "research_branch_only_not_in_manifest",
+  "boundary_note": "本文件提出可供专业团队和公众复核的研究框架，不是官方指标、法定规划、项目基线、预算承诺或实施结论。所有没有现场或正式来源的数据保持 unknown。",
+  "thesis": "科技加速度不等于模型、终端、活动或企业数量增长，而是城市把真实问题转成可信证据、可复用能力和广泛社会收益的速度，同时降低资源消耗、排斥、锁定和失败恢复成本。",
+  "conceptual_formula": {
+    "expression": "(problem_discovery_speed * bounded_experiment_throughput * evidence_reliability * reuse_diffusion_rate * benefit_inclusion) / (resource_cost * exclusion_cost * platform_lock_in * failure_recovery_time)",
+    "status": "conceptual_only",
+    "normalization_rule": "每个分项必须先声明单位、方向、来源、群体口径、时间窗、缺失值规则和不确定性；不得直接相乘形成宣传性总分。",
+    "anti_gaming_rule": "任何平均改善都必须同时报告最不利群体结果、负面结果、退出成本和排序翻转条件。"
+  },
+  "priority_dimensions": [
+    {
+      "id": "SA-01",
+      "name_zh": "创新可负担性与反排斥",
+      "problem": "住房、通勤、工位、算力和基本服务成本可能把青年、小团队、服务劳动者和原有居民排除在创新红利之外。",
+      "candidate_metrics": [
+        "housing_commute_burden_ratio_by_group",
+        "affordable_housing_30_45_min_access_coverage",
+        "low_cost_workspace_and_test_capacity_share",
+        "small_business_continuity_rate",
+        "innovation_opportunity_access_gap"
+      ],
+      "release_gate": "不得以产业增长、地价增长或平均收入改善抵消任何已识别群体的搬迁、服务流失或不可承受成本。",
+      "current_status": "unknown_requires_housing_rent_business_and_travel_baseline"
+    },
+    {
+      "id": "SA-02",
+      "name_zh": "劳动转型与能力跃迁",
+      "problem": "只吸引顶尖人才不能证明社会势能；物业、维护、零售、照护、物流、文旅和社区服务人员也需要获得增强而不是单纯替代。",
+      "candidate_metrics": [
+        "augmented_vs_displaced_task_share",
+        "training_to_real_job_or_project_conversion",
+        "job_stability_and_autonomy_change",
+        "occupational_harm_and_workload_change",
+        "capability_gain_gap_by_age_education_and_role"
+      ],
+      "release_gate": "不得只报告培训人数或工具使用率；必须追踪真实任务、收入、稳定性、自主性和最不利群体变化。",
+      "current_status": "unknown_requires_task_level_workforce_baseline_and_participation"
+    },
+    {
+      "id": "SA-03",
+      "name_zh": "算力—电力—水—碳—热代谢",
+      "problem": "城市级能耗或水耗背景数据不能证明项目级 AI 工作负载的资源可承受性，算力扩张还会产生峰值负荷、余热和电子废弃物。",
+      "candidate_metrics": [
+        "kwh_per_verified_public_task",
+        "water_and_carbon_per_verified_public_task",
+        "peak_power_and_demand_response",
+        "edge_cloud_utilization_and_idle_rate",
+        "waste_heat_reuse_and_hardware_recovery_rate"
+      ],
+      "release_gate": "没有可审计工作负载、计量边界、资源预算和降级方案时，不得把算力规模写成公共价值。",
+      "current_status": "unknown_requires_workload_metering_energy_water_carbon_and_asset_data"
+    },
+    {
+      "id": "SA-04",
+      "name_zh": "公共价值与收益分配",
+      "problem": "产业、企业和资本指标可能上升，但居民、贡献者、维护者与公共财政未必获得可验证回报，失败成本也可能被社会化。",
+      "candidate_metrics": [
+        "verified_public_value_per_public_input",
+        "local_procurement_and_employment_share",
+        "community_contribution_credit_withdrawal_and_return",
+        "negative_result_publication_rate",
+        "benefit_concentration_and_failure_cost_distribution"
+      ],
+      "release_gate": "必须逐主体披露谁投入、谁获益、谁承担失败和退出成本；不得用总量增长掩盖高度集中。",
+      "current_status": "unknown_requires_budget_procurement_benefit_and_failure_cost_ledger"
+    },
+    {
+      "id": "SA-05",
+      "name_zh": "跨模型、跨芯片、跨云互操作与退出",
+      "problem": "普通服务虽可离线存在，技术栈仍可能被单一模型、云、芯片、应用商店或私有数据格式锁定。",
+      "candidate_metrics": [
+        "provider_migration_time_and_cost",
+        "open_interface_and_data_export_pass_rate",
+        "independent_fallback_stack_count",
+        "model_retirement_or_cloud_outage_recovery_time",
+        "cross_model_outcome_difference_disclosure"
+      ],
+      "release_gate": "任何公共服务至少应有一种非专有替代、可导出数据和可验证迁移演练；供应商退出不能切断基本服务。",
+      "current_status": "unknown_requires_stack_inventory_contract_and_failure_injection"
+    },
+    {
+      "id": "SA-06",
+      "name_zh": "城市学习速度",
+      "problem": "发布会、终端和场景卡数量不等于创新；需要衡量从真实问题到可信结论、复用或退出的时间。",
+      "candidate_metrics": [
+        "median_days_problem_to_bounded_test",
+        "median_days_test_to_human_decision_and_receipt",
+        "bounded_experiments_completed_per_period",
+        "positive_and_negative_result_reproducibility",
+        "failure_detection_recovery_and_cross_site_reuse_time"
+      ],
+      "release_gate": "试验吞吐不能通过降低安全、参与或证据门来提高；失败、异议和退出同样计入学习产出。",
+      "current_status": "unknown_requires_versioned_problem_test_decision_receipt_logs"
+    }
+  ],
+  "cross_cutting_issues": [
+    {
+      "id": "SA-X01",
+      "name_zh": "家庭与全生命周期服务",
+      "scope": ["托育", "教育", "医疗", "伴侣就业", "夜间服务", "语言支持", "照护者路线"]
+    },
+    {
+      "id": "SA-X02",
+      "name_zh": "注意力、安静和不被 AI 打扰的权利",
+      "scope": ["AI-free 路线", "无屏幕空间", "无推送服务", "安静时段", "灯光声音广告机器人认知负荷"]
+    },
+    {
+      "id": "SA-X03",
+      "name_zh": "区域外溢与空间正义",
+      "scope": ["周边社区收益", "京津冀能力扩散", "订单与采购扩散", "资源吸附风险", "空间收益集中度"]
+    },
+    {
+      "id": "SA-X04",
+      "name_zh": "高后果与双重用途风险",
+      "scope": ["自主实验室", "具身智能", "网络安全", "生命健康", "分级访问", "红队隔离停机和事故复盘"]
+    }
+  ],
+  "simulation_program": [
+    {
+      "id": "SIM-SA-01",
+      "name_zh": "可负担性与机会可达",
+      "method": "住房、工位、培训、就业和公共服务的 15/30/45 分钟可达性；比较基准、增长无干预和可负担性保护情景。",
+      "required_outputs": ["group_quantiles", "worst_group_result", "displacement_risk", "sensitivity_to_rent_and_travel_cost"]
+    },
+    {
+      "id": "SIM-SA-02",
+      "name_zh": "创新扩散多主体模拟",
+      "method": "居民、研究团队、OPC/小企业、头部企业、运营者、政府和专业审查者的排队、测试、失败、复用和退出。",
+      "required_outputs": ["learning_cycle_time", "experiment_queue", "reuse_rate", "benefit_concentration", "failed_test_disclosure"]
+    },
+    {
+      "id": "SIM-SA-03",
+      "name_zh": "算力资源小时级预算",
+      "method": "比较边缘优先、云端优先、混合调度、网络中断、峰值拥塞和资源约束。",
+      "required_outputs": ["peak_power", "task_latency", "resource_per_verified_outcome", "service_degradation", "recovery_time"]
+    },
+    {
+      "id": "SIM-SA-04",
+      "name_zh": "劳动任务转型",
+      "method": "按任务拆分自动化、增强、保留人工和禁止自动化，联结培训供给、岗位需求与通勤可达。",
+      "required_outputs": ["transition_probability_by_group", "job_quality_change", "training_gap", "wage_and_stability_distribution"]
+    },
+    {
+      "id": "SIM-SA-05",
+      "name_zh": "技术栈故障注入",
+      "method": "模拟模型退役、API 涨价、云中断、芯片/框架更换、数据迁移和安全事件。",
+      "required_outputs": ["fallback_success", "migration_cost", "ordinary_service_takeover", "recovery_time", "data_portability"]
+    },
+    {
+      "id": "SIM-SA-06",
+      "name_zh": "分配敏感的稳健决策",
+      "method": "在现有 Monte Carlo/MCDA 中加入可负担性、最差群体、公共价值、资源代谢、平台锁定和区域外溢。",
+      "required_outputs": ["mean", "p05", "cvar", "maximum_regret", "worst_group_result", "ranking_flip_conditions"]
+    }
+  ],
+  "evidence_contract": {
+    "required_fields": [
+      "publisher",
+      "source_url_or_repository_path",
+      "retrieval_or_publication_date",
+      "spatial_coverage",
+      "temporal_coverage",
+      "license",
+      "raw_fields",
+      "transformations",
+      "hash",
+      "formula_and_unit",
+      "missing_value_rule",
+      "confidence",
+      "bias_and_failure_conditions",
+      "formal_use_status"
+    ],
+    "allowed_statuses": ["official", "formal_ready", "background_only", "provisional", "simulation_only", "unknown"],
+    "cross_check_rule": "重要结论应由官方/第一手来源加独立复算、两个独立可信来源，或公开方法加可重跑产物和现场/专业复核计划之一支持。",
+    "unknown_rule": "模型输出不得填补缺失现场事实；unknown 不是通过状态。"
+  },
+  "integration_todo": [
+    "开展来源与同类方案碰撞审计，避免把常见主题包装为原创",
+    "新增 affordability、labour、compute metabolism、lock-in、public value distribution 与 dual-use 风险维度",
+    "将新增指标接入 metrics.json，所有无基线项先保持 unknown",
+    "将新增情景接入现有稳健性模型并公开排序翻转条件",
+    "同步 proposal.md、proposal.en.md、assumptions.json、sources.json、risk.json、changelog.md、图件、HTML、A3/A0 和 manifest 哈希",
+    "重新运行 render、finalize、self-check 和 participant preflight"
+  ]
+}

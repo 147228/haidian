@@ -255,6 +255,20 @@
       "usage": "Transit-oriented conditional vertiport siting method; supports ground-first integration logic and does not establish a local route, site or permit.",
       "url": "https://www.sciencedirect.com/science/article/abs/pii/S096969972500225X",
       "accessed_date": "2026-08-09"
+    },
+    {
+      "id": "UAM-MULTIMODAL-RESILIENCE-2025",
+      "source_type": "academic_public",
+      "usage": "Multimodal resilience method with metro, passenger-flow, constrained vertiport and cascading-failure scenarios; method reference only, not a local resilience result.",
+      "url": "https://www.sciencedirect.com/science/article/pii/S096585642500093X",
+      "accessed_date": "2026-08-09"
+    },
+    {
+      "id": "TRANSPORT-EQUITY-ABM-2025",
+      "source_type": "academic_public_open_access",
+      "usage": "Agent-based transport-equity and level-of-service trade-off method; supports grouped access checks and does not transfer Berlin outputs to Haidian.",
+      "url": "https://www.sciencedirect.com/science/article/pii/S1877050925008610",
+      "accessed_date": "2026-08-09"
     }
   ]
 }

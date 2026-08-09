@@ -56,27 +56,29 @@ function serviceObjects() {
   return Object.fromEntries(spec.fleet_and_service_objects.map((item) => [item.id, item]));
 }
 
-function serviceCapacityPerMinute(mode, minute, objects) {
+function serviceCapacityPerMinute(mode, minute, objects, serviceOptions = {}) {
+  let capacity = 0;
   if (mode === 'metro') {
     const item = objects.metro_train;
-    return minute % item.headway_minutes === 0 ? item.vehicle_capacity_persons : 0;
-  }
-  if (mode === 'bus' || mode === 'enterprise_shuttle') {
+    capacity = minute % item.headway_minutes === 0 ? item.vehicle_capacity_persons : 0;
+  } else if (mode === 'bus' || mode === 'enterprise_shuttle') {
     const item = objects.bus_vehicle;
-    return minute % item.headway_minutes === 0 ? item.vehicle_capacity_persons : 0;
-  }
-  if (mode === 'bicycle') {
+    capacity = minute % item.headway_minutes === 0 ? item.vehicle_capacity_persons : 0;
+  } else if (mode === 'bicycle') {
     const item = objects.bicycle_parking;
-    return item.capacity_spaces / item.turnover_minutes;
-  }
-  if (mode === 'car') {
+    capacity = item.capacity_spaces / item.turnover_minutes;
+  } else if (mode === 'car') {
     const item = objects.car_vehicle_and_curb;
-    return item.curb_service_capacity_vehicles_per_15min / 15;
+    capacity = item.curb_service_capacity_vehicles_per_15min / 15;
+  } else if (mode === 'walking_wheelchair') {
+    capacity = objects.walk_wheelchair_stream.service_capacity_persons_per_minute;
   }
-  if (mode === 'walking_wheelchair') {
-    return objects.walk_wheelchair_stream.service_capacity_persons_per_minute;
+  const blockedWindows = (serviceOptions.blocked_windows_by_mode || {})[mode] || [];
+  if (blockedWindows.some((window) => minute >= window.start_minute && minute < window.end_minute)) {
+    return 0;
   }
-  return 0;
+  const multiplier = Number((serviceOptions.capacity_multiplier_by_mode || {})[mode] ?? 1);
+  return capacity * multiplier;
 }
 
 function profileWeights(profile) {
@@ -87,7 +89,7 @@ function profileWeights(profile) {
   });
 }
 
-function runMode(mode, demandSlices, objects, includeTrace = true) {
+function runMode(mode, demandSlices, objects, includeTrace = true, serviceOptions = {}) {
   const arrivals = Array(horizon).fill(0);
   for (const slice of demandSlices) {
     const weights = profileWeights(slice.profile);
@@ -105,7 +107,7 @@ function runMode(mode, demandSlices, objects, includeTrace = true) {
 
   for (let minute = 0; minute < horizon; minute += 1) {
     queue += arrivals[minute];
-    const service = serviceCapacityPerMinute(mode, minute, objects);
+    const service = serviceCapacityPerMinute(mode, minute, objects, serviceOptions);
     const beforeService = queue;
     const servedNow = Math.min(queue, Math.floor(service));
     queue -= servedNow;
@@ -119,7 +121,7 @@ function runMode(mode, demandSlices, objects, includeTrace = true) {
   }
 
   const supply = sum(Array.from({length: horizon}, (_, minute) =>
-    serviceCapacityPerMinute(mode, minute, objects)));
+    serviceCapacityPerMinute(mode, minute, objects, serviceOptions)));
   const output = {
     demand: sum(demandSlices.map((slice) => slice.demand)),
     service_supply: round(supply),
@@ -220,10 +222,115 @@ function runBehavioralSensitivity(demandByScenario, objects) {
   };
 }
 
+function groupExposureProxy(group, modeOutputs, baseDemand, resilience) {
+  const weights = resilience.group_mode_weights[group] || {};
+  const unmetExposure = Object.entries(weights).reduce((total, [mode, weight]) => {
+    const unmet = Number(modeOutputs[mode]?.unmet_at_horizon || 0);
+    const demand = Math.max(Number(baseDemand[mode] || 0), 1);
+    return total + Number(weight) * Math.min(unmet / demand, 1);
+  }, 0);
+  const delayExposure = Object.entries(weights).reduce((total, [mode, weight]) => {
+    const meanQueue = Number(modeOutputs[mode]?.mean_queue_person_minutes || 0);
+    const demand = Math.max(Number(baseDemand[mode] || 0), 1);
+    return total + Number(weight) * Math.min(meanQueue / demand / 0.2, 1);
+  }, 0);
+  return round(unmetExposure * 12 + delayExposure * 8);
+}
+
+function runResilienceEvent(event, baseDemand, baseProfile, objects, resilience) {
+  const primaryOutputs = Object.fromEntries(Object.entries(baseDemand).map(([mode, demand]) => [
+    mode,
+    runMode(mode, [{demand, profile: baseProfile}], objects, false, event)
+  ]));
+  const fallbackDemand = {...baseDemand};
+  const plannedFallbackByMode = {};
+  let fallbackEligibleUnmet = 0;
+  for (const [sourceMode, targetMode] of Object.entries(event.fallback_mode_by_mode || {})) {
+    const sourceUnmet = Number(primaryOutputs[sourceMode]?.unmet_at_horizon || 0);
+    fallbackEligibleUnmet += sourceUnmet;
+    const planned = Math.round(sourceUnmet * Number(event.fallback_recovery_fraction || 0));
+    if (targetMode && planned > 0) {
+      fallbackDemand[targetMode] = Number(fallbackDemand[targetMode] || 0) + planned;
+      plannedFallbackByMode[targetMode] = Number(plannedFallbackByMode[targetMode] || 0) + planned;
+    }
+  }
+  const fallbackOutputs = Object.fromEntries(Object.entries(fallbackDemand).map(([mode, demand]) => [
+    mode,
+    runMode(mode, [{demand, profile: baseProfile}], objects, false, event)
+  ]));
+  const coveredFallbackUnits = Object.entries(plannedFallbackByMode).reduce((total, [mode, planned]) => {
+    const primaryServed = Number(primaryOutputs[mode]?.served || 0);
+    const fallbackServed = Number(fallbackOutputs[mode]?.served || 0);
+    return total + Math.min(planned, Math.max(0, fallbackServed - primaryServed));
+  }, 0);
+  const primaryUnmet = sum(Object.values(primaryOutputs).map((output) => output.unmet_at_horizon));
+  const totalDemand = sum(Object.values(baseDemand));
+  const groupOutputs = Object.fromEntries(Object.keys(resilience.group_mode_weights).map((group) => {
+    const exposure = groupExposureProxy(group, primaryOutputs, baseDemand, resilience);
+    const gap = round(Number(event.group_gap_penalty_points?.[group] || 0) + exposure);
+    const recovery = round(Number(event.recovery_time_proxy_minutes_by_group?.[group] || 0) + exposure * 1.5);
+    return [group, {
+      unmet_exposure_proxy: exposure,
+      worst_group_gap_proxy_points: gap,
+      recovery_time_proxy_minutes: recovery,
+      status: gap <= resilience.policy.max_worst_group_gap_proxy_points && recovery <= resilience.policy.max_recovery_time_proxy_minutes ? 'screened' : 'requires_redesign'
+    }];
+  }));
+  const worstGroup = Object.entries(groupOutputs).sort((a, b) =>
+    b[1].worst_group_gap_proxy_points - a[1].worst_group_gap_proxy_points
+  )[0];
+  const fallbackCoverage = fallbackEligibleUnmet === 0 ? 1 : round(coveredFallbackUnits / fallbackEligibleUnmet);
+  return {
+    event_id: event.id,
+    event: event.event,
+    status: 'recomputed_from_declared_inputs',
+    primary_mode_outputs: primaryOutputs,
+    fallback_mode_outputs: fallbackOutputs,
+    primary_unmet_at_horizon: primaryUnmet,
+    fallback_eligible_unmet: fallbackEligibleUnmet,
+    planned_fallback_units: sum(Object.values(plannedFallbackByMode)),
+    covered_fallback_units: coveredFallbackUnits,
+    fallback_coverage_ratio: fallbackCoverage,
+    total_queue_person_minutes: round(sum(Object.values(primaryOutputs).map((output) => output.mean_queue_person_minutes))),
+    total_demand: totalDemand,
+    group_equity_proxies: groupOutputs,
+    worst_group: worstGroup ? {group: worstGroup[0], ...worstGroup[1]} : null,
+    policy_screen: {
+      fallback_coverage_pass: primaryUnmet === 0
+        || Object.keys(event.fallback_mode_by_mode || {}).length === 0
+        || fallbackCoverage >= resilience.policy.minimum_fallback_coverage_ratio,
+      worst_group_gap_pass: worstGroup ? worstGroup[1].worst_group_gap_proxy_points <= resilience.policy.max_worst_group_gap_proxy_points : true,
+      recovery_time_pass: worstGroup ? worstGroup[1].recovery_time_proxy_minutes <= resilience.policy.max_recovery_time_proxy_minutes : true,
+      air_candidate: 'blocked'
+    },
+    disclaimer: 'Synthetic disruption and grouped-equity proxies only; replace with dated incident, weather, accessibility and p90 OD observations.'
+  };
+}
+
+function runResilienceSensitivity(demandByScenario, objects) {
+  const resilience = model.resilience_sensitivity;
+  const baseDemand = demandByScenario[resilience.base_scenario];
+  const baseProfile = profiles[resilience.base_scenario];
+  const events = resilience.events.map((event) => runResilienceEvent(event, baseDemand, baseProfile, objects, resilience));
+  const policyPass = events.every((event) => Object.values(event.policy_screen).every((value) => value === true || value === 'blocked'));
+  return {
+    id: resilience.id,
+    status: resilience.status,
+    base_scenario: resilience.base_scenario,
+    events,
+    policy: resilience.policy,
+    method_sources: resilience.method_sources,
+    required_calibration: resilience.required_calibration,
+    policy_pass: policyPass,
+    disclaimer: 'Synthetic disruption and grouped-equity sensitivity only; not a local resilience or p90 travel-time claim.'
+  };
+}
+
 const agentCount = sum(spec.agent_types.map((item) => item.design_unit_count));
 const objects = serviceObjects();
 const demandByScenario = model.model_analysis.mode_demand_by_scenario;
 const behavioralSensitivity = runBehavioralSensitivity(demandByScenario, objects);
+const resilienceSensitivity = runResilienceSensitivity(demandByScenario, objects);
 const behavioralChoiceContract = model.behavioral_choice_contract;
 const enterpriseAgentCount = spec.agent_types.find((item) => item.id === model.behavioral_sensitivity.eligible_agent_group).design_unit_count;
 const eligibleEnterpriseDemand = sum(Object.values(model.behavioral_sensitivity.eligible_demand_by_mode));
@@ -262,6 +369,18 @@ const checks = [
     ),
     observed: behavioralChoiceContract ? behavioralChoiceContract.model_class : null,
     expected: 'grouped_mode_and_departure_time_choice_with_activity_chain'
+  },
+  {
+    id: 'resilience_equity_contract_declared',
+    pass: Boolean(
+      model.resilience_sensitivity
+      && model.resilience_sensitivity.events.length >= 3
+      && model.resilience_sensitivity.events.some((event) => event.id === 'R1_metro_segment_disruption')
+      && model.resilience_sensitivity.events.some((event) => event.id === 'R2_weather_ground_fallback')
+      && resilienceSensitivity.policy_pass
+    ),
+    observed: resilienceSensitivity.events.map((event) => ({id: event.event_id, policy_pass: event.policy_screen})),
+    expected: 'nominal_plus_disruption_plus_weather_ground_fallback_screened'
   }
 ];
 
@@ -278,6 +397,7 @@ const result = {
   behavioral_choice_contract: behavioralChoiceContract,
   scenario_outputs: scenarioOutputs,
   behavioral_sensitivity: behavioralSensitivity,
+  resilience_sensitivity: resilienceSensitivity,
   next_calibration: model.model_spec.calibration_metrics
 };
 

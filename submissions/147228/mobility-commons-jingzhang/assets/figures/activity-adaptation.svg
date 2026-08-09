@@ -3,7 +3,7 @@
   <desc id="desc">450 个企业设计单元中 20% 延后到岗，峰值排队与平均排队人分钟下降；居民、照护、访客、物流和夜班需求保持保护。</desc>
   <rect width="1200" height="850" fill="#f7f3ed"/>
   <text x="62" y="62" fill="#2a9d8f" font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700" letter-spacing="2">MOBILITY COMMONS / 147228</text>
-  <text x="1138" y="62" text-anchor="end" fill="#2a9d8f" font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700">B1 / MODEL v1.2</text>
+  <text x="1138" y="62" text-anchor="end" fill="#2a9d8f" font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700">B1 / MODEL v1.3</text>
   <text x="62" y="124" fill="#10233f" font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" font-size="38" font-weight="700">企业到岗弹性敏感性</text>
   <text x="62" y="158" fill="#7890af" font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" font-size="18">错峰释放高峰压力 · 合成设计敏感性 · 不是本地实测效果</text>
   <rect x="62" y="194" width="1076" height="112" rx="18" fill="#10233f"/>

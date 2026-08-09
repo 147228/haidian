@@ -3,7 +3,7 @@
   <desc id="desc">Grouped enterprise, resident, care, logistics and night-worker journeys share a mode and departure-time choice framework; all values await local calibration and the air candidate remains blocked.</desc>
   <rect width="1200" height="900" fill="#f7f3ed"/>
   <text x="62" y="58" fill="#2a9d8f" font-family="Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="2">MOBILITY COMMONS / 147228</text>
-  <text x="1138" y="58" text-anchor="end" fill="#2a9d8f" font-family="Arial, sans-serif" font-size="16" font-weight="700">CHOICE CONTRACT / v1.2</text>
+  <text x="1138" y="58" text-anchor="end" fill="#2a9d8f" font-family="Arial, sans-serif" font-size="16" font-weight="700">CHOICE CONTRACT / v1.3</text>
   <text x="62" y="116" fill="#10233f" font-family="Arial, sans-serif" font-size="36" font-weight="700">Cross-boundary commute &amp; people flow</text>
   <text x="62" y="150" fill="#7890af" font-family="Arial, sans-serif" font-size="18">Mode × departure time × transfer crowding · grouped OD · not a local performance claim</text>
   <g font-family="Arial, sans-serif">

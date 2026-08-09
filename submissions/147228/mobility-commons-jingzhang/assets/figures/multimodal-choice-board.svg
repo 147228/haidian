@@ -3,7 +3,7 @@
   <desc id="desc">将企业、居民、照护、物流和夜班分组动线放入同一套方式与出发时间选择框架；所有数值等待本地校准，空中候选保持阻断。</desc>
   <rect width="1200" height="900" fill="#f7f3ed"/>
   <text x="62" y="58" fill="#2a9d8f" font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700" letter-spacing="2">MOBILITY COMMONS / 147228</text>
-  <text x="1138" y="58" text-anchor="end" fill="#2a9d8f" font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700">CHOICE CONTRACT / v1.2</text>
+  <text x="1138" y="58" text-anchor="end" fill="#2a9d8f" font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700">CHOICE CONTRACT / v1.3</text>
   <text x="62" y="116" fill="#10233f" font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" font-size="36" font-weight="700">跨界通勤与人员动线</text>
   <text x="62" y="150" fill="#7890af" font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif" font-size="18">方式 × 出发时刻 × 换乘拥挤 · 分组 OD · 不是本地现状绩效</text>
   <g font-family="Arial, PingFang SC, Microsoft YaHei, sans-serif">

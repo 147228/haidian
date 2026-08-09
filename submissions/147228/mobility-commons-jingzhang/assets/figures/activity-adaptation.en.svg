@@ -3,7 +3,7 @@
   <desc id="desc">Twenty percent of 450 enterprise design units shift later; modeled peak queue and mean queue person-minutes fall while resident, care, visitor, logistics and night-worker demand is protected.</desc>
   <rect width="1200" height="850" fill="#f7f3ed"/>
   <text x="62" y="62" fill="#2a9d8f" font-family="Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="2">MOBILITY COMMONS / 147228</text>
-  <text x="1138" y="62" text-anchor="end" fill="#2a9d8f" font-family="Arial, sans-serif" font-size="16" font-weight="700">B1 / MODEL v1.2</text>
+  <text x="1138" y="62" text-anchor="end" fill="#2a9d8f" font-family="Arial, sans-serif" font-size="16" font-weight="700">B1 / MODEL v1.3</text>
   <text x="62" y="124" fill="#10233f" font-family="Arial, sans-serif" font-size="38" font-weight="700">Enterprise arrival sensitivity</text>
   <text x="62" y="158" fill="#7890af" font-family="Arial, sans-serif" font-size="18">Spread the peak · synthetic design sensitivity · not a local measured effect</text>
   <rect x="62" y="194" width="1076" height="112" rx="18" fill="#10233f"/>

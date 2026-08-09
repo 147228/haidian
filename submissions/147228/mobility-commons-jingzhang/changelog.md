@@ -95,3 +95,10 @@
 - Added an independent population-scale grouped departure-time choice screen: only the declared enterprise group can enter a synthetic 20-minute flex window, while residents, care/children, visitors, logistics/maintenance and night workers remain protected from unvalidated shifting.
 - Added full-population band conservation, protected-group and rescheduling-cost checks; the screen remains separate from O1/O2/O3/O4 ranking until local behaviour, headway and 15-minute capacity evidence is available.
 - Added bilingual `activity-choice-operations-board.svg` evidence boards pairing time-band redistribution with O4 metro/bus/bicycle/accessibility/car/shuttle service-unit loads, and synchronized the proposal readouts.
+
+## v2.10 - 2026-08-09
+
+- Added an independent three-slice service-time operations screen: grouped demand is assigned to synthetic metro departures, bus departures, bicycle slots, accessible-path slots, car equivalents and enterprise shuttles with FIFO residual-capacity carry.
+- Added boarded trips, failed-boarding attempts, residual queue, queue person-minutes and scheduled service-kilometre outputs for the full 3,122,000-agent screen; mass conservation and declared service-unit totals are checked.
+- Kept the operations gate separate from policy ranking and made the current synthetic result fail closed (`3.2431x` peak slice load, `452,668` end-of-window residual queue), so the candidate cannot be described as an operable timetable before dated supply, capacity and boarding evidence exists.
+- Added bilingual `service-time-operations-board.svg`, updated the proposal/report/offline visual pages, and recorded schedule-based capacity-constrained transit assignment sources.

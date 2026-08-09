@@ -1,5 +1,5 @@
 {
-  "model_version": "2.9-regional-choice-operations",
+  "model_version": "2.10-regional-time-slice-operations",
   "simulation_class": "regional_population_scale_synthetic_two_peak_flow_not_local_OD",
   "generated_by": "node visual/assets/run-regional-commute-simulation.js",
   "scope": {
@@ -104,6 +104,42 @@
       "rescheduling_cost_person_minutes_proxy": 4365320
     }
   },
+  "service_time_operations": {
+    "model_class": "aggregate_time_slice_queue_and_service_unit_screen",
+    "selection_boundary": "This is an independent operations screen. A non-zero residual queue is a stop-and-calibrate signal, not a local performance claim; it is not used to rank O1/O2/O3/O4 until dated timetables, headways, station/stop/curb capacities and observed queue/boarding data are available.",
+    "baseline": {
+      "policy_id": "B0_reference",
+      "agents_processed": 3122000,
+      "demand_mass_conservation": true,
+      "boarded_person_trips": 2664264.9,
+      "unresolved_queue_person_trips": 457735.1,
+      "failed_boarding_attempts": 860025.1,
+      "queue_person_minutes_proxy": 12900376.5,
+      "scheduled_service_km_proxy": 4658208,
+      "peak_slice_load_ratio": 41.8144,
+      "operations_screen_pass": false
+    },
+    "selected_policy": {
+      "policy_id": "O4_capacity_balanced",
+      "agents_processed": 3122000,
+      "demand_mass_conservation": true,
+      "boarded_person_trips": 2669332,
+      "unresolved_queue_person_trips": 452668,
+      "failed_boarding_attempts": 1082756,
+      "queue_person_minutes_proxy": 16241340,
+      "scheduled_service_km_proxy": 4658208,
+      "peak_slice_load_ratio": 3.2431,
+      "operations_screen_pass": false,
+      "mode_summaries": {
+        "metro": {"demand_person_trips": 950806, "declared_available_units": 4723, "boarded_person_trips": 829152, "unresolved_queue_person_trips": 121654, "queue_person_minutes_proxy": 4793670, "peak_slice_load_ratio": 2.0848},
+        "bus": {"demand_person_trips": 603161, "declared_available_units": 9334, "boarded_person_trips": 545725, "unresolved_queue_person_trips": 57436, "queue_person_minutes_proxy": 1723320, "peak_slice_load_ratio": 2.1478},
+        "bicycle": {"demand_person_trips": 423560, "declared_available_units": 360000, "boarded_person_trips": 330458, "unresolved_queue_person_trips": 93102, "queue_person_minutes_proxy": 3504030, "peak_slice_load_ratio": 2.5517},
+        "walking_wheelchair": {"demand_person_trips": 653164, "declared_available_units": 540000, "boarded_person_trips": 496148, "unresolved_queue_person_trips": 157016, "queue_person_minutes_proxy": 5246565, "peak_slice_load_ratio": 3.2431},
+        "car": {"demand_person_trips": 299215, "declared_available_units": 241177, "boarded_person_trips": 299215, "unresolved_queue_person_trips": 0, "queue_person_minutes_proxy": 0, "peak_slice_load_ratio": 0.9047},
+        "enterprise_shuttle": {"demand_person_trips": 192094, "declared_available_units": 7500, "boarded_person_trips": 168634, "unresolved_queue_person_trips": 23460, "queue_person_minutes_proxy": 973755, "peak_slice_load_ratio": 1.8146}
+      }
+    }
+  },
   "checks": {
     "all_population_agents_processed": true,
     "declared_group_counts_sum_to_population": true,
@@ -116,6 +152,10 @@
     "privacy_aggregate_only": true,
     "choice_screen_all_population_agents_processed": true,
     "choice_screen_mass_conservation": true,
-    "choice_screen_protects_non_enterprise_groups": true
+    "choice_screen_protects_non_enterprise_groups": true,
+    "service_time_screen_all_population_agents_processed": true,
+    "service_time_screen_mass_conservation": true,
+    "service_time_screen_mode_mass_conservation": true,
+    "service_supply_reconciles_to_declared_capacity": true
   }
 }

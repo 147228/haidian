@@ -189,6 +189,125 @@ function simulateDepartureTimeChoiceScreen(policyId, profileId) {
   };
 }
 
+function simulateTimeSlicedServiceOperations(policyId, profileId, choiceScreen = null) {
+  const operations = model.service_time_operations;
+  const slices = operations.time_slices;
+  const choice = choiceScreen || simulateDepartureTimeChoiceScreen(policyId, profileId);
+  const supply = operations.service_supply_units_by_profile[profileId]
+    || operations.service_supply_units_by_profile.B0;
+  const modeSummaries = {};
+  const modeSliceRows = {};
+  let demandProcessed = 0;
+  let boardedPersonTrips = 0;
+  let unresolvedQueuePersonTrips = 0;
+  let failedBoardingAttempts = 0;
+  let queuePersonMinutesProxy = 0;
+  let scheduledServiceKmProxy = 0;
+
+  for (const mode of MODES) {
+    const parameters = model.mode_parameters[mode];
+    const serviceUnit = parameters.service_unit;
+    const capacityPerUnit = Number(serviceUnit.capacity_persons_per_unit);
+    let queueBefore = 0;
+    let modeDemand = 0;
+    let modeBoarded = 0;
+    let modeFailedBoardingAttempts = 0;
+    let modeQueuePersonMinutesProxy = 0;
+    let modeScheduledServiceKmProxy = 0;
+    const rows = [];
+
+    for (const slice of slices) {
+      const demand = Number(choice.mode_band_counts[mode][slice.id] || 0);
+      const availableUnits = Number(supply[mode][slice.id] || 0);
+      const availablePersonCapacity = availableUnits * capacityPerUnit;
+      const arrivals = demand + queueBefore;
+      const boarded = Math.min(arrivals, availablePersonCapacity);
+      const failedBoarding = Math.max(0, arrivals - boarded);
+      const queueAfter = failedBoarding;
+      const loadRatio = availablePersonCapacity > 0 ? arrivals / availablePersonCapacity : (arrivals > 0 ? Infinity : 0);
+
+      rows.push({
+        mode,
+        time_slice: slice.id,
+        demand_person_trips: demand,
+        queue_before_person_trips: queueBefore,
+        arrivals_including_queue: arrivals,
+        available_service_units: availableUnits,
+        capacity_persons_per_unit: capacityPerUnit,
+        available_person_capacity: round(availablePersonCapacity, 2),
+        boarded_person_trips: round(boarded, 2),
+        failed_boarding_attempts: round(failedBoarding, 2),
+        residual_queue_after_slice: round(queueAfter, 2),
+        load_ratio: round(loadRatio),
+        queue_person_minutes_proxy: round(queueAfter * Number(slice.duration_minutes), 2),
+        scheduled_service_km_proxy: round(availableUnits * Number(serviceUnit.distance_km_per_unit), 2),
+        interpretation: 'synthetic FIFO slice screen; not an observed timetable, boarding count or passenger-level queue'
+      });
+
+      modeDemand += demand;
+      modeBoarded += boarded;
+      modeFailedBoardingAttempts += failedBoarding;
+      modeQueuePersonMinutesProxy += queueAfter * Number(slice.duration_minutes);
+      modeScheduledServiceKmProxy += availableUnits * Number(serviceUnit.distance_km_per_unit);
+      queueBefore = queueAfter;
+    }
+
+    const declaredAvailableUnits = rows.reduce((total, row) => total + row.available_service_units, 0);
+    const requiredUnitsForDemand = Math.ceil(modeDemand / capacityPerUnit);
+    const modeMassConservation = Math.abs(modeDemand - (modeBoarded + queueBefore)) < 0.01;
+    modeSliceRows[mode] = rows;
+    modeSummaries[mode] = {
+      mode,
+      label_zh: parameters.label_zh,
+      label_en: parameters.label_en,
+      demand_person_trips: modeDemand,
+      declared_available_units: declaredAvailableUnits,
+      required_units_for_demand: requiredUnitsForDemand,
+      supply_unit_shortfall: Math.max(0, requiredUnitsForDemand - declaredAvailableUnits),
+      boarded_person_trips: round(modeBoarded, 2),
+      failed_boarding_attempts: round(modeFailedBoardingAttempts, 2),
+      unresolved_queue_person_trips: round(queueBefore, 2),
+      queue_person_minutes_proxy: round(modeQueuePersonMinutesProxy, 2),
+      scheduled_service_km_proxy: round(modeScheduledServiceKmProxy, 2),
+      peak_slice_load_ratio: round(Math.max(...rows.map((row) => row.load_ratio))),
+      mass_conservation: modeMassConservation,
+      interpretation: 'synthetic service supply and FIFO queue screen; residual queue is a calibration stop signal, not a local performance result'
+    };
+
+    demandProcessed += modeDemand;
+    boardedPersonTrips += modeBoarded;
+    unresolvedQueuePersonTrips += queueBefore;
+    failedBoardingAttempts += modeFailedBoardingAttempts;
+    queuePersonMinutesProxy += modeQueuePersonMinutesProxy;
+    scheduledServiceKmProxy += modeScheduledServiceKmProxy;
+  }
+
+  const gate = model.optimization_search.hard_gate_constraints;
+  const peakSliceLoadRatio = round(Math.max(...Object.values(modeSummaries).map((summary) => summary.peak_slice_load_ratio)));
+  return {
+    policy_id: policyId,
+    profile_id: profileId,
+    model_class: operations.model_class,
+    status: operations.status,
+    agents_processed: demandProcessed,
+    all_agents_processed: demandProcessed === TOTAL,
+    demand_mass_conservation: demandProcessed === TOTAL,
+    boarded_person_trips: round(boardedPersonTrips, 2),
+    unresolved_queue_person_trips: round(unresolvedQueuePersonTrips, 2),
+    failed_boarding_attempts: round(failedBoardingAttempts, 2),
+    queue_person_minutes_proxy: round(queuePersonMinutesProxy, 2),
+    scheduled_service_km_proxy: round(scheduledServiceKmProxy, 2),
+    peak_slice_load_ratio: peakSliceLoadRatio,
+    peak_load_gate_ratio: gate.maximum_peak_mode_load_ratio,
+    mode_summaries: modeSummaries,
+    mode_slice_rows: modeSliceRows,
+    mode_slice_mass_conservation: Object.values(modeSummaries).every((summary) => summary.mass_conservation),
+    operations_screen_pass: unresolvedQueuePersonTrips === 0 && peakSliceLoadRatio <= gate.maximum_peak_mode_load_ratio,
+    selection_boundary: operations.selection_boundary,
+    interpretation: 'synthetic aggregate time-slice operations screen; use non-zero residual queue to trigger timetable, capacity and boarding-data calibration'
+  };
+}
+
 function emptyHistogram() {
   return {"0-30": 0, "30-45": 0, "45-60": 0, "60-90": 0, "90+": 0};
 }
@@ -526,6 +645,8 @@ const selectedPolicy = rankedCandidates[0];
 const returnLegReadout = simulateReturnLeg('O1', model.mode_weights_by_group[selectedPolicy.profile], selectedPolicy.id);
 const departureChoiceBaseline = simulateDepartureTimeChoiceScreen('B0_reference', 'B0');
 const departureChoiceSelected = simulateDepartureTimeChoiceScreen(selectedPolicy.id, selectedPolicy.profile);
+const serviceOperationsBaseline = simulateTimeSlicedServiceOperations('B0_reference', 'B0', departureChoiceBaseline);
+const serviceOperationsSelected = simulateTimeSlicedServiceOperations(selectedPolicy.id, selectedPolicy.profile, departureChoiceSelected);
 const optimizationSearch = {
   method: model.optimization_search.method,
   selection_order: model.optimization_search.selection_order,
@@ -571,10 +692,19 @@ const checks = {
   air_candidate_fail_closed: scenarios.every((scenario) => scenario.air_candidate === 'blocked'),
   privacy_aggregate_only: scenarios.every((scenario) => scenario.privacy_check === 'aggregate_only_no_personal_trace'),
   optimization_has_eligible_candidate: rankedCandidates.some((candidate) => candidateEligible(candidate.result)),
-  optimization_selected_policy_is_eligible: candidateEligible(selectedPolicy.result)
-  ,choice_screen_all_population_agents_processed: departureChoiceBaseline.all_agents_processed && departureChoiceSelected.all_agents_processed
-  ,choice_screen_mass_conservation: departureChoiceBaseline.mass_conservation && departureChoiceSelected.mass_conservation
-  ,choice_screen_protects_non_enterprise_groups: departureChoiceSelected.protected_group_shift_count === 0
+  optimization_selected_policy_is_eligible: candidateEligible(selectedPolicy.result),
+  choice_screen_all_population_agents_processed: departureChoiceBaseline.all_agents_processed && departureChoiceSelected.all_agents_processed,
+  choice_screen_mass_conservation: departureChoiceBaseline.mass_conservation && departureChoiceSelected.mass_conservation,
+  choice_screen_protects_non_enterprise_groups: departureChoiceSelected.protected_group_shift_count === 0,
+  service_time_screen_all_population_agents_processed: serviceOperationsBaseline.all_agents_processed && serviceOperationsSelected.all_agents_processed,
+  service_time_screen_mass_conservation: serviceOperationsBaseline.demand_mass_conservation && serviceOperationsSelected.demand_mass_conservation,
+  service_time_screen_mode_mass_conservation: serviceOperationsBaseline.mode_slice_mass_conservation && serviceOperationsSelected.mode_slice_mass_conservation,
+  service_supply_reconciles_to_declared_capacity: MODES.every((mode) => {
+    const parameters = model.mode_parameters[mode];
+    const capacityPerUnit = Number(parameters.service_unit.capacity_persons_per_unit);
+    const expectedUnits = Math.ceil(parameters.capacity_person_trips / capacityPerUnit);
+    return serviceOperationsSelected.mode_summaries[mode].declared_available_units === expectedUnits;
+  })
 };
 
 const headlineOptimized = selectedPolicy.result;
@@ -609,12 +739,18 @@ const output = {
     person_km_proxy: headlineOptimized.person_km_proxy,
     vehicle_or_service_km_proxy: headlineOptimized.vehicle_or_service_km_proxy,
     departure_time_choice_screen: departureChoiceSelected,
+    service_time_operations: serviceOperationsSelected,
     route_flow_summary: headlineOptimized.route_flow_summary
   },
   departure_time_choice_screen: {
     baseline: departureChoiceBaseline,
     selected_policy: departureChoiceSelected,
     selection_boundary: model.departure_time_choice.selection_boundary
+  },
+  service_time_operations: {
+    baseline: serviceOperationsBaseline,
+    selected_policy: serviceOperationsSelected,
+    selection_boundary: model.service_time_operations.selection_boundary
   },
   scenarios,
   comparison: {

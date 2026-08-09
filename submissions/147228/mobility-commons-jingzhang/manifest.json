@@ -118,7 +118,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "61860914b42985d7f77734bed291d9e5760030291c55fadd82839184e2696d81"
+      "sha256": "543419064b4408b4ec264fbb8c3ac97f8dea61ecd4d29a30ffdd50c941a5b5a9"
     },
     {
       "path": "compliance_matrix.json",
@@ -228,14 +228,14 @@
       "required": true,
       "language": "en",
       "translation_of": "proposal.md",
-      "sha256": "c9bdfd568ee395659273f05c40d341754b9ce8baef65e7f2676a645ef0e696df"
+      "sha256": "d675c7bdf50943f56b20d747c0a897b0c88be3106a6938eb7618b093393a7c20"
     },
     {
       "path": "proposal.md",
       "role": "narrative",
       "required": true,
       "language": "zh",
-      "sha256": "08505a04daf38d6501012d4fd60008607fcf780e89a6c263178fd384cd60f764"
+      "sha256": "10fdd9074f311f68cf98a61198589d303497ac734533525373ffb093b30c762e"
     },
     {
       "path": "report/copyright_statement.md",
@@ -254,14 +254,14 @@
       "required": true,
       "language": "en",
       "translation_of": "report/proposal.html",
-      "sha256": "86541ccef0f63d68534c0213b215b43669eabb4363637a3e71ea345e405ce7ab"
+      "sha256": "d68b71fa1ee97f2b5ead9d109d54eb5efc8c21f7dcd595cc744a79a574b96ee6"
     },
     {
       "path": "report/proposal.html",
       "role": "rendered_proposal_html",
       "required": true,
       "language": "zh",
-      "sha256": "384841b34ce701df07b85b72aeb3e7692d3bc455a9ce2c23283da142447b2ce7"
+      "sha256": "09630dda90688e0f31cb72268f57e7749e2bf02d973c6c2c6252adef7613eeda"
     },
     {
       "path": "self_check.json",
@@ -273,7 +273,7 @@
       "path": "sources.json",
       "role": "data",
       "required": true,
-      "sha256": "d3f80a46d18cc11a43a968190dbcd03aa6c11cd179f31740d3fab3c19f970437"
+      "sha256": "f18ae97daf912933024d7ecb32e8c40c9bc387f11dea36882c389bde7d52bf8f"
     },
     {
       "path": "standard_matrix.json",
@@ -322,14 +322,14 @@
       "required": true,
       "language": "en",
       "translation_of": "visual/index.html",
-      "sha256": "e0b0522c0af049f225611c8308f2e2ea08d7982e0720611c53b045a9f647aa4b"
+      "sha256": "349413d6bfdafb23bf931d80cb23bffa6ebd6e3e14109f85204f635f22b7d375"
     },
     {
       "path": "visual/index.html",
       "role": "visualization",
       "required": true,
       "language": "zh",
-      "sha256": "97541caeb7f1f5403c81609b3652d177975cb4c26a9c108ed8e39ec355122509"
+      "sha256": "9d8692e54c43e7acf02bd5b2dbf3183391ac2532f78b59de6ed61d9dbc78ffd0"
     },
     {
       "path": "visual/assets/multimodal-network.json",
@@ -482,22 +482,37 @@
       "sha256": "530e55b7159f05ff78010ca42ca593f3659f8af094b2ca5fcf15c3c2002da8d3"
     },
     {
+      "path": "assets/figures/service-time-operations-board.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "zh",
+      "sha256": "03e5163d3ecb10d532ea9a3c346d015ce536221163ba36769f67d70dc13f1db1"
+    },
+    {
+      "path": "assets/figures/service-time-operations-board.en.svg",
+      "role": "proposal_figure",
+      "required": true,
+      "language": "en",
+      "translation_of": "assets/figures/service-time-operations-board.svg",
+      "sha256": "c94339aac7568251519a47f3d576b598b4e0d7a0a13ccb48d5f7cf0d80bd20d9"
+    },
+    {
       "path": "visual/assets/regional-scale-commute.json",
       "role": "data",
       "required": true,
-      "sha256": "c2a097157cedbddd0ac874b491aa4cf7dad65b8b1c0394ff507fbe90114e8ff5"
+      "sha256": "344c8ddf80fe26e1c0d4d7796257d85ff0ebcf0ad670a5715e7a6c5de22c29bf"
     },
     {
       "path": "visual/assets/run-regional-commute-simulation.js",
       "role": "script",
       "required": true,
-      "sha256": "bf3bc42f9edaf5de7cc688324ae69a66db5bc0f9a220919d71ff93c8459d14fe"
+      "sha256": "a335fe49210167c0f52e64af774ca2375c973fd142d4adf935297beb93b788f3"
     },
     {
       "path": "visual/assets/regional-scale-commute-readout.json",
       "role": "data_readout",
       "required": true,
-      "sha256": "b8a1055f8e623873901a8cc36a9330577ace0991991c7f4325301afbe78bf5a7"
+      "sha256": "ea98bed6f597f32ed8d27ad840a7aeefec354fb024565042c7a6ceb8c601cb19"
     }
   ]
 }

@@ -1,8 +1,8 @@
 {
-  "version": "2.9-regional-choice-operations",
+  "version": "2.10-regional-time-slice-operations",
   "simulation_class": "regional_population_scale_synthetic_two_peak_flow_not_local_OD",
   "status": "transparent_sandbox_before_field_calibration",
-  "purpose": "Process one synthetic morning work/service chain and one separate synthetic return-leg coverage screen for every person in the regional population reference, compare a current-like stress case with an optimized multimodal operating case, and publish only aggregate flows.",
+  "purpose": "Process one synthetic morning work/service chain and one separate synthetic return-leg coverage screen for every person in the regional population reference, compare a current-like stress case with an optimized multimodal operating case, and expose the mode-by-time-slice service, boarding and residual-queue ledger as aggregate evidence.",
   "regional_scope": {
     "population_reference": 3122000,
     "population_reference_label": "Haidian permanent residents at the end of 2024",
@@ -145,6 +145,55 @@
     ],
     "selection_boundary": "This screen is a separate sensitivity readout and is not used to rank O1/O2/O3/O4 until local behaviour, timetable and capacity evidence is available.",
     "privacy": "Publish only group × time-band × mode aggregates; never publish employee-level schedules or traces."
+  },
+  "service_time_operations": {
+    "model_class": "aggregate_time_slice_queue_and_service_unit_screen",
+    "status": "synthetic_service_schedule_contract_not_observed_timetable",
+    "purpose": "Translate grouped departure bands into a declared three-slice service ledger so train departures, bus departures, bicycle slots, accessible-path slots, car equivalents and enterprise shuttles can be checked for boarding, denied boarding and residual queue without publishing individual traces.",
+    "time_slices": [
+      {"id": "early", "label_zh": "提前 07:40–07:55", "label_en": "early 07:40–07:55", "duration_minutes": 15},
+      {"id": "preferred", "label_zh": "首选 08:00–08:15", "label_en": "preferred 08:00–08:15", "duration_minutes": 15},
+      {"id": "late", "label_zh": "延后 08:20–08:35", "label_en": "late 08:20–08:35", "duration_minutes": 15}
+    ],
+    "queue_rule": "FIFO_with_residual_capacity_and_next_slice_carry",
+    "service_supply_units_by_profile": {
+      "B0": {
+        "metro": {"early": 240, "preferred": 4300, "late": 183},
+        "bus": {"early": 300, "preferred": 8650, "late": 384},
+        "bicycle": {"early": 20000, "preferred": 325000, "late": 15000},
+        "walking_wheelchair": {"early": 25000, "preferred": 490000, "late": 25000},
+        "car": {"early": 10000, "preferred": 225000, "late": 6177},
+        "enterprise_shuttle": {"early": 500, "preferred": 6500, "late": 500}
+      },
+      "O4": {
+        "metro": {"early": 600, "preferred": 3500, "late": 623},
+        "bus": {"early": 900, "preferred": 7600, "late": 834},
+        "bicycle": {"early": 60000, "preferred": 240000, "late": 60000},
+        "walking_wheelchair": {"early": 70000, "preferred": 400000, "late": 70000},
+        "car": {"early": 35000, "preferred": 175000, "late": 31177},
+        "enterprise_shuttle": {"early": 1200, "preferred": 5100, "late": 1200}
+      }
+    },
+    "supply_basis": "The declared slice supply is a synthetic stress-test schedule whose unit totals reconcile to each mode's declared capacity screen; it is not a timetable, fleet inventory, station count or operating commitment.",
+    "outputs": [
+      "mode_by_time_slice_demand",
+      "available_service_units_and_person_capacity",
+      "boarded_person_trips",
+      "denied_boarding_person_trips",
+      "residual_queue_after_each_slice",
+      "queue_person_minutes_proxy",
+      "service_vehicle_or_service_km_proxy",
+      "time_slice_mass_conservation"
+    ],
+    "selection_boundary": "This is an independent operations screen. A non-zero residual queue is a stop-and-calibrate signal, not a local performance claim; it is not used to rank O1/O2/O3/O4 until dated timetables, headways, station/stop/curb capacities and observed queue/boarding data are available.",
+    "calibration_required": [
+      "dated_service_timetable_and_headway_by_mode",
+      "station_stop_curb_capacity_by_15min",
+      "boarding_and_denied_boarding_counts",
+      "bicycle_parking_and_continuous_accessible_path_capacity",
+      "vehicle_fleet_and_service_distance_by_operator"
+    ],
+    "privacy": "Publish only mode × time-slice × service-unit aggregates; never publish employee-level schedules, vehicle identifiers or individual traces."
   },
   "route_templates": {
     "metro": "home → walk/access → metro backbone → walk/access → work/service",

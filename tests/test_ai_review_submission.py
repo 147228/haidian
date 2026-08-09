@@ -349,6 +349,65 @@ class AIReviewSubmissionTests(unittest.TestCase):
             )
             self.assertEqual([], warnings)
 
+    def test_visual_packet_keeps_all_bilingual_previews_with_eighteen_image_budget(self) -> None:
+        try:
+            from PIL import Image
+        except ImportError:  # pragma: no cover - Pillow is a project test dependency.
+            self.skipTest("Pillow unavailable")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            figure_dir = root / "assets" / "figures"
+            figure_dir.mkdir(parents=True)
+            figure_paths = [
+                "assets/figures/site-overview.png",
+                "assets/figures/land-use-structure.png",
+                "assets/figures/key-areas.png",
+                "assets/figures/mobility-bluegreen.png",
+                "assets/figures/metrics-evidence.png",
+            ]
+            for rel in figure_paths:
+                primary = root / rel
+                counterpart = primary.with_name(f"{primary.stem}.en{primary.suffix}")
+                Image.new("RGB", (2, 2), "white").save(primary)
+                Image.new("RGB", (2, 2), "white").save(counterpart)
+
+            for rel in [
+                "drawings/a3-booklet.pdf",
+                "drawings/a0-boards.pdf",
+                "drawings/a3-booklet.en.pdf",
+                "drawings/a0-boards.en.pdf",
+                "report/proposal.html",
+                "visual/index.html",
+                "report/proposal.en.html",
+                "visual/index.en.html",
+            ]:
+                path = root / rel
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(b"fixture")
+
+            rendered = root / "rendered"
+            rendered.mkdir()
+            def previews(prefix: str) -> list[Path]:
+                paths = [rendered / f"{prefix}-a3-01.png", rendered / f"{prefix}-a0-01.png"]
+                for path in paths:
+                    Image.new("RGB", (2, 2), "white").save(path)
+                return paths
+
+            with mock.patch("ai_review_submission.FIGURE_PATHS", figure_paths), mock.patch(
+                "ai_review_submission.render_pdf_previews",
+                side_effect=[previews("pdf-zh"), previews("pdf-en")],
+            ), mock.patch(
+                "ai_review_submission.render_html_previews",
+                side_effect=[previews("html-zh"), previews("html-en")],
+            ):
+                _, included, warnings = collect_visual_inputs(
+                    root, rendered, 18, 1024 * 1024
+                )
+            self.assertEqual(18, len(included))
+            self.assertIn("rendered/html-en-a3-01.png", included)
+            self.assertIn("rendered/html-en-a0-01.png", included)
+            self.assertEqual([], warnings)
+
     def test_organizer_owned_next_action_moves_to_data_gap(self) -> None:
         review = valid_review()
         for item in review["rubric_scores"]:

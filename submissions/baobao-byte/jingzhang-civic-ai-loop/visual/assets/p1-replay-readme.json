@@ -10,7 +10,8 @@
     "uncertainty to human review",
     "paper route and staffed fallback",
     "memory deletion 4 to 0",
-    "five-step rollback"
+    "five-step rollback",
+    "schema metadata presence (not full JSON Schema validation)"
   ],
   "claim_boundary": "PASS proves deterministic protocol branching and rollback mechanics only. It does not prove field safety, staff availability, public outcomes, legal authorization, deployment security, or an executed pilot.",
   "field_status": "NOT AUTHORIZED / NOT RUN"

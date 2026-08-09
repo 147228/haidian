@@ -344,7 +344,7 @@
       "path": "visual/assets/run-p1-replay.js",
       "role": "reproducibility_runner",
       "required": false,
-      "sha256": "72ae7450b90f256321ab78cd1dbb44be5f2ea2d65d1506a9a80a8a6a43203150"
+      "sha256": "60de96f068f4c438366ae69fe47f5b196cfb7b1797dc237dd1daa2756f9d4eb8"
     },
     {
       "path": "visual/assets/p1-replay-fixtures.json",
@@ -356,13 +356,13 @@
       "path": "visual/assets/p1-replay-evidence.json",
       "role": "supplemental_evidence",
       "required": false,
-      "sha256": "47eb2709bf3901a24e47334f363bb54a465a1e322732461dac328a1115256868"
+      "sha256": "47887d1c9ed85cca3ba4e60dfbfaf9f2f1d9ce3eed61aa795b5878666cb052fb"
     },
     {
       "path": "visual/assets/p1-replay-readme.json",
       "role": "supplemental_evidence",
       "required": false,
-      "sha256": "25d0e75a6575a2deaadd610d2dd44920500a32298af8ae38bb7e27533c9c66f3"
+      "sha256": "aa424c1e14f4ecc35fd4f5067cb821cdeb871bd427e863c52111b71876e1468e"
     }
   ],
   "validation_claim": {

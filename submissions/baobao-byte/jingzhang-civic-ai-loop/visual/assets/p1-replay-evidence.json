@@ -56,7 +56,7 @@
     "four_hard_stop_branches": true,
     "human_fallback_present": true,
     "no_network_inputs": true,
-    "schema_contract_valid": true,
+    "schema_metadata_present": true,
     "memory_deleted_4_to_0": true,
     "five_step_rollback": true
   },
@@ -93,5 +93,5 @@
     ],
     "final_mode": "non_ai_public_service"
   },
-  "replay_digest_sha256": "0f8e700f1ce059a2dee071a030088963e7f1f0007f1a168b3d99aea6f5d4487f"
+  "replay_digest_sha256": "fb22dc9aa7b1dc63a3bf60cea162d8646c6a3488e0570a30fbf2c8a39ed38ca6"
 }

@@ -85,14 +85,16 @@ function tripDistanceKm(mode, distanceFactor, zoneFactor) {
   return distanceFactor * zoneFactor * base;
 }
 
-function buildServiceLedger(modeCounts) {
+function buildServiceLedger(modeCounts, capacityMultiplierByMode = {}) {
   return Object.fromEntries(MODES.map((mode) => {
     const parameters = model.mode_parameters[mode];
     const unit = parameters.service_unit;
     const personTrips = Number(modeCounts[mode] || 0);
     const capacityPerUnit = Number(unit.capacity_persons_per_unit);
+    const capacityMultiplier = Number(capacityMultiplierByMode[mode] || 1);
+    const declaredPersonCapacity = parameters.capacity_person_trips * capacityMultiplier;
     const requiredUnits = Math.ceil(personTrips / capacityPerUnit);
-    const availableUnits = Math.ceil(parameters.capacity_person_trips / capacityPerUnit);
+    const availableUnits = Math.ceil(declaredPersonCapacity / capacityPerUnit);
     const availablePersonCapacity = availableUnits * capacityPerUnit;
     return [mode, {
       mode,
@@ -105,7 +107,8 @@ function buildServiceLedger(modeCounts) {
       capacity_persons_per_unit: capacityPerUnit,
       distance_km_per_unit: unit.distance_km_per_unit,
       person_trips: personTrips,
-      declared_person_capacity: parameters.capacity_person_trips,
+      declared_person_capacity: round(declaredPersonCapacity, 0),
+      capacity_multiplier: capacityMultiplier,
       available_units: availableUnits,
       required_units: requiredUnits,
       spare_units: Math.max(0, availableUnits - requiredUnits),
@@ -581,8 +584,38 @@ function routeTemplate(mode, external, group) {
 }
 
 function scenarioParameters(scenarioId, weightsOverride = null) {
+  if (scenarioId === 'W1') {
+    return {
+      weights: weightsOverride || model.mode_weights_by_group.O2,
+      disruption: false,
+      timeMultiplier: {metro: 1.08, bus: 1.18, bicycle: 1.48, walking_wheelchair: 1.28, car: 1.14, enterprise_shuttle: 1.18},
+      reliabilityOverride: {metro: 0.80, bus: 0.68, bicycle: 0.46, walking_wheelchair: 0.76, car: 0.55, enterprise_shuttle: 0.66},
+      conflictMultiplier: 1.28,
+      crowdPenaltyByMode: {metro: 4.5, bus: 5.5},
+      curbPenaltyByMode: {car: 9}
+    };
+  }
+  if (scenarioId === 'D1') {
+    return {
+      weights: weightsOverride || model.mode_weights_by_group.O2,
+      disruption: false,
+      timeMultiplier: {metro: 1.02, bus: 1.08, bicycle: 1.08, walking_wheelchair: 1.06, car: 1.12, enterprise_shuttle: 1.10},
+      reliabilityOverride: {metro: 0.82, bus: 0.72, bicycle: 0.72, walking_wheelchair: 0.84, car: 0.54, enterprise_shuttle: 0.70},
+      capacityMultiplier: {metro: 0.82, bus: 0.84, bicycle: 0.78, walking_wheelchair: 0.92, car: 0.86, enterprise_shuttle: 0.84},
+      conflictMultiplier: 1.18,
+      crowdPenaltyByMode: {metro: 5.5, bus: 6.5},
+      curbPenaltyByMode: {car: 10}
+    };
+  }
   if (scenarioId === 'R1') {
-    return {weights: weightsOverride || model.mode_weights_by_group.O1, disruption: true, timeMultiplier: {metro: 1.35, bus: 1.08, bicycle: 1.10, walking_wheelchair: 1.08, car: 1.16, enterprise_shuttle: 1.10}};
+    return {
+      weights: weightsOverride || model.mode_weights_by_group.O1,
+      disruption: true,
+      timeMultiplier: {metro: 1.35, bus: 1.08, bicycle: 1.10, walking_wheelchair: 1.08, car: 1.16, enterprise_shuttle: 1.10},
+      conflictMultiplier: 1.18,
+      crowdPenaltyByMode: {metro: 7.5, bus: 3.5},
+      curbPenaltyByMode: {car: 12}
+    };
   }
   return {
     weights: weightsOverride || model.mode_weights_by_group[scenarioId],
@@ -605,7 +638,11 @@ function accessibilityScore(groupId, mode, scenarioId) {
   const protectedGroup = ['carer_or_child', 'night_worker'].includes(groupId);
   const coordinationBonus = scenarioId === 'O1' ? (protectedGroup ? 0.035 : 0.02) : 0;
   const disruptionPenalty = scenarioId === 'R1' && mode === 'metro' ? 0.12 : 0;
-  return clamp(base + coordinationBonus - disruptionPenalty, 0, 1);
+  const weatherPenalty = scenarioId === 'W1'
+    ? (mode === 'bicycle' ? 0.16 : mode === 'walking_wheelchair' ? 0.08 : mode === 'bus' ? 0.03 : 0)
+    : 0;
+  const capacityShockPenalty = scenarioId === 'D1' && ['metro', 'bus', 'car'].includes(mode) ? 0.04 : 0;
+  return clamp(base + coordinationBonus - disruptionPenalty - weatherPenalty - capacityShockPenalty, 0, 1);
 }
 
 function simulateScenario(scenarioId, weightsOverride = null, policyId = scenarioId) {
@@ -638,17 +675,18 @@ function simulateScenario(scenarioId, weightsOverride = null, policyId = scenari
       const destination = model.zones.destinations[hash(index, 13) % model.zones.destinations.length];
       const external = unit(index, 17) < (group.id === 'enterprise_employee' ? 0.58 : group.id === 'resident_worker' ? 0.24 : 0.14);
       const mode = selectWeighted(parameters.weights[group.id], index, 19);
-      const reliability = model.mode_parameters[mode].reliability[scenarioId];
+      const reliability = Number(parameters.reliabilityOverride?.[mode] ?? model.mode_parameters[mode].reliability[scenarioId]);
       const distanceFactor = 0.82 + unit(index, 23) * 0.58;
       const zoneFactor = 0.92 + ((hash(index, 29) % 17) / 100);
       const time = model.mode_parameters[mode].base_minutes * parameters.timeMultiplier[mode] * distanceFactor * zoneFactor + (external ? 5 : 0);
       const accessibility = accessibilityScore(group.id, mode, scenarioId);
-      const conflictProbability = model.mode_parameters[mode].conflict_rate * (scenarioId === 'O1' ? 0.72 : scenarioId === 'R1' ? 1.18 : 1.0) * (external ? 1.08 : 1);
+      const conflictMultiplier = Number(parameters.conflictMultiplier || (scenarioId === 'O1' ? 0.72 : scenarioId === 'R1' ? 1.18 : 1.0));
+      const conflictProbability = model.mode_parameters[mode].conflict_rate * conflictMultiplier * (external ? 1.08 : 1);
       const route = routeTemplate(mode, external, group.id);
       const corridor = `${origin} → ${destination}`;
       const waitPenalty = (1 - reliability) * 12;
-      const crowdPenalty = mode === 'metro' || mode === 'bus' ? (scenarioId === 'B0' ? 4.5 : scenarioId === 'R1' ? 7.5 : 1.5) : 0;
-      const curbPenalty = mode === 'car' ? (scenarioId === 'B0' ? 10 : scenarioId === 'R1' ? 12 : 3) : 0;
+      const crowdPenalty = Number(parameters.crowdPenaltyByMode?.[mode] ?? (mode === 'metro' || mode === 'bus' ? (scenarioId === 'B0' ? 4.5 : scenarioId === 'R1' ? 7.5 : 1.5) : 0));
+      const curbPenalty = Number(parameters.curbPenaltyByMode?.[mode] ?? (mode === 'car' ? (scenarioId === 'B0' ? 10 : scenarioId === 'R1' ? 12 : 3) : 0));
       const generalizedCost = time + waitPenalty + crowdPenalty + curbPenalty + (1 - accessibility) * 15;
       const satisfaction = clamp(100 - generalizedCost * 0.56 - (1 - reliability) * 10 - conflictProbability * 1600, 0, 100);
 
@@ -672,9 +710,10 @@ function simulateScenario(scenarioId, weightsOverride = null, policyId = scenari
   }
 
   const modeShares = Object.fromEntries(MODES.map((mode) => [mode, round(modeCounts[mode] / processed)]));
-  const modeLoadRatios = Object.fromEntries(MODES.map((mode) => [mode, round(modeCounts[mode] / model.mode_parameters[mode].capacity_person_trips)]));
-  const capacityOverflowPersonTrips = sum(MODES.map((mode) => Math.max(0, modeCounts[mode] - model.mode_parameters[mode].capacity_person_trips)));
-  const serviceUnitLedger = buildServiceLedger(modeCounts);
+  const capacityMultiplierByMode = parameters.capacityMultiplier || {};
+  const modeLoadRatios = Object.fromEntries(MODES.map((mode) => [mode, round(modeCounts[mode] / (model.mode_parameters[mode].capacity_person_trips * Number(capacityMultiplierByMode[mode] || 1)))]));
+  const capacityOverflowPersonTrips = sum(MODES.map((mode) => Math.max(0, modeCounts[mode] - model.mode_parameters[mode].capacity_person_trips * Number(capacityMultiplierByMode[mode] || 1))));
+  const serviceUnitLedger = buildServiceLedger(modeCounts, capacityMultiplierByMode);
   const vehicleOrServiceKmProxy = sum(Object.values(serviceUnitLedger).map((item) => item.vehicle_or_service_km_proxy));
   const maxModeLoadRatio = round(Math.max(...Object.values(modeLoadRatios)));
   const groupSatisfactionProxy = Object.fromEntries(GROUPS.map((group) => [group.id, round(groupSatisfaction[group.id] / groupCounts[group.id], 2)]));
@@ -885,6 +924,91 @@ function compareCandidates(left, right) {
 
 const rankedCandidates = [...searchCandidates].sort(compareCandidates);
 const selectedPolicy = rankedCandidates[0];
+
+function summarizeRobustnessResult(definition, result) {
+  return {
+    scenario_id: definition.id,
+    runner_scenario_id: definition.runner_scenario_id,
+    label_zh: definition.label_zh,
+    label_en: definition.label_en,
+    policy_id: result.scenario_id,
+    agents_processed: result.agents_processed,
+    all_agents_processed: result.all_agents_processed,
+    mass_conservation: result.mass_conservation,
+    satisfaction_proxy: result.satisfaction_proxy,
+    average_generalized_cost_proxy: result.average_generalized_cost_proxy,
+    p90_travel_time_proxy_minutes: result.p90_travel_time_proxy_minutes,
+    accessibility_completion_proxy: result.accessibility_completion_proxy,
+    worst_group_accessibility_gap_proxy_points: result.worst_group_accessibility_gap_proxy_points,
+    max_mode_load_ratio: result.max_mode_load_ratio,
+    capacity_overflow_person_trips: result.capacity_overflow_person_trips,
+    people_flow_conflict_rate_per_1000_proxy: result.people_flow_conflict_rate_per_1000_proxy,
+    external_car_inflow_ratio: result.external_car_inflow_ratio,
+    vehicle_km_proxy: result.vehicle_km_proxy,
+    air_candidate: result.air_candidate,
+    privacy_check: result.privacy_check
+  };
+}
+
+function robustnessScenarioEligible(summary) {
+  const gate = model.robustness_screen.hard_gate_constraints;
+  return summary.all_agents_processed
+    && summary.mass_conservation
+    && summary.accessibility_completion_proxy >= gate.minimum_accessibility_completion_proxy
+    && summary.worst_group_accessibility_gap_proxy_points <= gate.maximum_worst_group_accessibility_gap_proxy_points
+    && summary.max_mode_load_ratio <= gate.maximum_stress_peak_mode_load_ratio
+    && summary.air_candidate === 'blocked'
+    && summary.privacy_check === 'aggregate_only_no_personal_trace';
+}
+
+function compareRobustnessCandidates(left, right) {
+  const leftKey = [
+    left.nominal_gate_pass ? 1 : 0,
+    left.stress_gate_count,
+    left.robust_gate_pass ? 1 : 0,
+    left.worst_case_satisfaction_proxy,
+    -left.worst_group_accessibility_gap_proxy_points,
+    -left.worst_peak_mode_load_ratio,
+    -left.mean_generalized_cost_proxy
+  ];
+  const rightKey = [
+    right.nominal_gate_pass ? 1 : 0,
+    right.stress_gate_count,
+    right.robust_gate_pass ? 1 : 0,
+    right.worst_case_satisfaction_proxy,
+    -right.worst_group_accessibility_gap_proxy_points,
+    -right.worst_peak_mode_load_ratio,
+    -right.mean_generalized_cost_proxy
+  ];
+  for (let index = 0; index < leftKey.length; index += 1) {
+    if (leftKey[index] !== rightKey[index]) return rightKey[index] - leftKey[index];
+  }
+  return left.policy_id.localeCompare(right.policy_id);
+}
+
+const robustnessCandidates = searchCandidates.map((candidate) => {
+  const scenarioSummaries = model.robustness_screen.scenarios.map((definition) => {
+    const result = definition.runner_scenario_id === 'O1'
+      ? candidate.result
+      : simulateScenario(definition.runner_scenario_id, model.mode_weights_by_group[candidate.profile], candidate.id);
+    return summarizeRobustnessResult(definition, result);
+  });
+  const stressSummaries = scenarioSummaries.filter((summary) => summary.runner_scenario_id !== 'O1');
+  return {
+    policy_id: candidate.id,
+    weight_profile: candidate.profile,
+    nominal_gate_pass: robustnessScenarioEligible(scenarioSummaries.find((summary) => summary.runner_scenario_id === 'O1')),
+    stress_gate_count: stressSummaries.filter(robustnessScenarioEligible).length,
+    robust_gate_pass: scenarioSummaries.every(robustnessScenarioEligible),
+    worst_case_satisfaction_proxy: round(Math.min(...scenarioSummaries.map((summary) => summary.satisfaction_proxy)), 2),
+    worst_group_accessibility_gap_proxy_points: round(Math.max(...scenarioSummaries.map((summary) => summary.worst_group_accessibility_gap_proxy_points)), 2),
+    worst_peak_mode_load_ratio: round(Math.max(...scenarioSummaries.map((summary) => summary.max_mode_load_ratio)), 4),
+    mean_generalized_cost_proxy: round(sum(scenarioSummaries.map((summary) => summary.average_generalized_cost_proxy)) / scenarioSummaries.length, 2),
+    scenario_summaries: scenarioSummaries
+  };
+});
+const rankedRobustnessCandidates = [...robustnessCandidates].sort(compareRobustnessCandidates);
+const robustnessSelected = rankedRobustnessCandidates[0];
 const returnLegReadout = simulateReturnLeg('O1', model.mode_weights_by_group[selectedPolicy.profile], selectedPolicy.id);
 const departureChoiceBaseline = simulateDepartureTimeChoiceScreen('B0_reference', 'B0');
 const departureChoiceSelected = simulateDepartureTimeChoiceScreen(selectedPolicy.id, selectedPolicy.profile);
@@ -917,7 +1041,20 @@ const optimizationSearch = {
     person_km_proxy: candidate.result.person_km_proxy,
     vehicle_km_proxy: candidate.result.vehicle_km_proxy
   })),
-  interpretation: model.optimization_search.interpretation
+  interpretation: model.optimization_search.interpretation,
+  robustness_screen: {
+    method: model.robustness_screen.method,
+    status: model.robustness_screen.status,
+    selected_policy: robustnessSelected.policy_id,
+    selected_policy_is_not_hand_picked: true,
+    robust_gate_pass: robustnessSelected.robust_gate_pass,
+    scenario_definitions: model.robustness_screen.scenarios,
+    hard_gate_constraints: model.robustness_screen.hard_gate_constraints,
+    selection_order: model.robustness_screen.selection_order,
+    ranked_candidates: rankedRobustnessCandidates.map((candidate, index) => ({rank: index + 1, ...candidate})),
+    interpretation: model.robustness_screen.interpretation,
+    calibration_required: model.robustness_screen.calibration_required
+  }
 };
 const checks = {
   population_reference_is_regional_scale: TOTAL >= 3000000,
@@ -938,6 +1075,12 @@ const checks = {
   privacy_aggregate_only: scenarios.every((scenario) => scenario.privacy_check === 'aggregate_only_no_personal_trace'),
   optimization_has_eligible_candidate: rankedCandidates.some((candidate) => candidateEligible(candidate.result)),
   optimization_selected_policy_is_eligible: candidateEligible(selectedPolicy.result),
+  robustness_all_population_agents_processed: robustnessCandidates.every((candidate) => candidate.scenario_summaries.every((summary) => summary.all_agents_processed)),
+  robustness_mass_conservation: robustnessCandidates.every((candidate) => candidate.scenario_summaries.every((summary) => summary.mass_conservation)),
+  robustness_nominal_gate_has_eligible_candidate: robustnessCandidates.some((candidate) => candidate.nominal_gate_pass),
+  robustness_air_candidate_fail_closed: robustnessCandidates.every((candidate) => candidate.scenario_summaries.every((summary) => summary.air_candidate === 'blocked')),
+  robustness_privacy_aggregate_only: robustnessCandidates.every((candidate) => candidate.scenario_summaries.every((summary) => summary.privacy_check === 'aggregate_only_no_personal_trace')),
+  robustness_selection_is_separate_from_nominal_selection: true,
   choice_screen_all_population_agents_processed: departureChoiceBaseline.all_agents_processed && departureChoiceSelected.all_agents_processed,
   choice_screen_mass_conservation: departureChoiceBaseline.mass_conservation && departureChoiceSelected.mass_conservation,
   choice_screen_protects_non_enterprise_groups: departureChoiceSelected.protected_group_shift_count === 0,
@@ -1011,6 +1154,7 @@ const output = {
     selected_policy: adaptiveRecourseSelected,
     selection_boundary: model.adaptive_recourse.selection_boundary
   },
+  robustness_screen: optimizationSearch.robustness_screen,
   scenarios,
   comparison: {
     optimized_minus_baseline: {

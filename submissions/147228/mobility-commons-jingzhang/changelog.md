@@ -115,3 +115,10 @@
 - Converted the responsibility-and-acceptance contract into `visual/assets/responsibility-acceptance-contract.json` with bilingual role fields, required dated readback fields, P0/P1/P2 acceptance targets, group dimensions, calibration inputs and fail-safe human fallback channels.
 - Kept all thresholds explicitly marked as `design_target`; they do not assert current performance, institutional partnership, permit, procurement or budget decisions.
 - Synchronized both proposals, rendered reports, offline visual pages and manifest hashes so the operational acceptance chain can be inspected without personal trajectories, enterprise identities or vehicle identifiers.
+
+## v2.13 - 2026-08-09
+
+- Added a full-population robustness screen: each O1/O2/O3/O4 candidate is replayed under nominal ground coordination, a 30-minute metro disruption, severe-weather bicycle constraint and multimodal capacity shock.
+- Added machine-readable scenario summaries, stress-gate status, worst-case satisfaction, accessibility gap, peak load, overflow and calibration requirements; the screen retains aggregates only and keeps the air candidate blocked.
+- Under the declared synthetic inputs, O2 is the robustness-screen winner while O4 remains the nominal-efficiency winner; O3 exits on the capacity-shock load gate. This is a sensitivity ranking, not a local resilience or implementation claim.
+- Added bilingual `robustness-screen-board.svg`, synchronized proposal/readout/model version and recorded the exact system-optimum transit method reference without importing paper coefficients.

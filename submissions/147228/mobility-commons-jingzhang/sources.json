@@ -250,6 +250,13 @@
       "accessed_date": "2026-08-09"
     },
     {
+      "id": "EXACT-SO-TRANSIT-2025",
+      "source_type": "academic_public_preprint",
+      "usage": "Exact system-optimum transit demand-management method with hard capacity and competing time-space flows; supports separating nominal efficiency ranking from a declared robustness stress screen without importing local coefficients.",
+      "url": "https://arxiv.org/abs/2505.22241",
+      "accessed_date": "2026-08-09"
+    },
+    {
       "id": "FLEXTIME-DEPARTURE-CHOICE-2013",
       "source_type": "academic_public",
       "usage": "Evidence on flexible work schedules and commute departure-time choice; regional effect sizes are not transferred to Haidian.",

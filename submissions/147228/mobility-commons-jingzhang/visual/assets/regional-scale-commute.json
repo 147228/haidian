@@ -1,5 +1,5 @@
 {
-  "version": "2.11-regional-adaptive-recourse",
+  "version": "2.13-regional-robustness-screen",
   "simulation_class": "regional_population_scale_synthetic_two_peak_flow_not_local_OD",
   "status": "transparent_sandbox_before_field_calibration",
   "purpose": "Process one synthetic morning work/service chain and one separate synthetic return-leg coverage screen for every person in the regional population reference, compare a current-like stress case with an optimized multimodal operating case, and expose the mode-by-time-slice service, boarding and residual-queue ledger as aggregate evidence.",
@@ -103,6 +103,29 @@
     },
     "selection_order": ["hard_gate_pass", "satisfaction_proxy_max", "average_generalized_cost_proxy_min", "p90_travel_time_proxy_minutes_min", "people_flow_conflict_rate_per_1000_proxy_min", "external_car_inflow_ratio_min", "vehicle_km_proxy_min"],
     "interpretation": "The selected policy is a synthetic candidate from a declared finite policy set; capacity gates prevent a paper-optimal but overloaded mode from winning, and the result is not a calibrated local optimum until OD, capacity, accessibility and satisfaction observations replace the assumptions."
+  },
+  "robustness_screen": {
+    "method": "full_population_candidate_replay_across_declared_stress_scenarios",
+    "status": "synthetic_robustness_screen_not_local_resilience",
+    "purpose": "Replay every candidate against nominal, metro disruption, severe-weather bicycle loss and multimodal capacity-shock scenarios so a high nominal satisfaction proxy cannot hide a fragile or inequitable operating pattern.",
+    "scenarios": [
+      {"id": "N0_nominal", "runner_scenario_id": "O1", "label_zh": "名义地面协同", "label_en": "nominal ground coordination", "description": "O1 service and reliability assumptions used as the comparable nominal screen."},
+      {"id": "R1_metro_disruption", "runner_scenario_id": "R1", "label_zh": "地铁中断 30 分钟", "label_en": "30-minute metro disruption", "description": "Metro reliability and time are degraded while ground fallback remains available."},
+      {"id": "W1_weather_bicycle", "runner_scenario_id": "W1", "label_zh": "强天气/骑行受限", "label_en": "severe weather / bicycle constrained", "description": "Bicycle and walking conditions deteriorate; no air candidate is opened to fill the gap."},
+      {"id": "D1_capacity_shock", "runner_scenario_id": "D1", "label_zh": "多方式容量冲击", "label_en": "multimodal capacity shock", "description": "Declared service capacity is temporarily reduced across modes to screen spare-capacity fragility."}
+    ],
+    "hard_gate_constraints": {
+      "minimum_accessibility_completion_proxy": 0.85,
+      "maximum_worst_group_accessibility_gap_proxy_points": 24,
+      "maximum_stress_peak_mode_load_ratio": 1.75,
+      "require_mass_conservation": true,
+      "require_all_agents_processed": true,
+      "air_candidate_must_remain_blocked": true
+    },
+    "selection_order": ["nominal_gate", "stress_gate_count", "worst_case_satisfaction_proxy_max", "worst_group_accessibility_gap_proxy_min", "worst_peak_mode_load_ratio_min", "mean_generalized_cost_proxy_min"],
+    "outputs": ["candidate_by_scenario_summary", "stress_gate_status", "worst_case_satisfaction_proxy", "worst_group_accessibility_gap_proxy_points", "worst_peak_mode_load_ratio", "recovery_calibration_requirements"],
+    "interpretation": "This is a transparent robustness screen over declared synthetic perturbations. It does not prove local resilience or select an implementation policy; a failure is a stop-and-calibrate signal, and the selected nominal candidate remains provisional until dated disruption, weather, capacity, accessibility and behavioural evidence are available.",
+    "calibration_required": ["dated metro and bus disruption logs", "weather and bicycle service cancellation records", "mode and station capacity by 15-minute slice", "grouped accessibility and care-trip completion", "observed fallback acceptance and recovery time", "resident and employee satisfaction/intercept evidence"]
   },
   "optimization_objective": {
     "order": ["hard_gates", "mass_conservation", "accessibility_continuity", "satisfaction_proxy_max", "generalized_cost_min", "p90_time_proxy_min", "people_flow_conflict_min", "external_car_inflow_min", "vehicle_km_proxy_min"],

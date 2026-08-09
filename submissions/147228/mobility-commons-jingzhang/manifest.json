@@ -241,7 +241,7 @@
       "path": "report/copyright_statement.md",
       "role": "copyright_statement",
       "required": true,
-      "sha256": "2cee9aac451807ea0007e734f99c9330fdbb039f72dc32832fd4c375061d805e"
+      "sha256": "ca06b2b59b9a073f28eb08a0e29abb1915cf136a0422d3383e6a1fc163559aa7"
     },
     {
       "path": "report/narrative.md",

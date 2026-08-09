@@ -360,7 +360,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--reasoning-effort", default="high")
     parser.add_argument("--timeout", type=int, default=900)
     parser.add_argument("--retries", type=int, default=2)
-    parser.add_argument("--max-images", type=int, default=13)
+    # Keep the queue default aligned with ai_review_submission's paired
+    # bilingual packet: five figure pairs, two PDF first-page pairs, and two
+    # HTML screenshot pairs (18 images total when all v2 counterparts exist).
+    parser.add_argument("--max-images", type=int, default=18)
     parser.add_argument("--audit-root", type=Path, default=Path(".maintainer-review/queue"))
     parser.add_argument("--worktree-root", type=Path, default=Path(".pr-worktree/auto-review"))
     parser.add_argument("--apply", action="store_true", help="Post reviews, change labels, and merge accepted PRs")

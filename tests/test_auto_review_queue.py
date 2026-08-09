@@ -3,6 +3,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,12 +14,18 @@ from auto_review_queue import (  # noqa: E402
     ci_state,
     decide,
     load_cached_review,
+    parse_args,
     submission_dir_from_files,
 )
 from generate_submissions_data import package_sha256  # noqa: E402
 
 
 class AutoReviewQueueTests(unittest.TestCase):
+    def test_default_image_budget_matches_bilingual_packet(self) -> None:
+        with patch.object(sys, "argv", ["auto_review_queue"]):
+            args = parse_args()
+        self.assertEqual(18, args.max_images)
+
     def test_accepts_score_at_threshold_when_all_gates_pass(self) -> None:
         review = {
             "mandatory_rejection": {"result": "pass"},

@@ -367,7 +367,7 @@ const output = {
       vehicle_km_proxy: headlineOptimized.vehicle_km_proxy - baseline.vehicle_km_proxy,
       accessibility_completion_proxy: round(headlineOptimized.accessibility_completion_proxy - baseline.accessibility_completion_proxy, 4)
     },
-    interpretation: "O1 is the selected synthetic operating candidate only when hard gates hold; proxy improvements are not measured local outcomes."
+    interpretation: `${selectedPolicy.id} is the selected synthetic operating candidate only when hard gates hold; proxy improvements are not measured local outcomes.`
   },
   checks,
   calibration_boundary: model.calibration_required_before_local_decision

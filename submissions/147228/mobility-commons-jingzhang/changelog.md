@@ -67,3 +67,7 @@
 ## v2.3 - 2026-08-09
 
 - Aligned the runner’s optimized-policy checks with the full-replay-selected policy, so machine checks, comparison output and evidence boards all refer to O3 rather than silently retaining O1.
+
+## v2.4 - 2026-08-09
+
+- Removed the last hard-coded O1 selection phrase from the regional runner; the interpretation now reports the policy actually selected by the full replay.

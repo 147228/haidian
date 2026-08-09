@@ -58,7 +58,40 @@
       "visitor_service": {"metro": 0.36, "bus": 0.26, "bicycle": 0.16, "walking_wheelchair": 0.16, "car": 0.02, "enterprise_shuttle": 0.04},
       "logistics_and_maintenance": {"metro": 0.05, "bus": 0.06, "bicycle": 0.02, "walking_wheelchair": 0.03, "car": 0.77, "enterprise_shuttle": 0.07},
       "night_worker": {"metro": 0.25, "bus": 0.38, "bicycle": 0.05, "walking_wheelchair": 0.13, "car": 0.12, "enterprise_shuttle": 0.07}
+    },
+    "O2": {
+      "enterprise_employee": {"metro": 0.44, "bus": 0.23, "bicycle": 0.11, "walking_wheelchair": 0.08, "car": 0.07, "enterprise_shuttle": 0.07},
+      "resident_worker": {"metro": 0.32, "bus": 0.25, "bicycle": 0.18, "walking_wheelchair": 0.17, "car": 0.04, "enterprise_shuttle": 0.04},
+      "carer_or_child": {"metro": 0.20, "bus": 0.32, "bicycle": 0.03, "walking_wheelchair": 0.40, "car": 0.02, "enterprise_shuttle": 0.03},
+      "visitor_service": {"metro": 0.32, "bus": 0.29, "bicycle": 0.17, "walking_wheelchair": 0.17, "car": 0.01, "enterprise_shuttle": 0.04},
+      "logistics_and_maintenance": {"metro": 0.05, "bus": 0.07, "bicycle": 0.02, "walking_wheelchair": 0.03, "car": 0.76, "enterprise_shuttle": 0.07},
+      "night_worker": {"metro": 0.24, "bus": 0.40, "bicycle": 0.05, "walking_wheelchair": 0.15, "car": 0.09, "enterprise_shuttle": 0.07}
+    },
+    "O3": {
+      "enterprise_employee": {"metro": 0.42, "bus": 0.18, "bicycle": 0.18, "walking_wheelchair": 0.10, "car": 0.05, "enterprise_shuttle": 0.07},
+      "resident_worker": {"metro": 0.30, "bus": 0.17, "bicycle": 0.25, "walking_wheelchair": 0.19, "car": 0.05, "enterprise_shuttle": 0.04},
+      "carer_or_child": {"metro": 0.16, "bus": 0.22, "bicycle": 0.09, "walking_wheelchair": 0.45, "car": 0.03, "enterprise_shuttle": 0.05},
+      "visitor_service": {"metro": 0.30, "bus": 0.20, "bicycle": 0.23, "walking_wheelchair": 0.22, "car": 0.01, "enterprise_shuttle": 0.04},
+      "logistics_and_maintenance": {"metro": 0.04, "bus": 0.05, "bicycle": 0.04, "walking_wheelchair": 0.03, "car": 0.77, "enterprise_shuttle": 0.07},
+      "night_worker": {"metro": 0.22, "bus": 0.29, "bicycle": 0.10, "walking_wheelchair": 0.24, "car": 0.08, "enterprise_shuttle": 0.07}
     }
+  },
+  "optimization_search": {
+    "method": "full_population_replay_lexicographic_policy_search",
+    "candidate_profiles": [
+      {"id": "O1_transit_priority", "weight_profile": "O1", "label_zh": "O1 公共交通优先", "label_en": "O1 transit priority"},
+      {"id": "O2_equity_balanced", "weight_profile": "O2", "label_zh": "O2 公平平衡", "label_en": "O2 equity balanced"},
+      {"id": "O3_active_first", "weight_profile": "O3", "label_zh": "O3 慢行优先", "label_en": "O3 active-first"}
+    ],
+    "hard_gate_constraints": {
+      "minimum_accessibility_completion_proxy": 0.92,
+      "maximum_worst_group_accessibility_gap_proxy_points": 5,
+      "require_mass_conservation": true,
+      "require_all_agents_processed": true,
+      "air_candidate_must_remain_blocked": true
+    },
+    "selection_order": ["hard_gate_pass", "satisfaction_proxy_max", "average_generalized_cost_proxy_min", "p90_travel_time_proxy_minutes_min", "people_flow_conflict_rate_per_1000_proxy_min", "external_car_inflow_ratio_min", "vehicle_km_proxy_min"],
+    "interpretation": "The selected policy is a synthetic candidate from a declared finite policy set; it is not a calibrated local optimum until OD, capacity, accessibility and satisfaction observations replace the assumptions."
   },
   "optimization_objective": {
     "order": ["hard_gates", "mass_conservation", "accessibility_continuity", "satisfaction_proxy_max", "generalized_cost_min", "p90_time_proxy_min", "people_flow_conflict_min", "external_car_inflow_min", "vehicle_km_proxy_min"],

@@ -22,33 +22,33 @@
     <rect x="1510" y="292" width="740" height="170" rx="24" fill="#12384c" stroke="#2e6b73"/>
   </g>
   <text x="170" y="337" class="sans muted small">区域人口覆盖校验</text><text x="170" y="414" class="sans white value">3.122M / 100%</text><text x="170" y="445" class="sans teal tiny">官方常住人口参考；不是 workforce / OD 基线</text>
-  <text x="860" y="337" class="sans muted small">O1 优化候选 · 满意度代理</text><text x="860" y="414" class="sans teal value">54.67 → 66.23</text><text x="860" y="445" class="sans teal tiny">+11.56 points · synthetic proxy</text>
-  <text x="1550" y="337" class="sans muted small">O1 优化候选 · 出行成本代理</text><text x="1550" y="414" class="sans white value">60.34 → 50.06</text><text x="1550" y="445" class="sans amber tiny">−10.28 generalized-cost proxy</text>
+  <text x="860" y="337" class="sans muted small">O3 全量搜索选中 · 满意度代理</text><text x="860" y="414" class="sans teal value">54.67 → 66.78</text><text x="860" y="445" class="sans teal tiny">+12.11 points · synthetic proxy</text>
+  <text x="1550" y="337" class="sans muted small">O3 全量搜索选中 · 出行成本代理</text><text x="1550" y="414" class="sans white value">60.34 → 48.93</text><text x="1550" y="445" class="sans amber tiny">−11.41 generalized-cost proxy</text>
 
   <rect x="130" y="510" width="1190" height="610" rx="28" fill="#0d2538" stroke="#24465b"/>
   <text x="175" y="565" class="sans white" font-size="30" font-weight="800">方式重分配 / MODE MIX</text>
   <text x="175" y="600" class="sans muted small">每条横条 = 3,122,000 人的一个早高峰动线；不是实际调查份额</text>
-  <text x="175" y="680" class="sans amber label">B0 压力场景</text><text x="175" y="815" class="sans teal label">O1 优化候选</text>
+  <text x="175" y="680" class="sans amber label">B0 压力场景</text><text x="175" y="815" class="sans teal label">O3 慢行优先 / 全量搜索选中</text>
   <g>
     <rect x="365" y="645" width="251" height="56" fill="#4b79b8"/><rect x="616" y="645" width="181" height="56" fill="#5d9fc1"/><rect x="797" y="645" width="87" height="56" fill="#4db49e"/><rect x="884" y="645" width="163" height="56" fill="#b9d7b1"/><rect x="1047" y="645" width="263" height="56" fill="#e77c65"/><rect x="1310" y="645" width="55" height="56" fill="#f4bd63"/>
-    <rect x="365" y="780" width="357" height="56" fill="#4b79b8"/><rect x="722" y="780" width="226" height="56" fill="#5d9fc1"/><rect x="948" y="780" width="115" height="56" fill="#4db49e"/><rect x="1063" y="780" width="152" height="56" fill="#b9d7b1"/><rect x="1215" y="780" width="98" height="56" fill="#e77c65"/><rect x="1313" y="780" width="52" height="56" fill="#f4bd63"/>
+    <rect x="365" y="780" width="304" height="56" fill="#4b79b8"/><rect x="669" y="780" width="184" height="56" fill="#5d9fc1"/><rect x="853" y="780" width="181" height="56" fill="#4db49e"/><rect x="1034" y="780" width="195" height="56" fill="#b9d7b1"/><rect x="1229" y="780" width="80" height="56" fill="#e77c65"/><rect x="1309" y="780" width="55" height="56" fill="#f4bd63"/>
     <text x="365" y="735" class="sans muted small">25.1%　18.1%　8.7%　16.3%　26.3%　5.5%</text>
-    <text x="365" y="870" class="sans teal small">35.7%　22.6%　11.5%　15.2%　9.8%　5.2%</text>
+    <text x="365" y="870" class="sans teal small">30.4%　18.4%　18.1%　19.5%　8.0%　5.5%</text>
   </g>
   <g class="sans mode"><text x="175" y="1000" class="blue">地铁</text><text x="335" y="1000" class="blue">公交</text><text x="495" y="1000" class="teal">自行车</text><text x="700" y="1000" fill="#b9d7b1">步行/无障碍</text><text x="965" y="1000" fill="#e77c65">汽车</text><text x="1125" y="1000" class="amber">企业接驳</text></g>
-  <text x="175" y="1066" class="sans muted tiny">O1 通过企业弹性到岗、公交/地铁优先、连续无障碍链和路缘管理降低外部小汽车流入；物流/维护仍保留服务车辆。</text>
+  <text x="175" y="1066" class="sans muted tiny">O3 经全量回放搜索选中：企业弹性到岗、慢行优先、连续无障碍链和路缘管理共同降低外部小汽车流入；物流/维护仍保留服务车辆。</text>
   <text x="175" y="1094" class="sans muted tiny">空气出行不进入分配：空域、适航、运营、保险、天气、噪声、应急与公众审查闸门未通过。</text>
 
   <rect x="1370" y="510" width="880" height="610" rx="28" fill="#f3f7f8" filter="url(#shadow)"/>
   <text x="1415" y="565" class="sans ink" font-size="30" font-weight="800">系统读数 / SYSTEM READOUT</text>
-  <text x="1415" y="600" class="sans" fill="#668095" font-size="19">B0 → O1 · hard gates first · all values are synthetic proxies</text>
+  <text x="1415" y="600" class="sans" fill="#668095" font-size="19">B0 → O3 · full replay selected · hard gates first · synthetic proxies</text>
   <g class="sans">
     <rect x="1415" y="640" width="395" height="125" rx="18" fill="#e6f4f1"/><text x="1445" y="680" class="ink small">P90 通勤时间代理 ↓</text><text x="1445" y="735" class="ink value">90 → 60 min</text>
-    <rect x="1830" y="640" width="380" height="125" rx="18" fill="#eef2ff"/><text x="1860" y="680" class="ink small">无障碍完成代理 ↑</text><text x="1860" y="735" class="ink value">91.24 → 93.37%</text>
-    <rect x="1415" y="795" width="395" height="125" rx="18" fill="#fff0ee"/><text x="1445" y="835" class="ink small">人流冲突 / 1000 ↓</text><text x="1445" y="890" class="ink value">5.74 → 3.01</text>
-    <rect x="1830" y="795" width="380" height="125" rx="18" fill="#fff5e5"/><text x="1860" y="835" class="ink small">外部汽车流入 ↓</text><text x="1860" y="890" class="ink value">26.95 → 8.60%</text>
-    <rect x="1415" y="950" width="395" height="125" rx="18" fill="#edf3fb"/><text x="1445" y="990" class="ink small">车辆公里代理 ↓</text><text x="1445" y="1045" class="ink value">28.11 → 27.08M</text>
-    <rect x="1830" y="950" width="380" height="125" rx="18" fill="#fcecf2"/><text x="1860" y="990" class="ink small">最弱群体差距</text><text x="1860" y="1045" class="ink value">需现场校准</text>
+    <rect x="1830" y="640" width="380" height="125" rx="18" fill="#eef2ff"/><text x="1860" y="680" class="ink small">无障碍完成代理 ↑</text><text x="1860" y="735" class="ink value">91.24 → 92.89%</text>
+    <rect x="1415" y="795" width="395" height="125" rx="18" fill="#fff0ee"/><text x="1445" y="835" class="ink small">人流冲突 / 1000 ↓</text><text x="1445" y="890" class="ink value">5.74 → 3.11</text>
+    <rect x="1830" y="795" width="380" height="125" rx="18" fill="#fff5e5"/><text x="1860" y="835" class="ink small">外部汽车流入 ↓</text><text x="1860" y="890" class="ink value">26.95 → 6.30%</text>
+    <rect x="1415" y="950" width="395" height="125" rx="18" fill="#edf3fb"/><text x="1445" y="990" class="ink small">车辆公里代理 ↓</text><text x="1445" y="1045" class="ink value">28.11 → 26.00M</text>
+    <rect x="1830" y="950" width="380" height="125" rx="18" fill="#fcecf2"/><text x="1860" y="990" class="ink small">无障碍群体差距</text><text x="1860" y="1045" class="ink value">2.81 pts proxy</text>
   </g>
 
   <rect x="130" y="1170" width="2120" height="250" rx="28" fill="#102f42" stroke="#28576a"/>

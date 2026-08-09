@@ -102,12 +102,12 @@ function routeTemplate(mode, external, group) {
   return template;
 }
 
-function scenarioParameters(scenarioId) {
+function scenarioParameters(scenarioId, weightsOverride = null) {
   if (scenarioId === 'R1') {
-    return {weights: model.mode_weights_by_group.O1, disruption: true, timeMultiplier: {metro: 1.35, bus: 1.08, bicycle: 1.10, walking_wheelchair: 1.08, car: 1.16, enterprise_shuttle: 1.10}};
+    return {weights: weightsOverride || model.mode_weights_by_group.O1, disruption: true, timeMultiplier: {metro: 1.35, bus: 1.08, bicycle: 1.10, walking_wheelchair: 1.08, car: 1.16, enterprise_shuttle: 1.10}};
   }
   return {
-    weights: model.mode_weights_by_group[scenarioId],
+    weights: weightsOverride || model.mode_weights_by_group[scenarioId],
     disruption: false,
     timeMultiplier: scenarioId === 'O1'
       ? {metro: 0.88, bus: 0.90, bicycle: 0.92, walking_wheelchair: 0.95, car: 1.03, enterprise_shuttle: 0.90}
@@ -130,8 +130,8 @@ function accessibilityScore(groupId, mode, scenarioId) {
   return clamp(base + coordinationBonus - disruptionPenalty, 0, 1);
 }
 
-function simulateScenario(scenarioId) {
-  const parameters = scenarioParameters(scenarioId);
+function simulateScenario(scenarioId, weightsOverride = null, policyId = scenarioId) {
+  const parameters = scenarioParameters(scenarioId, weightsOverride);
   const ranges = groupRanges();
   const modeCounts = Object.fromEntries(MODES.map((mode) => [mode, 0]));
   const groupCounts = {};
@@ -203,8 +203,8 @@ function simulateScenario(scenarioId) {
   const topCorridors = Object.entries(corridorCounts).sort((a, b) => b[1] - a[1]).slice(0, 12).map(([corridor, count]) => ({corridor, count, share: round(count / processed)}));
 
   return {
-    scenario_id: scenarioId,
-    status: scenarioId === 'O1' ? 'synthetic_candidate_subject_to_calibration' : 'synthetic_sensitivity',
+    scenario_id: policyId,
+    status: policyId.startsWith('O') ? 'synthetic_candidate_subject_to_calibration' : 'synthetic_sensitivity',
     population_agents: TOTAL,
     agents_processed: processed,
     work_activity_agents: workActivityAgents,
@@ -241,9 +241,78 @@ function sum(values) {
   return values.reduce((total, value) => total + Number(value || 0), 0);
 }
 
-const scenarios = ['B0', 'O1', 'R1'].map(simulateScenario);
+const scenarios = ['B0', 'O1', 'R1'].map((scenarioId) => simulateScenario(scenarioId));
 const baseline = scenarios[0];
 const optimized = scenarios[1];
+const searchCandidates = [
+  {id: 'O1_transit_priority', profile: 'O1', result: optimized},
+  ...model.optimization_search.candidate_profiles
+    .filter((candidate) => candidate.id !== 'O1_transit_priority')
+    .map((candidate) => ({
+      id: candidate.id,
+      profile: candidate.weight_profile,
+      result: simulateScenario('O1', model.mode_weights_by_group[candidate.weight_profile], candidate.id)
+    }))
+];
+
+function candidateEligible(result) {
+  const gate = model.optimization_search.hard_gate_constraints;
+  return result.all_agents_processed
+    && result.mass_conservation
+    && result.accessibility_completion_proxy >= gate.minimum_accessibility_completion_proxy
+    && result.worst_group_accessibility_gap_proxy_points <= gate.maximum_worst_group_accessibility_gap_proxy_points
+    && result.air_candidate === 'blocked';
+}
+
+function compareCandidates(left, right) {
+  const leftKey = [
+    candidateEligible(left.result) ? 1 : 0,
+    left.result.satisfaction_proxy,
+    -left.result.average_generalized_cost_proxy,
+    -left.result.p90_travel_time_proxy_minutes,
+    -left.result.people_flow_conflict_rate_per_1000_proxy,
+    -left.result.external_car_inflow_ratio,
+    -left.result.vehicle_km_proxy
+  ];
+  const rightKey = [
+    candidateEligible(right.result) ? 1 : 0,
+    right.result.satisfaction_proxy,
+    -right.result.average_generalized_cost_proxy,
+    -right.result.p90_travel_time_proxy_minutes,
+    -right.result.people_flow_conflict_rate_per_1000_proxy,
+    -right.result.external_car_inflow_ratio,
+    -right.result.vehicle_km_proxy
+  ];
+  for (let index = 0; index < leftKey.length; index += 1) {
+    if (leftKey[index] !== rightKey[index]) return rightKey[index] - leftKey[index];
+  }
+  return left.id.localeCompare(right.id);
+}
+
+const rankedCandidates = [...searchCandidates].sort(compareCandidates);
+const selectedPolicy = rankedCandidates[0];
+const optimizationSearch = {
+  method: model.optimization_search.method,
+  selection_order: model.optimization_search.selection_order,
+  hard_gate_constraints: model.optimization_search.hard_gate_constraints,
+  selected_policy: selectedPolicy.id,
+  selected_policy_is_not_hand_picked: true,
+  ranked_candidates: rankedCandidates.map((candidate, index) => ({
+    rank: index + 1,
+    policy_id: candidate.id,
+    weight_profile: candidate.profile,
+    hard_gate_pass: candidateEligible(candidate.result),
+    satisfaction_proxy: candidate.result.satisfaction_proxy,
+    average_generalized_cost_proxy: candidate.result.average_generalized_cost_proxy,
+    p90_travel_time_proxy_minutes: candidate.result.p90_travel_time_proxy_minutes,
+    people_flow_conflict_rate_per_1000_proxy: candidate.result.people_flow_conflict_rate_per_1000_proxy,
+    external_car_inflow_ratio: candidate.result.external_car_inflow_ratio,
+    vehicle_km_proxy: candidate.result.vehicle_km_proxy,
+    accessibility_completion_proxy: candidate.result.accessibility_completion_proxy,
+    worst_group_accessibility_gap_proxy_points: candidate.result.worst_group_accessibility_gap_proxy_points
+  })),
+  interpretation: model.optimization_search.interpretation
+};
 const checks = {
   population_reference_is_regional_scale: TOTAL >= 3000000,
   declared_group_counts_sum_to_population: sum(GROUPS.map((group) => group.count)) === TOTAL,
@@ -255,8 +324,12 @@ const checks = {
   optimized_conflict_proxy_not_higher: optimized.people_flow_conflict_rate_per_1000_proxy <= baseline.people_flow_conflict_rate_per_1000_proxy,
   optimized_external_car_inflow_not_higher: optimized.external_car_inflow_ratio <= baseline.external_car_inflow_ratio,
   air_candidate_fail_closed: scenarios.every((scenario) => scenario.air_candidate === 'blocked'),
-  privacy_aggregate_only: scenarios.every((scenario) => scenario.privacy_check === 'aggregate_only_no_personal_trace')
+  privacy_aggregate_only: scenarios.every((scenario) => scenario.privacy_check === 'aggregate_only_no_personal_trace'),
+  optimization_has_eligible_candidate: rankedCandidates.some((candidate) => candidateEligible(candidate.result)),
+  optimization_selected_policy_is_eligible: candidateEligible(selectedPolicy.result)
 };
+
+const headlineOptimized = selectedPolicy.result;
 
 Object.entries(checks).forEach(([name, passed]) => {
   if (!passed) fail(name);
@@ -267,16 +340,32 @@ const output = {
   simulation_class: model.simulation_class,
   regional_scope: model.regional_scope,
   optimization_objective: model.optimization_objective,
+  optimization_search: optimizationSearch,
+  selected_policy_readout: {
+    policy_id: selectedPolicy.id,
+    mode_counts: headlineOptimized.mode_counts,
+    mode_shares: headlineOptimized.mode_shares,
+    satisfaction_proxy: headlineOptimized.satisfaction_proxy,
+    average_generalized_cost_proxy: headlineOptimized.average_generalized_cost_proxy,
+    p50_travel_time_proxy_minutes: headlineOptimized.p50_travel_time_proxy_minutes,
+    p90_travel_time_proxy_minutes: headlineOptimized.p90_travel_time_proxy_minutes,
+    accessibility_completion_proxy: headlineOptimized.accessibility_completion_proxy,
+    people_flow_conflict_rate_per_1000_proxy: headlineOptimized.people_flow_conflict_rate_per_1000_proxy,
+    external_car_inflow_ratio: headlineOptimized.external_car_inflow_ratio,
+    vehicle_km_proxy: headlineOptimized.vehicle_km_proxy,
+    route_flow_summary: headlineOptimized.route_flow_summary
+  },
   scenarios,
   comparison: {
     optimized_minus_baseline: {
-      satisfaction_proxy_points: round(optimized.satisfaction_proxy - baseline.satisfaction_proxy, 2),
-      generalized_cost_proxy: round(optimized.average_generalized_cost_proxy - baseline.average_generalized_cost_proxy, 2),
-      p90_travel_time_proxy_minutes: optimized.p90_travel_time_proxy_minutes - baseline.p90_travel_time_proxy_minutes,
-      people_flow_conflict_rate_per_1000_proxy: round(optimized.people_flow_conflict_rate_per_1000_proxy - baseline.people_flow_conflict_rate_per_1000_proxy, 2),
-      external_car_inflow_ratio: round(optimized.external_car_inflow_ratio - baseline.external_car_inflow_ratio, 4),
-      vehicle_km_proxy: optimized.vehicle_km_proxy - baseline.vehicle_km_proxy,
-      accessibility_completion_proxy: round(optimized.accessibility_completion_proxy - baseline.accessibility_completion_proxy, 4)
+      selected_policy: selectedPolicy.id,
+      satisfaction_proxy_points: round(headlineOptimized.satisfaction_proxy - baseline.satisfaction_proxy, 2),
+      generalized_cost_proxy: round(headlineOptimized.average_generalized_cost_proxy - baseline.average_generalized_cost_proxy, 2),
+      p90_travel_time_proxy_minutes: headlineOptimized.p90_travel_time_proxy_minutes - baseline.p90_travel_time_proxy_minutes,
+      people_flow_conflict_rate_per_1000_proxy: round(headlineOptimized.people_flow_conflict_rate_per_1000_proxy - baseline.people_flow_conflict_rate_per_1000_proxy, 2),
+      external_car_inflow_ratio: round(headlineOptimized.external_car_inflow_ratio - baseline.external_car_inflow_ratio, 4),
+      vehicle_km_proxy: headlineOptimized.vehicle_km_proxy - baseline.vehicle_km_proxy,
+      accessibility_completion_proxy: round(headlineOptimized.accessibility_completion_proxy - baseline.accessibility_completion_proxy, 4)
     },
     interpretation: "O1 is the selected synthetic operating candidate only when hard gates hold; proxy improvements are not measured local outcomes."
   },

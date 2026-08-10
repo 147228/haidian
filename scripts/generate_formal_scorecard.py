@@ -65,7 +65,7 @@ def build_comment(scorecard: dict[str, Any]) -> str:
         f"Scoring status: **{scorecard['scoring_status']}**",
         f"Maintainer gate: **{scorecard['eligibility_gate']['maintainer_recommendation']}**",
         f"Content review eligible: **{'YES' if scorecard['eligibility_gate']['content_review_eligible'] else 'NO'}**",
-        f"Can enter formal professional scoring: **{'YES' if scorecard['eligibility_gate']['can_enter_formal_review'] else 'NO'}**",
+        f"Professional scoring eligible: **{'YES' if scorecard['eligibility_gate']['professional_scoring_eligible'] else 'NO'}**",
         "",
     ]
     if scorecard["scoring_status"] == "blocked":
@@ -124,7 +124,8 @@ def build_scorecard(summary: dict[str, Any]) -> dict[str, Any]:
             "content_review_eligible": content_ready,
             "professional_scoring_eligible": ready,
             "professional_scoring_blocked_by": [str(item) for item in blocked_by],
-            "can_enter_formal_review": ready,
+            # Legacy alias: this field means content-review eligibility.
+            "can_enter_formal_review": content_ready,
             "summary_zh": gate_summary,
         },
         "reviewer_panel": [

@@ -59,7 +59,33 @@
           }
         }
       }
+    },
+    "package_state": {
+      "type": "string",
+      "minLength": 1
+    },
+    "content_review_eligible": {
+      "type": "boolean"
+    },
+    "professional_scoring_eligible": {
+      "type": "boolean"
+    },
+    "professional_scoring_blocked_by": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "can_enter_formal_review": {
+      "type": "boolean",
+      "description": "Legacy alias for content_review_eligible."
+    },
+    "review_status": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Legacy status; formal-review-ready means content-review readiness only."
     }
   }
 }
-

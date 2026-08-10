@@ -16,6 +16,7 @@ HAS_REVIEW_DEPS = all(
 )
 
 if HAS_REVIEW_DEPS:
+    from jsonschema import validate  # noqa: E402
     from test_agent_scaffold_and_self_check import (  # noqa: E402
         complete_scaffold,
         run_scaffold,
@@ -67,10 +68,16 @@ class FormalScorecardScriptTests(unittest.TestCase):
             completed = run_scorecard(submission_dir, "alice", repo_root=root, out_dir=out_dir)
             self.assertNotEqual(completed.returncode, 0, completed.stdout + completed.stderr)
             scorecard = json.loads(completed.stdout)
+            schema = json.loads(
+                (REPO_ROOT / "brief" / "site-package" / "schemas" / "formal_scorecard.schema.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            validate(instance=scorecard, schema=schema)
             self.assertEqual(scorecard["scoring_status"], "blocked")
             self.assertTrue(scorecard["eligibility_gate"]["content_review_eligible"])
             self.assertFalse(scorecard["eligibility_gate"]["professional_scoring_eligible"])
-            self.assertFalse(scorecard["eligibility_gate"]["can_enter_formal_review"])
+            self.assertTrue(scorecard["eligibility_gate"]["can_enter_formal_review"])
             self.assertEqual(
                 ["official_site_boundary", "official_key_areas"],
                 scorecard["eligibility_gate"]["professional_scoring_blocked_by"],

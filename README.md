@@ -320,7 +320,7 @@ python3 scripts/render_proposal_html.py submissions/<your-github-login>/<proposa
 python3 scripts/score_submission.py submissions/<your-github-login>/<proposal-slug>/proposal.md
 ```
 
-该命令只检查 `proposal.md` 的轻量建议项；即使显示全绿或 `--strict` 返回 0，也**不表示** formal 投稿已通过。它不会检查目录范围、manifest、图层、图纸、HTML 或专业证据链。完成后仍必须运行下面的 `self_check_submission.py`，并以 `can_enter_formal_review=true` / `formal-review-ready` 作为正式准入证据。
+该命令只检查 `proposal.md` 的轻量建议项；即使显示全绿或 `--strict` 返回 0，也**不表示** formal 投稿已通过。它不会检查目录范围、manifest、图层、图纸、HTML 或专业证据链。完成后仍必须运行下面的 `self_check_submission.py`，并以 `content_review_eligible=true` / `formal-review-ready` 作为内容评审准入证据；正式专业评分还要检查 `professional_scoring_eligible=true`。
 
 exhibit 展示页和 portal 卡片由**维护者策展**:投稿包不包含 `exhibit.json`(deterministic 校验会拒绝它),
 进入 portal 与否由维护者在合并后决定。预览渲染流程可使用 `examples/` 演示样例:
@@ -372,7 +372,7 @@ python3 scripts/ai_review_submission.py \
 
 AI 评审结果写入 `.maintainer-review/<proposal-slug>/ai-review/`，严格遵守 advisory review schema，并生成 `ai-review.json`、`ai-decision.json`、完整 Markdown 报告和可复制到 PR 的评论。模型不能覆盖本地确定性 gate；缺少版权、授权或资料公开性证据时必须要求补证。API Key 不进入 GitHub Actions。详见 [docs/maintainer-workflow.md](docs/maintainer-workflow.md#8-本地-ai-agent-专业评审)。
 
-若维护者审核结果为 `formal-review-ready`，可生成本地正式评分表：
+若维护者审核结果为 `formal-review-ready` 且 `professional_scoring_eligible=true`，可生成本地正式评分表：
 
 ```bash
 python3 scripts/generate_formal_scorecard.py \
@@ -380,7 +380,7 @@ python3 scripts/generate_formal_scorecard.py \
   --pr-author <your-github-login>
 ```
 
-评分表遵守 `brief/site-package/schemas/formal_scorecard.schema.json`，只作为本地专家评分材料；未达到 `formal-review-ready` 的方案会被标为 `blocked`，不得进入正式评分。
+评分表遵守 `brief/site-package/schemas/formal_scorecard.schema.json`，只作为本地专家评分材料；未达到 `formal-review-ready` 或 `professional_scoring_eligible=true` 的方案会被标为 `blocked`，不得进入正式评分。
 
 导出专家离线评审包可运行：
 

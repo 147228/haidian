@@ -12,7 +12,13 @@
 - Regenerated `open-pulse-scenario-audit.json`; the change remains a local structural audit and adds no field, operational, legal or deployment claim.
 - Added mirrored Chinese/English visual-index links for the S02 tabletop contract, evidence receipt and runner, so the primary offline review surface exposes the v3.6 replay without changing its `not_authorized_not_run` / `not_run` boundary.
 
-## v3.6 - 2026-08-09
+## v3.7 — 2026-08-10
+
+- Removed all concept FAR/storey ranges from the public proposal and rendered reports; the package now expresses only public-interface, reversible-service and evidence relationships.
+- Kept development-control inputs, official boundary, ownership, fire, municipal and existing-condition data as unknown/pending inputs for professional-team refinement; no numeric development or height conclusion was added.
+- Re-rendered bilingual HTML and refreshed manifest hashes. Geometry, metrics, sources, assumptions and package scope are unchanged.
+
+## v3.6 — 2026-08-09
 
 - Added four deterministic negative replays, one per S02 fixture; the runner now verifies hold/stop/withdraw/delete-temporary-state decisions as `reject_or_stop` while retaining `not_run`, `performance_results=null`, and the no-authorization boundary.
 - Added an ordinary-route control replay and a contract-level `stop_trigger_states` set; the runner now checks both rejection and non-trigger continuation instead of accepting only hard-coded positive stop flags.

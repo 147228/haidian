@@ -69,9 +69,9 @@
     },
     {
       "id": "A-G0-OFFLINE-009",
-      "status": "concept_requires_replay",
-      "statement": "The T-02 G0 offline evidence contract and its five fixed questions demonstrate only a replayable protocol and complete contract fields; they do not demonstrate answer correctness, source freshness, successful human handoff, model interaction, or field operation.",
-      "impact": "Any execution depends on confirmation by maintainers and responsible entities, including source refresh, accountable human service channels, professional review, approvals, and any required site or field conditions."
+      "status": "synthetic_governance_replay_completed_real_validation_pending",
+      "statement": "The T-02 G0 contract has completed one deterministic replay of ten fixed, PII-free synthetic cases with ten exact expected-decision matches, all four distinct declared stop events mapped to their exact recovery actions, and ten exact fail-closed controls covering fixture and contract drift, source closure, precedence, and canonical RACI closure. This proves contract logic only; it does not demonstrate a substantive answer, answer correctness, live source freshness, successful real human handoff, model or API interaction, service operation, field evidence, approval, accountable-owner confirmation, independent real retest, G1 completion, or operating non-AI parity.",
+      "impact": "The scene remains at G0. Any G1 application still depends on accountable source and service owners, refreshed sources, an actually available human and non-AI path, approved site/sample/window/effect threshold/version lock, professional review, approvals, and an independent real retester."
     },
     {
       "id": "A-KEY-AREA-DETAIL-010",

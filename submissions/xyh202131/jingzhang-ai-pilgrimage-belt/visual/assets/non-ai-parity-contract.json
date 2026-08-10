@@ -4,6 +4,7 @@
   "status": "conceptual",
   "purpose": "把“提供非 AI 选项”升级为“证明基本服务等价”，防止人工或离线通道只存在于文字中却无法完成同一基本任务。",
   "scope": "所有申请进入 G2 或 G3 的公共服务场景",
+  "pre_g1_synthetic_rehearsal_rule": "T-02 may exercise expected non-AI routing, stop, and recovery decisions with synthetic cases at G0, but this does not observe availability, equal rights, completion, cost, appeal, accessibility, or any other operating-parity result.",
   "review_rule": {
     "presence_only_pass_allowed": false,
     "same_interface_required": false,
@@ -43,6 +44,7 @@
     "journeys_with_ai_and_non_ai_paths": 4,
     "journeys_with_equal_rights_rule": 4,
     "journeys_with_exit_action": 4,
+    "completed_synthetic_pre_g1_t02_rehearsals": 1,
     "current_operating_results_known": 0
   },
   "test_journeys": [
@@ -93,8 +95,20 @@
       "exit_action": "下线智能导航并保留人工与公开来源入口，完成来源同步和申诉复测后再申请恢复。",
       "evidence_refs": [
         "proposal.md#四门制与场景护照",
-        "geometry/constraints.geojson#SCENE-011"
+        "geometry/constraints.geojson#SCENE-011",
+        "visual/assets/g0-offline-enterprise-service-baseline.json#T02-G0-G1-REPLAY-1.0.0",
+        "visual/assets/t02-g0-g1-replay-result.json#T02-G0-G1-SYNTHETIC-REPLAY-RESULT-V1"
       ],
+      "synthetic_pre_g1_rehearsal": {
+        "status": "pass",
+        "fixture_count": 10,
+        "exact_expected_decision_match_count": 10,
+        "decision_mismatch_count": 0,
+        "non_ai_path_decisions_exercised": true,
+        "observed_non_ai_availability": false,
+        "observed_equal_rights_cost_or_outcome": false,
+        "real_parity_result_known": false
+      },
       "result_status": "unknown"
     },
     {

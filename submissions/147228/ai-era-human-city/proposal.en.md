@@ -9,7 +9,7 @@ translation_of: "proposal.md"
 license: "CC-BY-4.0"
 proposal_format_version: "2"
 bilingual_contract_version: "1"
-iteration: "v0.6"
+iteration: "v0.7"
 ---
 
 # From an AI Showcase to a City for People in the AI Era
@@ -72,17 +72,17 @@ For reviewer-visible reverse tracing, `visual/assets/ai-era-traceability-index.j
 
 ## Land Use, Building Scale, and Retain-Renovate-Demolish Strategy
 
-This section translates the temporary geometry into spatial actions that can be compared. The FAR and storey ranges below are concept ranges for testing the relationship between public ground floors, low-scale service nodes, and upper envelopes. They are not control-plan indicators and do not describe existing conditions. The three key areas start with public interfaces and human service, then move to formal-boundary, tenure, fire, municipal, heritage, and existing-building review. [standard:MOHURD-CONTROL-DETAILED-PLANNING] [data:geometry/buildings.geojson#FOOTPRINT-01] [metric:building_footprint_area_sqm]
+This section translates the temporary geometry into spatial actions that can be compared. The table compares public interfaces, ordinary routes, staffed services, and withdrawable equipment; it does not define development controls or upper massing. The three key areas start with public interfaces and human service, then move to formal-boundary, tenure, fire, municipal, heritage, and existing-building review. [standard:MOHURD-CONTROL-DETAILED-PLANNING] [data:geometry/buildings.geojson#FOOTPRINT-01] [metric:building_footprint_area_sqm]
 
-| Key area | Concept spatial move | Concept massing range | Retain, renew, and review first |
+| Key area | Concept spatial move | Public interface and reversible relationship | Retain, renew, and review first |
 |---|---|---|---|
-| Zhongzhiyuan | Link a problem station, shared-experiment front desk, and public observer seat along a human-priority route. Keep a screen-free entry, human takeover point, and withdrawable display at ground level. | Concept FAR 1.2–1.8; public interface 2–4 storeys; upper height unknown | Check existing campus services and public-access conditions before deciding retain, renew, or build. `PROV-KEY-001` is not a parcel line. |
-| AI Origin Community | Place the reskilling living room, intergenerational learning court, and night human service on one walkable daily route, with public space continuous with the ordinary resident path. | Concept FAR 1.0–1.5; public interface 2–3 storeys; upper height unknown | Start with accessibility walk-through, resident time-of-use, and community-service inventory. `PROV-KEY-002` is not a tenure boundary. |
-| Dazhongsi | Form a withdrawable civic living room from cultural interpretation, a public-data consent desk, and a night fallback entrance, while keeping equipment and flows away from the ordinary route. | Concept FAR 0.8–1.3; public interface 1–3 storeys; upper height unknown | Check heritage, transport, and night-service conditions before setting renewal intensity. `PROV-KEY-003` is not a construction area. |
+| Zhongzhiyuan | Link a problem station, shared-experiment front desk, and public observer seat along a human-priority route. Keep a screen-free entry, human takeover point, and withdrawable display at ground level. | Public observer seat and staffed front desk stay adjacent; equipment, maintenance, and testing back-of-house can close without cutting the walking spine | Check existing campus services and public-access conditions before deciding retain, renew, or build. `PROV-KEY-001` is not a parcel line. |
+| AI Origin Community | Place the reskilling living room, intergenerational learning court, and night human service on one walkable daily route, with public space continuous with the ordinary resident path. | Paper, phone, and staffed entries face the ordinary route; test components remain removable and pausable, and resident service is not account-dependent | Start with accessibility walk-through, resident time-of-use, and community-service inventory. `PROV-KEY-002` is not a tenure boundary. |
+| Dazhongsi | Form a withdrawable civic living room from cultural interpretation, a public-data consent desk, and a night fallback entrance, while keeping equipment and flows away from the ordinary route. | Rail arrival, quiet route, and service front desk are separated; events and data display can withdraw without occupying daily resident movement | Check heritage, transport, and night-service conditions before setting renewal intensity. `PROV-KEY-003` is not a construction area. |
 
-These concept ranges answer what to compare first. They do not answer where construction is permitted or how much can be built. All three areas retain human service, an ordinary route, an accessible alternative, and a withdrawal notice. [data:geometry/key_areas.geojson#PROV-KEY-001] [data:geometry/key_areas.geojson#PROV-KEY-002] [data:geometry/key_areas.geojson#PROV-KEY-003]
+These relationships answer which public and reversible conditions to compare first. They do not answer where construction is permitted or how much can be built. All three areas retain human service, an ordinary route, an accessible alternative, and a withdrawal notice. [data:geometry/key_areas.geojson#PROV-KEY-001] [data:geometry/key_areas.geojson#PROV-KEY-002] [data:geometry/key_areas.geojson#PROV-KEY-003]
 
-Formal FAR, building height, retain/renew/demolish schedule, fire review, and engineering feasibility remain `unknown` before G1. [metric:far] [metric:building_height]
+Development controls, the retain/renew/demolish schedule, fire review, and engineering feasibility remain `unknown` before G1. [metric:far] [metric:building_height]
 
 ## Transport, Rail, Municipal Infrastructure, and Public Services
 

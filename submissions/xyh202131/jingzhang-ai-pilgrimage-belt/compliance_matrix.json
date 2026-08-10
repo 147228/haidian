@@ -861,7 +861,10 @@
         "visual/assets/site-grounding-register.json",
         "visual/assets/pilot-readiness-register.json",
         "visual/assets/non-ai-parity-contract.json",
-        "visual/assets/g1-preregistration-register.json"
+        "visual/assets/g1-preregistration-register.json",
+        "visual/assets/g0-offline-enterprise-service-baseline.json",
+        "visual/assets/t02-g0-g1-replay-fixtures.json",
+        "visual/assets/t02-g0-g1-replay-result.json"
       ],
       "metrics": [
         "scenario_count",
@@ -870,7 +873,10 @@
         "manual_fallback_coverage_ratio",
         "pilot_readiness_protocol_coverage_ratio",
         "g1_preregistration_required_field_coverage_ratio",
-        "completed_g1_preregistration_count"
+        "completed_g1_preregistration_count",
+        "completed_g0_offline_replay_count",
+        "g0_offline_expected_decision_match_ratio",
+        "g0_offline_stop_recovery_branch_coverage_ratio"
       ],
       "drawings": [
         "drawings/a3-booklet.pdf",
@@ -890,11 +896,13 @@
       "assumption_ids": [
         "A-SCENARIO-PROTOCOL-004",
         "A-GOVERNANCE-001",
-        "A-SITE-LOCATION-008"
+        "A-SITE-LOCATION-008",
+        "A-G0-OFFLINE-009"
       ],
       "self_check_ids": [
         "SCENARIO_PROTOCOL",
-        "PUBLIC_INTEREST_FALLBACK"
+        "PUBLIC_INTEREST_FALLBACK",
+        "G0_T02_SYNTHETIC_REPLAY"
       ]
     },
     {
@@ -998,7 +1006,9 @@
       "evidence_files": [
         "visual/assets/pilot-readiness-register.json",
         "visual/assets/site-grounding-register.json",
-        "visual/assets/g1-preregistration-register.json"
+        "visual/assets/g1-preregistration-register.json",
+        "visual/assets/g0-offline-enterprise-service-baseline.json",
+        "visual/assets/t02-g0-g1-replay-result.json"
       ],
       "metrics": [
         "phase_count",
@@ -1007,7 +1017,9 @@
         "pilot_readiness_project_coverage_ratio",
         "pilot_readiness_protocol_coverage_ratio",
         "g1_preregistration_required_field_coverage_ratio",
-        "g1_field_execution_count"
+        "g1_field_execution_count",
+        "completed_g0_offline_replay_count",
+        "g0_offline_expected_decision_match_ratio"
       ],
       "drawings": [
         "drawings/a3-booklet.pdf",
@@ -1027,11 +1039,13 @@
       "assumption_ids": [
         "A-SCENARIO-PROTOCOL-004",
         "A-EXTERNAL-COLLAB-005",
-        "A-POST-OPENING-007"
+        "A-POST-OPENING-007",
+        "A-G0-OFFLINE-009"
       ],
       "self_check_ids": [
         "SCENARIO_PROTOCOL",
-        "TASK_EVIDENCE_SPECIFICITY"
+        "TASK_EVIDENCE_SPECIFICITY",
+        "G0_T02_SYNTHETIC_REPLAY"
       ]
     }
   ]

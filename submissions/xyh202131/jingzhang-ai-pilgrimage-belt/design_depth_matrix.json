@@ -446,7 +446,9 @@
       "evidence_files": [
         "visual/assets/pilot-readiness-register.json",
         "visual/assets/site-grounding-register.json",
-        "visual/assets/g1-preregistration-register.json"
+        "visual/assets/g1-preregistration-register.json",
+        "visual/assets/g0-offline-enterprise-service-baseline.json",
+        "visual/assets/t02-g0-g1-replay-result.json"
       ],
       "metric_refs": [
         "gateway_count",
@@ -455,7 +457,9 @@
         "pilot_readiness_project_coverage_ratio",
         "pilot_readiness_protocol_coverage_ratio",
         "g1_preregistration_required_field_coverage_ratio",
-        "completed_g1_preregistration_count"
+        "completed_g1_preregistration_count",
+        "completed_g0_offline_replay_count",
+        "g0_offline_expected_decision_match_ratio"
       ],
       "source_ids": [
         "DATA-SRC-OFFICIAL-ANNOUNCEMENT-20260509",
@@ -466,13 +470,15 @@
       "assumption_ids": [
         "A-SCENARIO-PROTOCOL-004",
         "A-POST-OPENING-007",
-        "A-SITE-LOCATION-008"
+        "A-SITE-LOCATION-008",
+        "A-G0-OFFLINE-009"
       ],
       "self_check_ids": [
         "TASK_EVIDENCE_SPECIFICITY",
-        "SCENARIO_PROTOCOL"
+        "SCENARIO_PROTOCOL",
+        "G0_T02_SYNTHETIC_REPLAY"
       ],
-      "evidence_summary_zh": "八个项目分别绑定 Feature、前置条件、概念级责任角色、审批触发、禁采数据、事故责任、共同测试、恢复、独立复测和 go/no-go；12 个场景另有 G1 预注册合同，先锁定同任务对照、主指标、分母、停止恢复和版本。字段覆盖不代表责任主体已确认、项目已获批或测试已执行。"
+      "evidence_summary_zh": "八个项目分别绑定 Feature、前置条件、概念级责任角色、审批触发、禁采数据、事故责任、共同测试、恢复、独立复测和 go/no-go；12 个场景另有 G1 预注册合同。T-02 已完成一次十案例合成治理回放，证明固定规则、停机和恢复分支可复现；责任主体、审批、真实服务、G1 窗口与现场执行仍为 0 或 unknown。"
     },
     {
       "item_id": "phasing_implementation",
@@ -493,7 +499,9 @@
       "evidence_files": [
         "visual/assets/pilot-readiness-register.json",
         "visual/assets/innovation-register.json",
-        "visual/assets/g1-preregistration-register.json"
+        "visual/assets/g1-preregistration-register.json",
+        "visual/assets/g0-offline-enterprise-service-baseline.json",
+        "visual/assets/t02-g0-g1-replay-result.json"
       ],
       "metric_refs": [
         "phase_count",
@@ -501,7 +509,9 @@
         "pilot_readiness_protocol_coverage_ratio",
         "completed_post_opening_field_audit_count",
         "approved_g1_test_window_count",
-        "g1_field_execution_count"
+        "g1_field_execution_count",
+        "completed_g0_offline_replay_count",
+        "g0_offline_stop_recovery_branch_coverage_ratio"
       ],
       "source_ids": [
         "AGENT-TASKBOOK",
@@ -511,12 +521,14 @@
       ],
       "assumption_ids": [
         "A-SCENARIO-PROTOCOL-004",
-        "A-POST-OPENING-007"
+        "A-POST-OPENING-007",
+        "A-G0-OFFLINE-009"
       ],
       "self_check_ids": [
-        "SCENARIO_PROTOCOL"
+        "SCENARIO_PROTOCOL",
+        "G0_T02_SYNTHETIC_REPLAY"
       ],
-      "evidence_summary_zh": "0—2、3—5、5 年后只是时间窗口；责任、审批、预注册、社区共测、独立复测、已建公园增量和恢复证据共同决定进入、毕业与回滚。获批 G1 窗口和现场执行数均为 0，当前仍停留在概念/G0。"
+      "evidence_summary_zh": "0—2、3—5、5 年后只是时间窗口；责任、审批、预注册、社区共测、独立复测、已建公园增量和恢复证据共同决定进入、毕业与回滚。T-02 的一次合成治理回放只补足 G0 决策逻辑证据；获批 G1 窗口、真实独立复测和现场执行数均为 0，当前仍停留在 G0。"
     },
     {
       "item_id": "metrics_recalculation",

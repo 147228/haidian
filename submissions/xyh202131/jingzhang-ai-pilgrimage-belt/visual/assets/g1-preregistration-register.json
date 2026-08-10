@@ -1000,6 +1000,11 @@
       "linked_parity_refs": [
         "PARITY-002"
       ],
+      "linked_synthetic_replay_refs": [
+        "visual/assets/g0-offline-enterprise-service-baseline.json#T02-G0-G1-REPLAY-1.0.0",
+        "visual/assets/t02-g0-g1-replay-fixtures.json#T02-G0-G1-SYNTHETIC-REPLAY-V1",
+        "visual/assets/t02-g0-g1-replay-result.json#T02-G0-G1-SYNTHETIC-REPLAY-RESULT-V1"
+      ],
       "baseline_task": {
         "zh": "参与者用正式来源清单、纸质流程和人工窗口完成同一固定企业服务问题集。",
         "en": "Participants complete the same fixed enterprise-service question set using an official source list, printed process, and staffed counter."
@@ -1041,14 +1046,21 @@
       "threshold": {
         "status": "pending_preregistration",
         "value": null,
-        "fixed_safety_hard_gates": {}
+        "fixed_safety_hard_gates": {
+          "synthetic_contract_replay_exact_match_required": true,
+          "unknown_fields_enums_and_source_ids_fail_closed": true,
+          "prohibited_data_stops_without_retention": true,
+          "stale_or_conflicting_sources_stop": true,
+          "required_human_path_unavailable_stops": true,
+          "real_owner_site_sample_window_effect_threshold_and_version_lock_still_required": true
+        }
       },
       "hard_no_harm_rule": {
         "zh": "不得把导航写成审批或资格决定；错误不得影响正式办理；非 AI 用户的结果、费用、权利和申诉不得较差。",
         "en": "Navigation must not be presented as approval or eligibility; an error must not affect a formal procedure; non-AI users must not receive worse outcomes, costs, rights, or appeal."
       },
       "data_owner_role": {
-        "role": "authoritative service-source and handoff-record custodian",
+        "role": "service_information_owner",
         "assignment_status": "unconfirmed"
       },
       "stop_rule": {
@@ -1058,10 +1070,16 @@
       "recovery_acceptance": {
         "zh": "全部任务切回正式来源和人工窗口，修正来源包并由独立人员重跑完整问题集。",
         "en": "Return every task to official sources and the staffed counter, correct the source pack, and have an independent reviewer rerun the complete question set.",
-        "evidence_status": "unknown"
+        "synthetic_stop_branch_count": 4,
+        "synthetic_stop_branches_with_recovery_count": 4,
+        "declared_stop_event_count": 4,
+        "covered_unique_stop_event_count": 4,
+        "exact_stop_event_recovery_mapping_count": 4,
+        "stop_event_coverage_ratio": 1.0,
+        "real_recovery_evidence_status": "unknown"
       },
       "independent_retester": {
-        "role": "independent service-quality and source-freshness reviewer",
+        "role": "independent_real_retester",
         "confirmation_status": "unconfirmed",
         "independence_rule": "must not maintain the answer set or operate the staffed counter"
       },
@@ -1071,6 +1089,18 @@
         "model_or_system_version": null,
         "data_snapshot_digest": null,
         "locked_before_collection_required": true
+      },
+      "g0_synthetic_replay_evidence": {
+        "status": "pass",
+        "replay_kind": "synthetic_deterministic_governance_replay",
+        "fixture_count": 10,
+        "exact_expected_decision_match_count": 10,
+        "decision_mismatch_count": 0,
+        "negative_control_count": 13,
+        "exact_negative_control_pass_count": 13,
+        "result_ref": "visual/assets/t02-g0-g1-replay-result.json",
+        "does_not_complete_g1_preregistration": true,
+        "does_not_authorize_service_or_field_execution": true
       },
       "result_status": "unknown"
     },
@@ -1178,6 +1208,7 @@
     "current_gate_g0_count": 12,
     "conceptual_unapproved_count": 12,
     "completed_preregistrations": 0,
+    "completed_synthetic_g0_governance_replays": 1,
     "approved_collection_windows": 0,
     "completed_field_executions": 0,
     "known_result_count": 0,

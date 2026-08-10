@@ -206,7 +206,7 @@
       "priority": "P0",
       "status": "open",
       "owner_needed": "independent rights reviewer",
-      "evidence_needed": "file-level audit for all 62 manifest paths"
+    "evidence_needed": "file-level audit for all 65 manifest paths"
     },
     {
       "item_id": "RIGHTS-OPEN-03",
@@ -221,8 +221,8 @@
     "completed_independent_file_level_clearance_audits": 0,
     "source_records": 29,
     "osm_element_records": 120,
-    "manifest_paths": 62,
-    "file_level_asset_records": 62,
+    "manifest_paths": 65,
+    "file_level_asset_records": 65,
     "audit_records": 0,
     "repository_review": "disclosure_ready",
     "public_or_professional_reuse": "blocked_pending_terms_and_audit",
@@ -263,7 +263,7 @@
       "result": "pass",
       "severity": "major",
       "target": "metrics.json",
-      "message": "62 个 known 指标来自 EPSG:4548 几何复算或机器可读属性计数；11 个无正式资料或运行证据的指标保持 unknown，建筑密度和道路比例不使用代理值。"
+      "message": "73 个 known 指标来自 EPSG:4548 几何复算、机器可读属性计数或 G0 合成治理回放结果；11 个无正式资料或现实运行证据的指标保持 unknown，建筑密度和道路比例不使用代理值。"
     },
     {
       "check_id": "SOURCE_ID_CLOSURE",
@@ -285,6 +285,14 @@
       "severity": "major",
       "target": "visual/assets/g1-preregistration-register.json",
       "message": "12/12 场景具备同任务对照、主指标与分母、采样、时间窗、无伤害、停止恢复、独立复测和版本字段；完成预注册、获批窗口、现场执行与已知结果均为 0。"
+    },
+    {
+      "check_id": "G0_T02_SYNTHETIC_REPLAY",
+      "result": "pass",
+      "severity": "major",
+      "target": "visual/assets/t02-g0-g1-replay-result.json",
+      "reproduction_command": "node submissions/xyh202131/jingzhang-ai-pilgrimage-belt/visual/assets/run_t02_g0_g1_replay.js --check",
+      "message": "零依赖 Node 22.x 离线回放在十个无 PII 合成案例上取得 10/10 精确预期决策匹配与 0 mismatch；4/4 个不同的声明停止事件均精确映射到各自恢复动作；13/13 fail-closed 负向控制覆盖样例/冻结合同未知字段、枚举与回答模式漂移、来源闭包、禁采数据优先级、canonical RACI 闭包、现实服务授权和摘要计数篡改；允许来源闭包 6/6。该 PASS 只证明 G0 合同逻辑可确定性重放；实体回答、模型/API、真实服务、现场、审批、责任主体、真实独立复测、G1 结果与真实非 AI 同权结果仍为 0 或 unknown，当前 gate 保持 G0。"
     },
     {
       "check_id": "PUBLIC_INTEREST_FALLBACK",
@@ -327,7 +335,7 @@
       "severity": "major",
       "target": "visual/assets/rights-clearance-ledger.json",
       "reproduction_command": "Run the complete PowerShell/Python audit block under report/narrative.md#权利证据审计--rights-evidence-audit; it executes JSON Schema validation plus path, hash, source, OSM, tool, declared-parent and release-gate assertions.",
-      "message": "manifest、5 个兼容组与 62 条逐文件资产记录严格等集且路径唯一；29 条来源、120 个 OSM way、稳定工具 ID、Noto/Helvetica/SVG 渲染字体边界与外部请求均闭合。包内 metrics source_files 与声明的直接父资产已机器核对；parent_asset_refs 不是通用构建图。该 PASS 只表示披露和声明链接可审计；独立逐文件清权审计仍为 0、总体 not_fully_cleared。"
+      "message": "manifest、5 个兼容组与 65 条逐文件资产记录严格等集且路径唯一；29 条来源、120 个 OSM way、稳定工具 ID、Noto/Helvetica/SVG/Node.js 运行时边界与外部请求均闭合。包内 metrics source_files 与声明的直接父资产已机器核对；parent_asset_refs 不是通用构建图。该 PASS 只表示披露和声明链接可审计；独立逐文件清权审计仍为 0、总体 not_fully_cleared。"
     },
     {
       "check_id": "PUBLIC_OR_PROFESSIONAL_REUSE_RIGHTS",

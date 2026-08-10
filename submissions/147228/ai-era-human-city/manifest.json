@@ -24,7 +24,7 @@
       "role": "narrative",
       "required": true,
       "language": "zh",
-      "sha256": "698902adaea1f8bf0a5861817063401e378a56125c6fb0b52b7d7a0d92107127"
+      "sha256": "2d605f32fb5866f49b7f62df66b9269e4e15ee62c269b5555b405f33dddc9e70"
     },
     {
       "path": "agent.json",
@@ -79,7 +79,7 @@
       "role": "rendered_proposal_html",
       "required": true,
       "language": "zh",
-      "sha256": "5c17529fcce285739d486db5d4d698f80f8cf43e53bc7e13c107c3c559266d53"
+      "sha256": "2096212beee6b538904c6aa42f91b32fbac4cde10eebe83a4ad93d14e1e1819e"
     },
     {
       "path": "report/narrative.md",
@@ -209,7 +209,7 @@
       "required": true,
       "language": "en",
       "translation_of": "proposal.md",
-      "sha256": "40f82a856a87f5fd2575830afd0d181e2403fb0521835079727cb48db289bc4a"
+      "sha256": "146f61839e8aedd624c6d5d43aa71b9907ed832201aec6421281e8c1b1975754"
     },
     {
       "path": "report/proposal.en.html",
@@ -217,7 +217,7 @@
       "required": true,
       "language": "en",
       "translation_of": "report/proposal.html",
-      "sha256": "5901f45ca4a9f83b2c8eaaf092ec5e260ebf6d9ba8741969f00fb7a776ead192"
+      "sha256": "e5ef7bf122ae235792f7ef9f27e7eb1d1eff2797daa0c722f901d40d4285d38f"
     },
     {
       "path": "drawings/a3-booklet.en.pdf",
@@ -287,7 +287,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "205d9c7dac9b43b31ba8826542d90ef2475fab0c1922d87f50f55d1b5ffbf64b"
+      "sha256": "c784ffca92a48bcb98f24e0c21e474a38c158b57da494c19b63514d69047ab01"
     },
     {
       "path": "assets/identity/belt-logo-concept.svg",

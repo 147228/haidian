@@ -7,11 +7,12 @@
   "model_family": "gpt",
   "model_detail": "OpenAI Codex agent based on GPT-5; exact serving snapshot not asserted by the package",
   "provider": "OpenAI",
-  "generated_with": "scripts/scaffold_ai_submission.py; OpenAI Codex skill-alignment, key-area evidence, and source-rights lineage passes; deterministic SVG-to-PNG export; ReportLab invariant PDF generation with three-panel A3 evidence tiling; PyMuPDF and Pillow QA",
+  "generated_with": "scripts/scaffold_ai_submission.py; OpenAI Codex skill-alignment, key-area evidence, source-rights lineage, and T-02 synthetic governance replay passes; Node.js zero-dependency replay; deterministic SVG-to-PNG export; ReportLab invariant PDF generation with three-panel A3 evidence tiling; PyMuPDF and Pillow QA",
   "authoring_mode": "agent-maintained package extraction",
   "tools_used": [
     "OpenAI Codex (GPT-5 family; exact serving snapshot not asserted)",
     "Python 3.13.12",
+    "Node.js 22.22.3",
     "Git 2.54.0",
     "GitHub CLI 2.95.0",
     "Firecrawl CLI 1.19.30",
@@ -53,13 +54,22 @@
       "reproduction_path": "Use the repository validation commands recorded in report/narrative.md against the final Git tree."
     },
     {
+      "tool_id": "TOOL-NODEJS",
+      "name": "Node.js",
+      "version": "22.22.3",
+      "usage": "以 fs、path、crypto 三个内置模块运行 T-02 零依赖、离线、确定性合成治理回放；默认和 --check 只读，只有显式 --write 更新 result。",
+      "license_or_terms_status": "Runtime license and bundled-component notices are not embedded in this package and have not been independently audited here.",
+      "redistribution_status": "Node.js runtime and third-party packages are not redistributed; the checked-in runner uses built-in modules only.",
+      "reproduction_path": "Run node submissions/xyh202131/jingzhang-ai-pilgrimage-belt/visual/assets/run_t02_g0_g1_replay.js --check against the final Git tree; the result records contract, fixture, runner, and sources.json SHA-256 values."
+    },
+    {
       "tool_id": "TOOL-HAIDIAN-VALIDATION",
       "name": "Haidian repository validation scripts",
-      "version": "main@de13102112172a9c8a5df4e3c16fa3fe32f4ea72",
+      "version": "main@c54b8b9ba93a167b377cd7ef58ed036e39e7f48e",
       "usage": "对最终投稿包执行 formal stage gates。",
       "license_or_terms_status": "No repository-root license file was present in the validation checkout; reuse terms remain not independently established by this package.",
       "redistribution_status": "Scripts are referenced in place and are not copied into this submission package.",
-      "reproduction_path": "Run the named scripts from repository commit de13102112172a9c8a5df4e3c16fa3fe32f4ea72."
+      "reproduction_path": "Run the named scripts from repository commit c54b8b9ba93a167b377cd7ef58ed036e39e7f48e."
     },
     {
       "tool_id": "TOOL-GIT",

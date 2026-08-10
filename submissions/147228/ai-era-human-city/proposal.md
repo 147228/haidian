@@ -10,7 +10,7 @@ summary: "以人本缓冲、机器可调用的公共规则和可撤回的版本�
 proposal_format_version: "2"
 bilingual_contract_version: "1"
 translation_file: "proposal.en.md"
-iteration: "v0.6"
+iteration: "v0.7"
 tracks: "ai-traffic-walkability,civic-agent-governance,youth-friendly-public-space"
 scenarios: "ai-traffic-walkability,robot-delivery-low-speed,ai-health-service-navigation,ai-cultural-guide,enterprise-service-copilot,public-safety-operations-review"
 ---
@@ -109,19 +109,19 @@ scenarios: "ai-traffic-walkability,robot-delivery-low-speed,ai-health-service-na
 
 ## 用地、建筑规模与拆改留方案
 
-本节把临时几何翻译成可讨论的空间动作。下表中的容积率和层数是概念比较范围，用来测试首层公共界面、低尺度服务节点和上部体量的关系，不是控规指标，也不表示现状。三处重点区先做公共界面和人工服务，再进入正式边界、权属、消防、市政、文化遗产和现状建筑资料的专业复核。[standard:MOHURD-CONTROL-DETAILED-PLANNING] [data:geometry/buildings.geojson#FOOTPRINT-01] [metric:building_footprint_area_sqm]
+本节把临时几何翻译成可讨论的空间动作。下表只比较公共界面、普通路径、人工服务与可撤回设备的关系，不定义开发控制或上部体量。三处重点区先做公共界面和人工服务，再进入正式边界、权属、消防、市政、文化遗产和现状建筑资料的专业复核。[standard:MOHURD-CONTROL-DETAILED-PLANNING] [data:geometry/buildings.geojson#FOOTPRINT-01] [metric:building_footprint_area_sqm]
 
-| 重点区 | 概念空间动作 | 概念体量范围 | 保留、更新与复核重点 |
+| 重点区 | 概念空间动作 | 公共界面与可逆关系 | 保留、更新与复核重点 |
 |---|---|---|---|
-| 众智园 | 把问题站、共享实验前台和公众观察席沿人工优先路径串联，首层保留无屏入口、人工接管点和可撤回展示面 | 概念 FAR 1.2–1.8；公共界面 2–4 层；上部高度 unknown | 先核对现有园区服务与公共开放条件，再决定保留、改造或新建；不得把 `PROV-KEY-001` 当作地块红线 |
-| AI 原点社区 | 把技能再造客厅、代际共学庭和夜间人工服务放在同一条可步行的日常路径上，公共空间与居民普通路径连续 | 概念 FAR 1.0–1.5；公共界面 2–3 层；上部高度 unknown | 先做无障碍走测、居民使用时段和社区服务盘点，再讨论空间取舍；不得把 `PROV-KEY-002` 当作社区权属边界 |
-| 大钟寺 | 以文化解释服务、公共数据授权前台和夜间回退入口形成可退出的城市客厅，控制首层设备和人流对普通路径的干扰 | 概念 FAR 0.8–1.3；公共界面 1–3 层；上部高度 unknown | 先核对历史文化、交通和夜间服务条件，再决定更新强度；不得把 `PROV-KEY-003` 当作建设范围 |
+| 众智园 | 把问题站、共享实验前台和公众观察席沿人工优先路径串联，首层保留无屏入口、人工接管点和可撤回展示面 | 公众观察席与人工前台相邻；设备、维护和测试后场可关闭，不切断慢行主链 | 先核对现有园区服务与公共开放条件，再决定保留、改造或新建；不得把 `PROV-KEY-001` 当作地块红线 |
+| AI 原点社区 | 把技能再造客厅、代际共学庭和夜间人工服务放在同一条可步行的日常路径上，公共空间与居民普通路径连续 | 纸面、电话和人工入口朝向普通路径；测试组件可拆、可暂停，居民服务不依赖数字账号 | 先做无障碍走测、居民使用时段和社区服务盘点，再讨论空间取舍；不得把 `PROV-KEY-002` 当作社区权属边界 |
+| 大钟寺 | 以文化解释服务、公共数据授权前台和夜间回退入口形成可退出的城市客厅，控制首层设备和人流对普通路径的干扰 | 轨道到达、安静链和服务前台分流；活动与数据展示可撤回，不占用居民日常通行 | 先核对历史文化、交通和夜间服务条件，再决定更新强度；不得把 `PROV-KEY-003` 当作建设范围 |
 
-这里的概念范围只回答“先比较什么”，不替专业团队回答“哪里能建、建多少”。三处重点区均保留人工服务、普通路径、无障碍替代和撤回提示。[data:geometry/key_areas.geojson#PROV-KEY-001] [data:geometry/key_areas.geojson#PROV-KEY-002] [data:geometry/key_areas.geojson#PROV-KEY-003]
+这里的关系只回答“先比较哪些公共性与可逆性”，不替专业团队回答“哪里能建、建多少”。三处重点区均保留人工服务、普通路径、无障碍替代和撤回提示。[data:geometry/key_areas.geojson#PROV-KEY-001] [data:geometry/key_areas.geojson#PROV-KEY-002] [data:geometry/key_areas.geojson#PROV-KEY-003]
 
-正式 FAR、建筑高度、拆改清单、消防与工程可行性在 G1 之前保持 `unknown`。[metric:far] [metric:building_height]
+开发控制、拆改清单、消防与工程可行性在 G1 之前保持 `unknown`。[metric:far] [metric:building_height]
 
-可逆设计的空间动作有三条，保留可变的公共/共享时段，使用可拆卸的展示与服务组件，所有数字接口具有停用和版本说明。它服务于 AI 迭代与城市长期周期的错配，却不就结构、施工、材料或投资作任何保证。far 与 building_height 在 metrics.json 中保持 unknown，用于记录当前资料边界。[data:geometry/land_use.geojson#LAND-05] [metric:far] [metric:building_height]
+可逆设计的空间动作有三条，保留可变的公共/共享时段，使用可拆卸的展示与服务组件，所有数字接口具有停用和版本说明。它服务于 AI 迭代与城市长期周期的错配，却不就结构、施工、材料或投资作任何保证。开发控制字段在 metrics.json 中保持 unknown，用于记录当前资料边界。[data:geometry/land_use.geojson#LAND-05] [metric:far] [metric:building_height]
 
 ## 交通、轨道、市政与公共服务设施
 

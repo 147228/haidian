@@ -678,15 +678,73 @@
     },
     "completed_g0_offline_replay_count": {
       "status": "known",
-      "value": 0,
+      "value": 1,
       "unit": "count",
       "source_files": [
-        "visual/assets/g0-offline-enterprise-service-baseline.json"
+        "visual/assets/g0-offline-enterprise-service-baseline.json",
+        "visual/assets/t02-g0-g1-replay-result.json"
       ],
-      "formula": "count(completed read-only offline replays)",
+      "formula": "t02_g0_g1_replay_result.summary.completed_synthetic_governance_replays",
       "confidence": "high",
       "assumptions": [
-        "No offline replay has been completed; no model interaction, service interaction, or field execution is claimed."
+        "Counts one deterministic synthetic governance replay only; it is not a model, API, service, field, approval, owner-confirmation, G1, parity or performance result."
+      ]
+    },
+    "g0_offline_synthetic_fixture_count": {
+      "status": "known",
+      "value": 10,
+      "unit": "count",
+      "source_files": [
+        "visual/assets/t02-g0-g1-replay-fixtures.json",
+        "visual/assets/t02-g0-g1-replay-result.json"
+      ],
+      "formula": "len(t02_g0_g1_replay_result.cases)",
+      "confidence": "high",
+      "assumptions": [
+        "Every fixture is synthetic, contains no PII, and performs no real service or field interaction."
+      ]
+    },
+    "g0_offline_expected_decision_match_ratio": {
+      "status": "known",
+      "value": 1.0,
+      "unit": "ratio",
+      "source_files": [
+        "visual/assets/t02-g0-g1-replay-fixtures.json",
+        "visual/assets/run_t02_g0_g1_replay.js",
+        "visual/assets/t02-g0-g1-replay-result.json"
+      ],
+      "formula": "exact_expected_decision_match_count / fixture_count = 10 / 10",
+      "confidence": "high",
+      "assumptions": [
+        "Measures deterministic contract-decision agreement on fixed synthetic inputs only; it is not service accuracy or answer correctness."
+      ]
+    },
+    "g0_offline_stop_recovery_branch_coverage_ratio": {
+      "status": "known",
+      "value": 1.0,
+      "unit": "ratio",
+      "source_files": [
+        "visual/assets/g0-offline-enterprise-service-baseline.json",
+        "visual/assets/t02-g0-g1-replay-result.json"
+      ],
+      "formula": "covered_unique_stop_event_count / declared_stop_event_count = 4 / 4; every observed stop event must map to its declared recovery action",
+      "confidence": "high",
+      "assumptions": [
+        "Shows unique coverage of all four declared synthetic stop events and exact event-to-recovery mappings; it does not prove that a real recovery or restart occurred."
+      ]
+    },
+    "g0_offline_fail_closed_control_pass_ratio": {
+      "status": "known",
+      "value": 1.0,
+      "unit": "ratio",
+      "source_files": [
+        "visual/assets/run_t02_g0_g1_replay.js",
+        "visual/assets/t02-g0-g1-replay-result.json"
+      ],
+      "formula": "exact_negative_control_pass_count / negative_control_count = 13 / 13",
+      "confidence": "high",
+      "assumptions": [
+        "Covers strict fixture and frozen-contract fields, enum and answer-mode drift, full permitted-source closure, decision precedence and canonical RACI closure in memory; it is not a penetration test, security certification or field audit."
       ]
     },
     "g0_offline_answer_output_count": {
@@ -700,6 +758,100 @@
       "confidence": "high",
       "assumptions": [
         "No substantive answer output, model interaction, service interaction, field execution, approval, or service result exists in this G0 evidence package."
+      ]
+    },
+    "g0_offline_model_call_count": {
+      "status": "known",
+      "value": 0,
+      "unit": "count",
+      "source_files": [
+        "visual/assets/t02-g0-g1-replay-result.json"
+      ],
+      "formula": "real_world_status.model_calls",
+      "confidence": "high",
+      "assumptions": [
+        "The zero-dependency replay does not invoke a model."
+      ]
+    },
+    "g0_offline_api_call_count": {
+      "status": "known",
+      "value": 0,
+      "unit": "count",
+      "source_files": [
+        "visual/assets/t02-g0-g1-replay-result.json"
+      ],
+      "formula": "real_world_status.api_calls",
+      "confidence": "high",
+      "assumptions": [
+        "The replay is offline and does not invoke an API or network endpoint."
+      ]
+    },
+    "g0_offline_service_interaction_count": {
+      "status": "known",
+      "value": 0,
+      "unit": "count",
+      "source_files": [
+        "visual/assets/t02-g0-g1-replay-result.json"
+      ],
+      "formula": "real_world_status.service_interactions",
+      "confidence": "high",
+      "assumptions": [
+        "No real user, staffed counter, phone line, service desk or formal process was contacted."
+      ]
+    },
+    "g0_offline_field_test_count": {
+      "status": "known",
+      "value": 0,
+      "unit": "count",
+      "source_files": [
+        "visual/assets/t02-g0-g1-replay-result.json"
+      ],
+      "formula": "real_world_status.field_tests",
+      "confidence": "high",
+      "assumptions": [
+        "No site, participant, shadow, controlled or operating field test occurred."
+      ]
+    },
+    "g0_offline_approval_count": {
+      "status": "known",
+      "value": 0,
+      "unit": "count",
+      "source_files": [
+        "visual/assets/g0-offline-enterprise-service-baseline.json",
+        "visual/assets/t02-g0-g1-replay-result.json"
+      ],
+      "formula": "real_world_status.approvals",
+      "confidence": "high",
+      "assumptions": [
+        "All approval triggers remain pending; the replay grants no authority."
+      ]
+    },
+    "g0_offline_confirmed_owner_role_count": {
+      "status": "known",
+      "value": 0,
+      "unit": "count",
+      "source_files": [
+        "visual/assets/g0-offline-enterprise-service-baseline.json",
+        "visual/assets/t02-g0-g1-replay-result.json"
+      ],
+      "formula": "real_world_status.confirmed_owner_roles",
+      "confidence": "high",
+      "assumptions": [
+        "RACI entries are role definitions only; no person or organisation is assigned."
+      ]
+    },
+    "g0_offline_completed_real_independent_retest_count": {
+      "status": "known",
+      "value": 0,
+      "unit": "count",
+      "source_files": [
+        "visual/assets/g0-offline-enterprise-service-baseline.json",
+        "visual/assets/t02-g0-g1-replay-result.json"
+      ],
+      "formula": "real_world_status.completed_real_independent_retests",
+      "confidence": "high",
+      "assumptions": [
+        "A real independent retester is unconfirmed and the real retest template remains not_performed with an unknown result."
       ]
     },
     "g1_preregistration_required_field_coverage_ratio": {

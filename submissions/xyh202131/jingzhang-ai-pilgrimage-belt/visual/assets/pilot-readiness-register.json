@@ -228,7 +228,26 @@
       "item_type": "concept_project",
       "name": "Dazhongsi urban-services portal",
       "current_gate": "G0",
-      "current_status": "concept_only_pending_service_and_site_confirmation",
+      "current_status": "synthetic_governance_replay_passed_real_readiness_no_go",
+      "canonical_governance_ref": "visual/assets/g0-offline-enterprise-service-baseline.json#T02-G0-G1-REPLAY-1.0.0",
+      "canonical_role_ids": {
+        "accountable": "service_information_owner",
+        "responsible": [
+          "source_pack_custodian",
+          "staffed_handoff_lead"
+        ],
+        "consulted": [
+          "procedure_owner",
+          "privacy_incident_reviewer",
+          "accessibility_reviewer",
+          "authoritative_boundary_or_land_administration",
+          "representative_service_user",
+          "independent_real_retester"
+        ],
+        "informed": [
+          "bounded_service_user"
+        ]
+      },
       "raci": {
         "accountable_role": "public-service and venue owner to be confirmed",
         "responsible_roles": [
@@ -238,7 +257,8 @@
         "consulted_roles": [
           "residents and commuters",
           "transport and commercial operators",
-          "accessibility and privacy reviewers"
+          "accessibility and privacy reviewers",
+          "authoritative boundary or land-administration channel"
         ],
         "informed_roles": [
           "service users and affected tenants"
@@ -248,6 +268,13 @@
         "current service-owner and venue confirmation",
         "transport, fire, privacy and accessibility review",
         "source maintenance and human-handoff agreement"
+      ],
+      "approval_trigger_ids": [
+        "APPROVAL-SOURCE-OWNER",
+        "APPROVAL-PROCEDURE-PRIVACY-ACCESSIBILITY",
+        "APPROVAL-STAFFED-FALLBACK",
+        "APPROVAL-FROZEN-PACK",
+        "APPROVAL-INDEPENDENT-RETESTER"
       ],
       "prohibited_data": [
         "identity documents retained outside an authorised transaction",
@@ -260,15 +287,39 @@
         "a source is stale without warning",
         "human or non-AI completion is unavailable"
       ],
+      "stop_event_ids": [
+        "STOP-STALE-SOURCE",
+        "STOP-SOURCE-CONFLICT",
+        "STOP-HUMAN-PATH-UNAVAILABLE",
+        "STOP-PROHIBITED-DATA"
+      ],
       "recovery_plan": "Disable the affected answer set, route all tasks to the staffed or published non-AI channel, correct the source pack and retest the fixed question set.",
+      "recovery_action_ids": [
+        "RECOVER-FREEZE-CORRECT-RETEST-SOURCE-PACK",
+        "RECOVER-RESOLVE-CONFLICT-AND-FULL-REPLAY",
+        "RECOVER-RESTORE-HUMAN-PATH-AND-FULL-REPLAY",
+        "RECOVER-PROHIBITED-DATA-INCIDENT-AND-FULL-REPLAY"
+      ],
       "community_co_test": "Residents, older people, disabled users, commuters and visitors complete the same bounded task through AI, staffed and published non-AI channels.",
       "independent_retest": "An independent service-quality reviewer repeats the fixed question set, expiry-warning and handoff tests.",
       "evidence_deliverables": [
         "source and expiry register",
         "fixed-question benchmark",
         "human-handoff log",
-        "task parity comparison"
+        "task parity comparison",
+        "synthetic deterministic replay result"
       ],
+      "synthetic_rehearsal_evidence": {
+        "status": "pass",
+        "fixture_count": 10,
+        "exact_expected_decision_match_count": 10,
+        "decision_mismatch_count": 0,
+        "result_ref": "visual/assets/t02-g0-g1-replay-result.json",
+        "real_service_interactions": 0,
+        "approvals": 0,
+        "confirmed_owner_roles": 0,
+        "completed_real_independent_retests": 0
+      },
       "go_no_go": "NO-GO until the accountable service source, current venue, human fallback, non-AI route and formal-error stop process are confirmed."
     },
     {
@@ -467,7 +518,26 @@
       "item_type": "first_test_protocol",
       "name": "Sourced enterprise-service protocol",
       "current_gate": "G0",
-      "current_status": "protocol_defined_not_executed",
+      "current_status": "synthetic_governance_replay_passed_real_service_not_executed",
+      "canonical_governance_ref": "visual/assets/g0-offline-enterprise-service-baseline.json#T02-G0-G1-REPLAY-1.0.0",
+      "canonical_role_ids": {
+        "accountable": "service_information_owner",
+        "responsible": [
+          "source_pack_custodian",
+          "staffed_handoff_lead"
+        ],
+        "consulted": [
+          "procedure_owner",
+          "privacy_incident_reviewer",
+          "accessibility_reviewer",
+          "authoritative_boundary_or_land_administration",
+          "representative_service_user",
+          "independent_real_retester"
+        ],
+        "informed": [
+          "bounded_service_user"
+        ]
+      },
       "raci": {
         "accountable_role": "service-information owner to be confirmed",
         "responsible_roles": [
@@ -477,7 +547,8 @@
         "consulted_roles": [
           "procedure owners",
           "privacy and accessibility reviewers",
-          "representative service users"
+          "representative service users",
+          "authoritative boundary or land-administration channel"
         ],
         "informed_roles": [
           "users of the bounded service"
@@ -487,6 +558,13 @@
         "authoritative source-owner confirmation",
         "privacy, accessibility and procedure review",
         "staffed fallback and correction duty accepted"
+      ],
+      "approval_trigger_ids": [
+        "APPROVAL-SOURCE-OWNER",
+        "APPROVAL-PROCEDURE-PRIVACY-ACCESSIBILITY",
+        "APPROVAL-STAFFED-FALLBACK",
+        "APPROVAL-FROZEN-PACK",
+        "APPROVAL-INDEPENDENT-RETESTER"
       ],
       "prohibited_data": [
         "eligibility decisions inferred from chat history",
@@ -499,15 +577,48 @@
         "a stale source is presented without warning",
         "refusal or human handoff fails"
       ],
+      "stop_event_ids": [
+        "STOP-STALE-SOURCE",
+        "STOP-SOURCE-CONFLICT",
+        "STOP-HUMAN-PATH-UNAVAILABLE",
+        "STOP-PROHIBITED-DATA"
+      ],
       "recovery_plan": "Route all affected tasks to the official non-AI or staffed channel, freeze the source version, correct the answer set and rerun the complete benchmark.",
+      "recovery_action_ids": [
+        "RECOVER-FREEZE-CORRECT-RETEST-SOURCE-PACK",
+        "RECOVER-RESOLVE-CONFLICT-AND-FULL-REPLAY",
+        "RECOVER-RESTORE-HUMAN-PATH-AND-FULL-REPLAY",
+        "RECOVER-PROHIBITED-DATA-INCIDENT-AND-FULL-REPLAY"
+      ],
       "community_co_test": "Representative users complete a fixed task set in AI, staffed and published non-AI modes, including refusal and complaint cases.",
       "independent_retest": "An evaluator outside the content team reruns the fixed question set and verifies citations, expiry warnings, refusals and handoff.",
       "evidence_deliverables": [
         "versioned source pack",
         "fixed question and expected-action set",
         "expiry and refusal log",
-        "handoff completion record"
+        "handoff completion record",
+        "synthetic deterministic replay result"
       ],
+      "synthetic_rehearsal_evidence": {
+        "status": "pass",
+        "fixture_count": 10,
+        "exact_expected_decision_match_count": 10,
+        "decision_mismatch_count": 0,
+        "negative_control_count": 13,
+        "exact_negative_control_pass_count": 13,
+        "stop_branch_count": 4,
+        "stop_branches_with_recovery_count": 4,
+        "declared_stop_event_count": 4,
+        "covered_unique_stop_event_count": 4,
+        "exact_stop_event_recovery_mapping_count": 4,
+        "stop_event_coverage_ratio": 1.0,
+        "result_ref": "visual/assets/t02-g0-g1-replay-result.json",
+        "real_service_interactions": 0,
+        "field_tests": 0,
+        "approvals": 0,
+        "confirmed_owner_roles": 0,
+        "completed_real_independent_retests": 0
+      },
       "go_no_go": "NO-GO to bounded service until pre-published coverage, freshness warning, refusal, handoff and non-AI parity thresholds are met; no result is currently claimed."
     },
     {
@@ -567,6 +678,7 @@
     "raci_role_field_coverage_ratio": 1.0,
     "completed_community_co_tests": 0,
     "completed_independent_retests": 0,
+    "completed_synthetic_t02_governance_replays": 1,
     "approved_or_operating_items": 0,
     "coverage_ratios_are_operating_results": false
   }

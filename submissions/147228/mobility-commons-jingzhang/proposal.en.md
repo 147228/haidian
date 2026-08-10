@@ -9,7 +9,7 @@ license: "COMMUNITY-DISPLAY-ONLY"
 summary: "A time-windowed curb ledger brings metro, bus, bicycle, walking/accessibility, cars, parking and loading into one auditable system, while external commuting, people flow and multimodal simulation remain explicit; future air mobility is only a conditional, reversible, ground-first experiment."
 tracks: ["ai-traffic-walkability", "enterprise-services-ecosystem", "civic-agent-governance"]
 scenarios: ["ai-traffic-walkability", "enterprise-service-copilot", "public-safety-operations-review"]
-iteration: "v2.31"
+iteration: "v2.32"
 ---
 
 # Jing-Zhang Mobility Commons: An Enterprise–Resident Mobility Operating System
@@ -22,16 +22,7 @@ This is a new independent submission package. It does not modify the existing fi
 
 An ordinary person is not a flow point in a model. At each step—leaving, transferring, encountering disruption, asking for help and returning home—they need an understandable choice. The first reversible pilot accepts one minimum chain: **choose a public/accessibility or human route → request one mobility service → trigger human or rail/bus takeover when a transfer is missed, the network is offline, weather turns bad or a curb conflict occurs → freeze the booking and exit when the state is unsafe or unreachable → let an independent reviewer replay the evidence and decide whether to repair, expand or withdraw**. This is not an operational claim. The current M-09 is only a local, offline, no-personal-data tabletop replay of four synthetic requests; `performance_results=null` and `operational_status=not_authorized_not_run`.
 
-To make the tabletop replay a readable spatial acceptance entry point, the four requests and four declared triggers are paired here:
-
-| Synthetic request | Trigger | Human-visible fallback | PASS criterion |
-| --- | --- | --- | --- |
-| Resident daily care `M09-R01` | Digital service unavailable `M09-E01` | Human, public transport, telephone or paper entry; freeze new reservations | Retain fallback; do not fill unknown performance with a result |
-| Wheelchair-accessible route `M09-R02` | Accessibility audit has no date `M09-E02` | Human route audit and assistance | Keep the audit open; do not claim accessibility performance |
-| Enterprise shuttle window `M09-R03` | Complaint owner unassigned `M09-E03` | Register the need only; no booking or expansion | Remain in P0; do not hide the ownership gap |
-| Rail last-mile transfer `M09-R04` | Human/public-transport fallback available `M09-E04` | Staffed wayfinding and public transport | Serve without digital entry and record the unresolved gap |
-
-The visible PASS criteria are therefore 4/4 requests retaining fallback, 6/6 checks passing and 5/5 rollback steps replaying; local performance remains `null` and P1/P2 cannot advance [data:visual/assets/mobility-tabletop-contract.json] [data:visual/assets/mobility-tabletop-evidence.json].
+To make the tabletop replay a readable spatial acceptance entry point, the four request types each connect to a trigger and a human/public-transport fallback; the brief checks only reservation freeze, fallback retention, gap recording and no P1/P2 advancement. The exact requests, triggers and 6/6 checks remain in the package fixture; `performance_results=null`, so a synthetic PASS is not field performance [data:visual/assets/mobility-tabletop-contract.json] [data:visual/assets/mobility-tabletop-evidence.json].
 
 | Step | Space/service visible to an ordinary person | Evidence retained | Fail-closed action |
 | --- | --- | --- | --- |
@@ -169,17 +160,15 @@ The first pilot is a small morning and evening window in Zhongzhiyuan, an access
 
 ### Conceptual Massing and Public Interfaces for the Three Key Areas
 
-Mobility operations do not replace urban design. The following massing ledger translates each area’s mobility role into a provisional interface and intensity range; it does not change the geometry or present a regulatory-plan control.
+Mobility operations do not replace urban design. The following massing ledger translates each area’s mobility role into a provisional interface and intensity range; it does not change the geometry or present a regulatory-plan control. The announcement-scale areas are approximately 192.1, 104.3 and 72.0 ha for task scale only; they are not existing building area, parcel boundaries or regulatory-plan indicators [data:geometry/key_areas.geojson#PROV-KEY-001] [source:OFFICIAL-ANNOUNCEMENT].
 
-| Key area | Announced area (task scale only) | Spatial relationship | Conceptual intensity | Public-facing height | First professional evidence to collect |
+| Key area | Spatial relationship | Conceptual intensity | Public-facing height | First professional evidence to collect |
 | --- | --- | --- | --- | --- |
-| Zhongzhiyuan AI Autonomous Innovation Acceleration Zone | Approx. 192.1 ha in the announcement | Separate enterprise arrival, shuttle waiting, loading and fire-clearance layers; keep the ground interface service-oriented | FAR 1.2–1.8 for design comparison only | 2–4 storeys; upper height unknown | Existing buildings, energy/fire review, ownership, enterprise OD and curb survey |
-| Beijing AI Origin Community | Approx. 104.3 ha in the announcement | Place community services, continuous walking/accessibility, weather shelter and daily needs on one human-first interface | FAR 1.0–1.5 for design comparison only | 2–3 storeys; upper height unknown | Accessibility walk, resident-service baseline, ownership, care and night-safety evidence |
-| Dazhongsi AI Industry Cluster | Approx. 72.0 ha in the announcement | Distinguish rail transfer, bicycle parking, public ground-floor frontage and timed loading | FAR 0.8–1.3 for design comparison only | 1–3 storeys; upper height unknown | Station flow, curb counts, traffic organisation, fire and municipal interfaces |
+| Zhongzhiyuan AI Autonomous Innovation Acceleration Zone | Separate enterprise arrival, shuttle waiting, loading and fire-clearance layers; keep the ground interface service-oriented | FAR 1.2–1.8 for design comparison only | 2–4 storeys; upper height unknown | Existing buildings, energy/fire review, ownership, enterprise OD and curb survey |
+| Beijing AI Origin Community | Place community services, continuous walking/accessibility, weather shelter and daily needs on one human-first interface | FAR 1.0–1.5 for design comparison only | 2–3 storeys; upper height unknown | Accessibility walk, resident-service baseline, ownership, care and night-safety evidence |
+| Dazhongsi AI Industry Cluster | Distinguish rail transfer, bicycle parking, public ground-floor frontage and timed loading | FAR 0.8–1.3 for design comparison only | 1–3 storeys; upper height unknown | Station flow, curb counts, traffic organisation, fire and municipal interfaces |
 
-Announced areas provide task scale only; they are not existing building area, parcel boundaries or regulatory-plan indicators. FAR and storeys are conceptual design ranges, not official planning conditions, building permits or construction commitments. A formal scheme must recalculate them after survey, regulatory-plan review, ownership, fire, structural, municipal and public-participation evidence is complete [depth:height_massing_character] [depth:development_intensity_controls].
-
-The three announced areas can be read back from the provisional key-area layer and traced to the announcement; the layer still declares `official_boundary=false`, so its provisional status is unchanged [data:geometry/key_areas.geojson#PROV-KEY-001] [source:OFFICIAL-ANNOUNCEMENT].
+FAR and storeys are conceptual design ranges, not official planning conditions, building permits or construction commitments. A formal scheme must recalculate them after survey, regulatory-plan review, ownership, fire, structural, municipal and public-participation evidence is complete [depth:height_massing_character] [depth:development_intensity_controls].
 
 Until that evidence exists, the first spatial moves remain removable signs, weather shelters, bicycle parking, accessible ramps and curb-state boards. No road widening, building increment or demolition conclusion follows from this ledger [standard:MOHURD-CONTROL-DETAILED-PLANNING].
 

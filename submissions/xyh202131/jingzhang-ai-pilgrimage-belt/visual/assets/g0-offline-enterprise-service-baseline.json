@@ -1,13 +1,13 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "evidence": {
     "register_id": "JZ-G0-OFFLINE-ENTERPRISE-SERVICE-V1",
-    "as_of": "2026-08-09",
-    "status": "conceptual_reproducible_not_executed",
+    "as_of": "2026-08-10",
+    "status": "synthetic_governance_replay_passed_real_service_not_executed",
     "protocol_id": "T-02",
     "current_gate": "G0",
-    "purpose_zh": "为来源化企业服务协议固定一个仅可离线复核的五问证据契约；它证明问题、来源边界和拒答转接字段可重放，不声称执行、模型交互、现场结果、审批或服务正确性。",
-    "purpose_en": "Fix a five-question, offline-review-only evidence contract for the sourced enterprise-service protocol. It demonstrates replayable question, source-boundary, refusal, and handoff fields, without claiming execution, model interaction, field results, approval, or service correctness."
+    "purpose_zh": "为来源化企业服务协议固定一个仅可离线复核的五问证据契约，并用十个无 PII 合成案例重放来源边界、拒答、停机、人工转接与恢复决策；它不声称实体回答、模型或 API 调用、真实服务、现场结果、审批、责任主体确认或服务正确性。",
+    "purpose_en": "Fix a five-question, offline-review-only evidence contract for the sourced enterprise-service protocol and replay source-boundary, refusal, stop, human-handoff, and recovery decisions against ten PII-free synthetic cases. It claims no substantive answer, model or API call, real service, field result, approval, confirmed owner, or service correctness."
   },
   "fixed_questions": [
     {
@@ -88,36 +88,278 @@
       "project_material": "No source in this contract authorizes a formal procedure, case determination, or autonomous service operation; such requests require human handoff."
     }
   },
-  "replay_contract": {
-    "replay_scope": "Read-only review of sources.json and this file's five fixed questions; no web retrieval, source refresh, model call, service interaction, field visit, or formal procedure is performed.",
-    "steps": [
-      "Read sources.json without modification.",
-      "Read the five fixed_questions in this file without modification.",
-      "Verify every question source_id exists in sources.json and is permitted by source_contract.",
-      "Verify each question carries allowed use, prohibited inference, expected answer mode, and refusal/handoff action.",
-      "Record only contract-completeness counts; do not generate a substantive service response."
+  "governance_replay_contract": {
+    "contract_version": "T02-G0-G1-REPLAY-1.0.0",
+    "fixture_set_id": "T02-G0-G1-SYNTHETIC-REPLAY-V1",
+    "runner_file": "run_t02_g0_g1_replay.js",
+    "result_file": "t02-g0-g1-replay-result.json",
+    "decision_precedence": [
+      "prohibited_data",
+      "unknown_request",
+      "stale_source",
+      "conflicting_source",
+      "human_path_unavailable",
+      "bounded_request_class"
     ],
-    "version_lock": null,
-    "input_summary": null,
-    "output_location": null,
+    "request_class_question_map": {
+      "source_status": "Q-001",
+      "opening_background": "Q-002",
+      "policy_background": "Q-003",
+      "provisional_precision": "Q-004",
+      "formal_procedure": "Q-005",
+      "unknown": null
+    },
+    "role_catalog": [
+      {
+        "role_id": "service_information_owner",
+        "raci": "A",
+        "label_zh": "服务信息责任主体",
+        "label_en": "service-information owner",
+        "assignment_status": "unconfirmed"
+      },
+      {
+        "role_id": "source_pack_custodian",
+        "raci": "R",
+        "label_zh": "来源包维护角色",
+        "label_en": "source-pack custodian",
+        "assignment_status": "unconfirmed"
+      },
+      {
+        "role_id": "staffed_handoff_lead",
+        "raci": "R",
+        "label_zh": "人工转接责任角色",
+        "label_en": "staffed-handoff lead",
+        "assignment_status": "unconfirmed"
+      },
+      {
+        "role_id": "procedure_owner",
+        "raci": "C",
+        "label_zh": "正式程序责任角色",
+        "label_en": "formal-procedure owner",
+        "assignment_status": "unconfirmed"
+      },
+      {
+        "role_id": "privacy_incident_reviewer",
+        "raci": "C",
+        "label_zh": "隐私事件复核角色",
+        "label_en": "privacy-incident reviewer",
+        "assignment_status": "unconfirmed"
+      },
+      {
+        "role_id": "accessibility_reviewer",
+        "raci": "C",
+        "label_zh": "无障碍复核角色",
+        "label_en": "accessibility reviewer",
+        "assignment_status": "unconfirmed"
+      },
+      {
+        "role_id": "representative_service_user",
+        "raci": "C",
+        "label_zh": "代表性服务使用者",
+        "label_en": "representative service user",
+        "assignment_status": "unconfirmed"
+      },
+      {
+        "role_id": "authoritative_boundary_or_land_administration",
+        "raci": "C",
+        "label_zh": "权威边界或土地管理人工渠道",
+        "label_en": "authoritative boundary or land-administration human channel",
+        "assignment_status": "unconfirmed"
+      },
+      {
+        "role_id": "independent_real_retester",
+        "raci": "C",
+        "label_zh": "独立真实复测角色",
+        "label_en": "independent real-world retester",
+        "assignment_status": "unconfirmed"
+      },
+      {
+        "role_id": "bounded_service_user",
+        "raci": "I",
+        "label_zh": "限域服务使用者",
+        "label_en": "bounded-service user",
+        "assignment_status": "unconfirmed"
+      }
+    ],
+    "approval_triggers": [
+      {
+        "trigger_id": "APPROVAL-SOURCE-OWNER",
+        "label_zh": "确认权威来源责任主体",
+        "label_en": "confirm the authoritative source owner",
+        "status": "pending"
+      },
+      {
+        "trigger_id": "APPROVAL-PROCEDURE-PRIVACY-ACCESSIBILITY",
+        "label_zh": "完成程序、隐私与无障碍审查",
+        "label_en": "complete procedure, privacy, and accessibility review",
+        "status": "pending"
+      },
+      {
+        "trigger_id": "APPROVAL-STAFFED-FALLBACK",
+        "label_zh": "人工兜底与纠错职责被责任主体接受",
+        "label_en": "accountable acceptance of staffed fallback and correction duties",
+        "status": "pending"
+      },
+      {
+        "trigger_id": "APPROVAL-FROZEN-PACK",
+        "label_zh": "冻结真实 G1 使用的来源、问题和预期决策包",
+        "label_en": "freeze the source, question, and expected-decision pack for real G1 use",
+        "status": "pending"
+      },
+      {
+        "trigger_id": "APPROVAL-INDEPENDENT-RETESTER",
+        "label_zh": "确认无利益冲突的独立真实复测者",
+        "label_en": "confirm a conflict-free independent real-world retester",
+        "status": "pending"
+      }
+    ],
+    "prohibited_data_categories": [
+      "identity_document_outside_authorized_workflow",
+      "cross_user_conversation_reuse",
+      "eligibility_inference_from_chat"
+    ],
+    "stop_events": [
+      {
+        "event_id": "STOP-STALE-SOURCE",
+        "label_zh": "过期来源未提示",
+        "label_en": "stale source without warning",
+        "recovery_action_id": "RECOVER-FREEZE-CORRECT-RETEST-SOURCE-PACK"
+      },
+      {
+        "event_id": "STOP-SOURCE-CONFLICT",
+        "label_zh": "来源冲突未解决",
+        "label_en": "unresolved source conflict",
+        "recovery_action_id": "RECOVER-RESOLVE-CONFLICT-AND-FULL-REPLAY"
+      },
+      {
+        "event_id": "STOP-HUMAN-PATH-UNAVAILABLE",
+        "label_zh": "必要人工或非 AI 通道不可用",
+        "label_en": "required human or non-AI path unavailable",
+        "recovery_action_id": "RECOVER-RESTORE-HUMAN-PATH-AND-FULL-REPLAY"
+      },
+      {
+        "event_id": "STOP-PROHIBITED-DATA",
+        "label_zh": "出现禁止采集或留存的数据类别",
+        "label_en": "prohibited data category encountered",
+        "recovery_action_id": "RECOVER-PROHIBITED-DATA-INCIDENT-AND-FULL-REPLAY"
+      }
+    ],
+    "recovery_actions": [
+      {
+        "action_id": "RECOVER-FREEZE-CORRECT-RETEST-SOURCE-PACK",
+        "label_zh": "停用对应路径，冻结并修正来源包，完整重放固定案例",
+        "label_en": "disable the affected path, freeze and correct the source pack, then replay the full fixed set",
+        "requires_full_synthetic_replay": true,
+        "real_restart_authorized": false
+      },
+      {
+        "action_id": "RECOVER-RESOLVE-CONFLICT-AND-FULL-REPLAY",
+        "label_zh": "转正式来源人工渠道裁决冲突后完整重放",
+        "label_en": "route the conflict to the responsible source channel and replay the full set after resolution",
+        "requires_full_synthetic_replay": true,
+        "real_restart_authorized": false
+      },
+      {
+        "action_id": "RECOVER-RESTORE-HUMAN-PATH-AND-FULL-REPLAY",
+        "label_zh": "保持 AI 路径停用，恢复人工与非 AI 通道后完整重放",
+        "label_en": "keep the AI path disabled, restore human and non-AI paths, then replay the full set",
+        "requires_full_synthetic_replay": true,
+        "real_restart_authorized": false
+      },
+      {
+        "action_id": "RECOVER-PROHIBITED-DATA-INCIDENT-AND-FULL-REPLAY",
+        "label_zh": "拒绝且不留存禁止数据，按隐私事件流程复核后完整重放",
+        "label_en": "reject and do not retain prohibited data, review under the privacy-incident process, then replay the full set",
+        "requires_full_synthetic_replay": true,
+        "real_restart_authorized": false
+      }
+    ],
+    "independent_real_retest_template": {
+      "status": "not_performed",
+      "retester_role_id": "independent_real_retester",
+      "confirmation_status": "unconfirmed",
+      "conflict_of_interest_attestation": null,
+      "input_hashes": null,
+      "runner_version": null,
+      "deviations": null,
+      "decision_diff": null,
+      "real_retest_result": "unknown"
+    },
+    "real_world_status_invariants": {
+      "current_gate": "G0",
+      "completed_synthetic_governance_replays": 1,
+      "substantive_answer_outputs": 0,
+      "model_calls": 0,
+      "api_calls": 0,
+      "service_interactions": 0,
+      "field_tests": 0,
+      "approvals": 0,
+      "confirmed_owner_roles": 0,
+      "completed_real_independent_retests": 0,
+      "completed_g1_preregistrations": 0,
+      "approved_g1_collection_windows": 0,
+      "completed_g1_field_executions": 0,
+      "known_g1_results": 0,
+      "known_real_non_ai_parity_results": 0
+    }
+  },
+  "replay_contract": {
+    "replay_scope": "Read-only deterministic replay of ten fixed synthetic cases against sources.json, this file's five fixed questions, the JZ-05/T-02 canonical RACI declarations in pilot-readiness-register.json, and explicit decision precedence; no web retrieval, source refresh, model or API call, substantive answer, service interaction, field visit, approval, or formal procedure is performed.",
+    "steps": [
+      "Read sources.json, this contract, the fixed synthetic fixtures, and the JZ-05/T-02 canonical RACI declarations without modification.",
+      "Strictly reject unknown fields, enum values, answer-mode drift, missing permitted sources, or broken cross-file references.",
+      "Apply the fixed decision precedence and compare every actual decision with its machine-readable expected decision.",
+      "Verify all four distinct declared stop events map exactly to their respective recovery actions, every prohibited-data flag contains no raw personal data, and the JZ-05/T-02 canonical RACI sets close against this contract.",
+      "Record synthetic governance evidence only; do not generate a substantive service response or advance the gate."
+    ],
+    "version_lock": {
+      "contract_version": "T02-G0-G1-REPLAY-1.0.0",
+      "fixture_set_id": "T02-G0-G1-SYNTHETIC-REPLAY-V1",
+      "runner_version": "1.0.0",
+      "network_dependencies": 0,
+      "model_dependencies": 0
+    },
+    "input_summary": {
+      "fixed_question_count": 5,
+      "synthetic_fixture_count": 10,
+      "contains_real_personal_data": false,
+      "source_snapshot": "sources.json"
+    },
+    "output_location": "visual/assets/t02-g0-g1-replay-result.json",
     "refusal_and_handoff_contract": {
       "rule_zh": "当来源缺失、过期、超出范围、涉及临时边界精度，或请求正式办事、审批与个案判断时，拒绝作出实体结论并转接至维护者、责任主体、主管部门、场地运营方或人工服务渠道。",
       "rule_en": "When a source is missing, stale, or out of scope, when provisional-boundary precision is requested, or when a request concerns a formal procedure, approval, or case determination, refuse a substantive conclusion and hand off to the maintainer, responsible body, public authority, site operator, or human service channel.",
       "service_execution_authorized": false
     },
-    "replayer_statement_zh": "复核者可以复现本协议的读取和字段核验，但不能据此声称完成服务、得到回答或验证现场行为。",
-    "replayer_statement_en": "A replayer can reproduce the protocol's reading and field checks, but cannot claim that a service was completed, an answer was obtained, or field behaviour was verified.",
-    "completed_replays": 0,
+    "replayer_statement_zh": "复核者可以复现十个合成案例的合同、来源闭包和预期决策核验，但不能据此声称完成服务、得到实体回答、验证人工转接或现场行为，亦不能将场景推进到 G1。",
+    "replayer_statement_en": "A replayer can reproduce contract, source-closure, and expected-decision checks for ten synthetic cases, but cannot claim a completed service, substantive answer, verified human handoff or field behaviour, or advancement to G1.",
+    "replay_kind": "synthetic_deterministic_governance_replay",
+    "completed_replays": 1,
     "answer_outputs": 0,
+    "model_calls": 0,
+    "api_calls": 0,
+    "service_interactions": 0,
     "field_tests": 0,
-    "approval_count": 0
+    "approval_count": 0,
+    "confirmed_owner_roles": 0,
+    "completed_real_independent_retests": 0
   },
   "summary": {
     "question_count": 5,
     "question_contract_coverage_ratio": 1.0,
-    "completed_offline_replays": 0,
+    "synthetic_fixture_count": 10,
+    "exact_expected_decision_match_count": 10,
+    "decision_mismatch_count": 0,
+    "completed_offline_replays": 1,
     "known_answer_outputs": 0,
+    "model_call_count": 0,
+    "api_call_count": 0,
+    "service_interaction_count": 0,
     "field_execution_count": 0,
-    "coverage_definition": "Coverage measures required contract-field presence across the five fixed questions only; it is not service accuracy, source freshness, handoff success, model performance, or field execution."
+    "approval_count": 0,
+    "confirmed_owner_role_count": 0,
+    "completed_real_independent_retest_count": 0,
+    "result_ref": "visual/assets/t02-g0-g1-replay-result.json",
+    "coverage_definition": "Coverage and exact-decision matches measure deterministic contract logic across synthetic cases only; they are not service accuracy, live source freshness, successful real handoff, model performance, approval, G1 completion, non-AI operating parity, or field execution."
   }
 }

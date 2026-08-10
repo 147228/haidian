@@ -3968,7 +3968,7 @@
     {
       "request_id": "RIGHTS-REQ-04",
       "owner_needed": "Production-tool and model terms reviewer",
-      "evidence_needed": "Applicable service/tool terms and output-use analysis tied to stable tool IDs and output mappings in agent.json.",
+      "evidence_needed": "Applicable service/tool terms and output-use analysis tied to stable tool IDs and output mappings in agent.json, including the Node.js 22.22.3 runtime used for the zero-dependency T-02 synthetic governance replay.",
       "blocks": [
         "public_or_professional_reuse"
       ],

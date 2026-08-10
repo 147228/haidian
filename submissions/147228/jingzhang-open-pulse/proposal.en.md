@@ -7,7 +7,7 @@ summary: "With Jing-Zhang Heritage Park as the public base and three key areas a
 translation_of: "proposal.md"
 proposal_format_version: "2"
 bilingual_contract_version: "1"
-iteration: "v3.6"
+iteration: "v3.7"
 tracks: ["ai-traffic-walkability", "enterprise-services-ecosystem", "civic-agent-governance"]
 scenarios: ["ai-traffic-walkability", "enterprise-service-copilot", "public-safety-operations-review"]
 ---
@@ -149,17 +149,17 @@ Dazhongsi is an urban, internationally legible AI service and enterprise distric
 
 Each key-area polygon is provisional and each node proposal is a concept for professional refinement. The node-level decision record is mapped to `[data:geometry/key_areas.geojson#PROV-KEY-001]`, `#PROV-KEY-002`, and `#PROV-KEY-003`.
 
-### Conceptual Massing and Public Interfaces for the Three Key Areas
+### Public Interfaces and Reversible Relationships for the Three Key Areas
 
-The three key areas already have functions and spatial actions, but they also need a professional comparison entry for scale. The ledger below gives conceptual intensity and ground-floor interface ranges only; it does not change the geometry or turn provisional areas into regulatory controls.
+The three key areas already have functions and spatial actions, but ordinary routes, staffed services, and equipment back-of-house still need a professional comparison entry. The ledger below gives public-interface and reversible-service relationships only; it does not change the geometry or turn provisional areas into regulatory controls.
 
-| Key area | Public ground-floor choice | Conceptual intensity | Public-facing height | First professional evidence to collect |
-| --- | --- | --- | --- | --- |
-| Zhongzhiyuan AI Autonomous Innovation Acceleration Zone | Layer Qinghe public space, R&D display, cycle shelter and enclosed testing; do not expose models or personal data at the public edge | FAR 1.2–1.8 for design comparison only | 2–4 storeys; upper height unknown | Existing buildings, ownership, flood/blue-line, fire, energy and enterprise OD |
-| Beijing AI Origin Community | Stitch campus, enterprise and neighbourhood walking; put open publishing, talent service and human entry at an accessible ground floor | FAR 1.0–1.5 for design comparison only | 2–3 storeys; upper height unknown | Accessibility walk, resident/student service baseline, ownership, care and night safety |
-| Dazhongsi AI Industry Cluster | Separate station, four-quadrant walking, international presentation and retail/service edges; keep data display away from quiet residential frontage | FAR 0.8–1.3 for design comparison only | 1–3 storeys; upper height unknown | Station flow, road/curb counts, fire, municipal, ownership and event-day organisation |
+| Key area | Public ground-floor choice | Reversible service relationship | First professional evidence to collect |
+| --- | --- | --- | --- |
+| Zhongzhiyuan AI Autonomous Innovation Acceleration Zone | Layer Qinghe public space, R&D display, cycle shelter and enclosed testing; do not expose models or personal data at the public edge | Public observer seat and staffed front desk stay adjacent; equipment, maintenance, and testing back-of-house can close without cutting the walking spine | Existing buildings, ownership, flood/blue-line, fire, energy and enterprise OD |
+| Beijing AI Origin Community | Stitch campus, enterprise and neighbourhood walking; put open publishing, talent service and human entry at an accessible ground floor | Paper, phone, and staffed entries face the ordinary route; test components remain removable and pausable, and resident service is not account-dependent | Accessibility walk, resident/student service baseline, ownership, care and night safety |
+| Dazhongsi AI Industry Cluster | Separate station, four-quadrant walking, international presentation and retail/service edges; keep data display away from quiet residential frontage | Rail arrival, quiet route, and service front desk are separated; events and data display can withdraw without occupying daily resident movement | Station flow, road/curb counts, fire, municipal, ownership and event-day organisation |
 
-FAR and storeys are conceptual ranges under the provisional boundary, not statutory building scale, planning conditions, permits or construction commitments. A formal scheme must recalculate them after regulatory-plan, survey, ownership, fire, structural, municipal, traffic and public-participation evidence is available [depth:height_massing_character] [depth:development_intensity_controls].
+These relationships only identify which public and reversible conditions to compare first. They do not answer where construction is permitted, who holds the space, or what final control parameters should be. A formal scheme must be determined by a professional team after regulatory-plan, survey, ownership, fire, structural, municipal, traffic and public-participation evidence is available [depth:height_massing_character] [depth:development_intensity_controls].
 
 Until then, renewal prioritises wayfinding, staffed service, cycle shelter, weather seats, accessible ramps and movable equipment; no road redline, building increment or demolition conclusion follows [standard:MOHURD-CONTROL-DETAILED-PLANNING].
 
@@ -203,7 +203,7 @@ Land-use classification follows the published classification standard [standard:
 
 The principal land-use and building evidence is carried by [data:geometry/land_use.geojson#LU-001], [data:geometry/buildings.geojson#BLDG-001] and [metric:building_footprint_area_sqm].
 
-Building-scale and intensity indicators must remain consistent with `metrics.json` and the geometry layers. Total floor area, FAR, building height, building-density, green-ratio, setbacks and building-control lines are marked `unknown` or `pending_control` because official conditions are missing; no fixed number is used to manufacture precision. The submitted A3 booklet contains the renewal-project list and indicator review table, the A0 boards foreground the key spatial structure and areas, and the offline HTML provides the linked indicator and layer audit entry.
+Development-control indicators must remain consistent with `metrics.json` and the geometry layers. Total floor area, density, setbacks and building-control lines are marked `unknown` or `pending_control` because official conditions are missing; no fixed number is used to manufacture precision. The submitted A3 booklet contains the renewal-project list and indicator review table, the A0 boards foreground the key spatial structure and areas, and the offline HTML provides the linked indicator and layer audit entry.
 
 ## Transport, Rail, Municipal Infrastructure, and Public Services
 

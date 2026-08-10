@@ -2,7 +2,7 @@
 
 ## 中文
 
-本文件不声称投稿包已经完成清权。`visual/assets/rights-clearance-ledger.json` 保留 5 个兼容归组，并对 manifest 中 62 个路径建立 62 条逐文件资产记录（其中 61 个为非 manifest 内容文件）；`visual/assets/source-rights-evidence.json` 另以 schema 约束 29 条来源、120 个 OSM way、字体事实和外部取证请求。结构闭环只表示可审计披露，当前独立逐文件清权审计完成数仍为 **0**，总体状态为 `not_fully_cleared`。
+本文件不声称投稿包已经完成清权。`visual/assets/rights-clearance-ledger.json` 保留 5 个兼容归组，并对 manifest 中 65 个路径建立 65 条逐文件资产记录（其中 64 个为非 manifest 内容文件）；`visual/assets/source-rights-evidence.json` 另以 schema 约束 29 条来源、120 个 OSM way、字体事实和外部取证请求。结构闭环只表示可审计披露，当前独立逐文件清权审计完成数仍为 **0**，总体状态为 `not_fully_cleared`。
 
 - 文本、结构化记录与概念设计几何由声明的 AI Agent 为本投稿编制；其中事实、标准和空间依据仍受 `sources.json` 的权威等级与用途限制约束。
 - `geometry/site_boundary.geojson` 与 `geometry/key_areas.geojson` 继承仓库临时边界的非官方、低精度和再利用边界，不构成官方红线或审批依据。
@@ -12,6 +12,7 @@
 - `COMMUNITY-DISPLAY-ONLY` 目前只是 front matter 中的许可标签，完整条款未随投稿包提供，因此不能据此确认评审、归档、在线展示、翻译、专业深化、商业使用或再许可的兼容性。
 - JZ 几何 Logo 与地标命名为概念提案，尚未完成商标和生产品牌审查，不代表任何企业或政府授权。
 - Firecrawl CLI 1.19.30 仅用于检索和抓取公开网页，形成引用、摘要与用途限制记录。抓取缓存不进入投稿包，网页正文、图片、Logo 与页面版式未作为投稿资产复制；外部网页按 `citation_only` 使用，其转载、再利用和权威状态仍需依 `sources.json` 与原发布方条款判断。抓取成功不等于现场踏勘、竣工核验、合作确认或正式审批。
+- `visual/assets/run_t02_g0_g1_replay.js` 是为本包编制的可编辑源代码，只使用 Node.js 22.22.3 的 `fs`、`path`、`crypto` 内置模块；fixtures 与 result 不含第三方网页、图片或真实个人数据。Node.js runtime 不随包再分发，其运行时及组件条款、代码与结果的对外再利用边界仍待独立复核。合成回放 PASS 不是版权、软件安全、服务效果或公共发布许可。
 
 本台账可以支持仓库评审中的事实披露，但不构成法律意见、所有权证明或公共发布许可。对外展示、专业深化或其他再利用前，必须完成台账中 `RIGHTS-OPEN-01`—`RIGHTS-OPEN-05` 里适用的事项，并由维护者或权利专业人员确认。
 
@@ -19,7 +20,7 @@
 
 ## English
 
-This package does not claim that rights clearance is complete. `visual/assets/rights-clearance-ledger.json` retains five compatibility groups and adds 62 file-level asset records for the 62 manifest paths (61 non-manifest content files). Schema-constrained `visual/assets/source-rights-evidence.json` separately records 29 sources, 120 OSM ways, font facts, and external evidence requests. Structural closure means audit-ready disclosure only: completed independent file-level clearance audits remain **0**, and the overall status remains `not_fully_cleared`.
+This package does not claim that rights clearance is complete. `visual/assets/rights-clearance-ledger.json` retains five compatibility groups and adds 65 file-level asset records for the 65 manifest paths (64 non-manifest content files). Schema-constrained `visual/assets/source-rights-evidence.json` separately records 29 sources, 120 OSM ways, font facts, and external evidence requests. Structural closure means audit-ready disclosure only: completed independent file-level clearance audits remain **0**, and the overall status remains `not_fully_cleared`.
 
 - Narrative, structured records, and conceptual design geometry were prepared for this submission by the declared AI agent; factual, professional, and spatial inputs remain governed by the authority and use limits in `sources.json`.
 - `geometry/site_boundary.geojson` and `geometry/key_areas.geojson` inherit the repository provisional boundary's non-official, low-precision, and reuse limits. They are not official redlines or approval evidence.
@@ -29,6 +30,7 @@ This package does not claim that rights clearance is complete. `visual/assets/ri
 - `COMMUNITY-DISPLAY-ONLY` is currently only a front-matter license label. Its complete terms are not included, so compatibility with judging, archiving, web display, translation, professional deepening, commercial use, or sublicensing is not confirmed.
 - The JZ geometric logo and landmark names are conceptual proposals pending trademark and production-brand review; they imply no corporate or government authorization.
 - Firecrawl CLI 1.19.30 was used only to search and retrieve public webpages for citations, summaries, and use-limit records. Retrieval caches are excluded from the package, and webpage text, images, logos, and layouts are not copied as submission assets. External pages remain `citation_only` evidence whose reuse and authority are governed by `sources.json` and the original publisher's terms. Successful retrieval is not a site visit, as-built verification, partnership confirmation, or approval.
+- `visual/assets/run_t02_g0_g1_replay.js` is editable source code authored for this package and uses only the `fs`, `path`, and `crypto` built-in modules in Node.js 22.22.3; its fixtures and result contain no third-party webpage, image, or real personal data. The Node.js runtime is not redistributed, and its runtime/component terms plus the external-reuse boundaries of the code and result remain pending independent review. A synthetic replay PASS is not copyright clearance, software-security certification, service evidence, or a public-release licence.
 
 The ledger supports transparent repository review, but it is not legal advice, proof of ownership, or a public-release license. Before external display, professional deepening, or other reuse, the applicable `RIGHTS-OPEN-01`—`RIGHTS-OPEN-05` items must be completed and confirmed by maintainers or qualified rights professionals.
 

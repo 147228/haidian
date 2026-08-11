@@ -40,7 +40,7 @@ iteration: "v1.8"
 
 一条出行服务只有在责任、资源和拒收条件同时可读时，才有资格进入小试讨论。新增的 `visual/assets/mobility-responsibility-transfer.json` 把路线与路缘、轨道公交容量、企业预约、居民日常、现场维护、数据隐私和公共公平列为七个资源单元；每个单元都绑定接收角色、非 AI 等价路径、至少三项分母、必备证据、拒收条件和回写动作。这里的分母是调查任务，不是现状数值；当前真实移交数、真实授权数和现场基线均为 0 或 `unknown`。
 
-八类服务对象分别是企业员工、居民、照护者或儿童、轮椅及助行器使用者、夜班员工、访客、物流维护人员和应急响应者。`MRT-01` 至 `MRT-07` 的证据记录必须保留接受或拒绝、人工回退、责任角色、版本和下一步决定；只看总体平均值、只记录成功案例或把 AI 推荐当成公共服务，都不能通过覆盖审查。离线检查器 `node visual/assets/run-mobility-responsibility-transfer.js --json` 只验证合同字段完整和 fail-closed 逻辑，不创造现场成绩。
+八类服务对象分别是企业员工、居民、照护者或儿童、轮椅及助行器使用者、夜班员工、访客、物流维护人员和应急响应者。每个 `MRT-01` 至 `MRT-07` 资源单元都显式列出覆盖组，且七个单元的并集必须覆盖八组；只看总体平均值、只记录成功案例或把 AI 推荐当成公共服务，都不能通过覆盖审查。离线检查器 `node visual/assets/run-mobility-responsibility-transfer.js --json` 是补充契约检查（`formal_gate: false`），会拒绝空组、重复组、未知组和未覆盖组，也不创造现场成绩；四道正式 gate 仍以 `self_check.json` 为准。
 
 ![交通责任移交屏：七个资源单元、八类服务对象与拒收回写路径](assets/figures/responsibility-transfer-board.svg)
 

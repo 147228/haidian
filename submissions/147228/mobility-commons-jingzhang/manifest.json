@@ -118,7 +118,7 @@
       "path": "changelog.md",
       "role": "narrative",
       "required": false,
-      "sha256": "4d35a203c1edc23f87666cab503dd9ac4c89aee6ef682d8ba63824f9e8cd2bfd"
+      "sha256": "b11ba073290148d320584e81c5be28e8e88acd7f0c61dde7bff118de5348253c"
     },
     {
       "path": "compliance_matrix.json",
@@ -235,7 +235,7 @@
       "role": "narrative",
       "required": true,
       "language": "zh",
-      "sha256": "b83905983fa0462d4082e03383e411a7c2899c27ff5fb668977976f4092cc9e9"
+      "sha256": "5775985860885c818e7767aaa16618bde54b02205be2559a0fecd2527d60e36c"
     },
     {
       "path": "report/copyright_statement.md",
@@ -267,7 +267,7 @@
       "path": "self_check.json",
       "role": "data",
       "required": true,
-      "sha256": "1a9ed02a7c7365b766f55195a5fd7a2beeb1f918f28b4600962edb0a2b14e6e4"
+      "sha256": "c98a5f9c9545a68f0b07f3f30dd5949ec76834dc4cdf21fa454f4642f150ed1a"
     },
     {
       "path": "sources.json",
@@ -434,13 +434,13 @@
       "path": "visual/assets/mobility-responsibility-transfer.json",
       "role": "data",
       "required": false,
-      "sha256": "e61b5822c25d356e8404804035b7bd55d3fcf05edca56068ed899bcb777d0c9c"
+      "sha256": "068e757114ea482af7d2247cbf876303b1531d93271b14f4fd6e15745d9afbc5"
     },
     {
       "path": "visual/assets/run-mobility-responsibility-transfer.js",
       "role": "verification_script",
       "required": false,
-      "sha256": "790d66b1f5bdf396b21dc5fb2e963016160fda9f021b920a1b022fb0c709d3d8"
+      "sha256": "944e93ceaa862b0c8a337ad8dfea7674909c20a9e8f3a4b4751f2771eddb34dc"
     }
   ]
 }

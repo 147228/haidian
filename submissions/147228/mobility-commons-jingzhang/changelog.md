@@ -3,6 +3,7 @@
 ## v1.9 - 2026-08-12
 
 - Added a bilingual responsibility-transfer board and a machine-readable contract for seven mobility resource units and eight service groups.
+- Hardened the supplemental contract runner: every resource unit now declares its covered groups, the union must cover all eight unique non-empty groups, and duplicate/empty/unknown mappings are regression-tested. This runner is explicitly supplemental; the repository's four formal gates remain authoritative.
 - Added explicit denominators, non-AI equivalents, refusal conditions and event writeback fields for route/curb, transit, enterprise, resident, maintenance, data and equity interfaces.
 - Added an offline fail-closed checker; it reports 8/8 contract checks, real transfers 0, real authorization 0 and field status HOLD.
 - Kept all resource quantities, staffing, capacity, public acceptance and operating outcomes unknown until dated local evidence exists.

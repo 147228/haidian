@@ -13,6 +13,13 @@
     {
       "id": "MRT-01",
       "interface": "accessible route and curb space",
+      "coverage_groups": [
+        "resident",
+        "carer_or_child",
+        "wheelchair_or_assistive_device_user",
+        "visitor",
+        "emergency_responder"
+      ],
       "recipient_role": "transport and accessibility review role",
       "non_ai_equivalent": "posted route, staffed wayfinding and public transport",
       "denominator": ["audited route segments", "usable crossing windows", "available staffed fallback windows"],
@@ -23,6 +30,14 @@
     {
       "id": "MRT-02",
       "interface": "rail and bus transfer capacity",
+      "coverage_groups": [
+        "resident",
+        "carer_or_child",
+        "wheelchair_or_assistive_device_user",
+        "night_shift_worker",
+        "visitor",
+        "emergency_responder"
+      ],
       "recipient_role": "rail and bus operations role",
       "non_ai_equivalent": "published timetable, platform information and staffed transfer desk",
       "denominator": ["dated headway record", "station or stop capacity record", "transfer observation windows"],
@@ -33,6 +48,12 @@
     {
       "id": "MRT-03",
       "interface": "enterprise curb and loading window",
+      "coverage_groups": [
+        "enterprise_employee",
+        "visitor",
+        "logistics_or_maintenance_worker",
+        "emergency_responder"
+      ],
       "recipient_role": "enterprise mobility coordinator role",
       "non_ai_equivalent": "paper booking register and on-site marshal",
       "denominator": ["available curb minutes", "clearing staff minutes", "fire and accessible route minutes protected"],
@@ -43,6 +64,13 @@
     {
       "id": "MRT-04",
       "interface": "resident daily service access",
+      "coverage_groups": [
+        "resident",
+        "carer_or_child",
+        "wheelchair_or_assistive_device_user",
+        "night_shift_worker",
+        "visitor"
+      ],
       "recipient_role": "community liaison and resident/carer observation roles",
       "non_ai_equivalent": "walk-in, telephone and paper service",
       "denominator": ["observed service attempts by group", "available human service windows", "accessible alternatives"],
@@ -53,6 +81,11 @@
     {
       "id": "MRT-05",
       "interface": "maintenance and removable equipment",
+      "coverage_groups": [
+        "wheelchair_or_assistive_device_user",
+        "logistics_or_maintenance_worker",
+        "emergency_responder"
+      ],
       "recipient_role": "field maintenance role",
       "non_ai_equivalent": "manual inspection, repair ticket and removable sign or barrier",
       "denominator": ["inspection hours", "repair capacity", "equipment inventory"],
@@ -63,6 +96,16 @@
     {
       "id": "MRT-06",
       "interface": "data, privacy and complaint handling",
+      "coverage_groups": [
+        "enterprise_employee",
+        "resident",
+        "carer_or_child",
+        "wheelchair_or_assistive_device_user",
+        "night_shift_worker",
+        "visitor",
+        "logistics_or_maintenance_worker",
+        "emergency_responder"
+      ],
       "recipient_role": "data stewardship and independent privacy review roles",
       "non_ai_equivalent": "aggregate paper register with a public complaint channel",
       "denominator": ["grouped records", "retention window", "complaint cases with closure owner"],
@@ -73,6 +116,16 @@
     {
       "id": "MRT-07",
       "interface": "public review and equity burden",
+      "coverage_groups": [
+        "enterprise_employee",
+        "resident",
+        "carer_or_child",
+        "wheelchair_or_assistive_device_user",
+        "night_shift_worker",
+        "visitor",
+        "logistics_or_maintenance_worker",
+        "emergency_responder"
+      ],
       "recipient_role": "independent safety, accessibility, privacy and equity review roles",
       "non_ai_equivalent": "public notice, staffed observation and group-specific manual review",
       "denominator": ["observed groups", "valid comparison windows", "negative or refused cases"],

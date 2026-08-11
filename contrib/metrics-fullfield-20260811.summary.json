@@ -1,0 +1,341 @@
+{
+  "snapshot": {
+    "repository": "open-city-ai/haidian",
+    "sha": "6843ad6709e05b6521f25185d476a967fd928305",
+    "date": "20260811",
+    "n_packages_total_dirs": 577,
+    "n_packages_with_metrics": 577,
+    "n_packages_with_manifest": 577,
+    "n_packages_with_proposal": 577,
+    "n_metric_entries": 12972,
+    "n_parse_failures": 0
+  },
+  "root_structure": {
+    "container_shapes": {
+      "metrics,schema_version,units": 577
+    },
+    "schema_versions": {
+      "0.1.0": 573,
+      "0.2.0": 3,
+      "0.1.1": 1
+    }
+  },
+  "field_coverage": {
+    "confidence": {
+      "missing_count": 150,
+      "missing_pct": 1.16
+    },
+    "formula": {
+      "missing_count": 98,
+      "missing_pct": 0.76
+    },
+    "source_files": {
+      "missing_count": 96,
+      "missing_pct": 0.74
+    },
+    "unit": {
+      "missing_count": 20,
+      "missing_pct": 0.15
+    },
+    "value": {
+      "missing_count": 5,
+      "missing_pct": 0.04
+    }
+  },
+  "entry_validity": {
+    "valid_entries": 12799,
+    "valid_pct": 98.67,
+    "problem_breakdown": {
+      "status='known'": {
+        "count": 130,
+        "explanation": "entry has a declared-valid status but is missing one or more required fields (status/value/unit/source_files/formula/confidence)"
+      },
+      "status='unknown'": {
+        "count": 43,
+        "explanation": "entry has a declared-valid status but is missing one or more required fields (status/value/unit/source_files/formula/confidence)"
+      }
+    }
+  },
+  "distributions": {
+    "status": {
+      "known": {
+        "count": 10983,
+        "pct": 84.67
+      },
+      "unknown": {
+        "count": 1976,
+        "pct": 15.23
+      },
+      "not_applicable": {
+        "count": 13,
+        "pct": 0.1
+      }
+    },
+    "unit": {
+      "declared_enum": {
+        "sqm": 5312,
+        "count": 3419,
+        "ratio": 2923,
+        "m": 871,
+        "index": 103,
+        "none": 94
+      },
+      "other_values": {
+        "total_count": 250,
+        "n_distinct_values": 90,
+        "top": {
+          "null": 45,
+          "km": 16,
+          "persons": 14,
+          "far": 10,
+          "n/a": 10,
+          "ha": 8,
+          "normalized_score_0_100": 6,
+          "percent": 5
+        }
+      }
+    },
+    "confidence": {
+      "declared_enum": {
+        "medium": 5981,
+        "high": 3173,
+        "unknown": 1884,
+        "low": 1770
+      },
+      "other_values": {
+        "total_count": 164,
+        "n_distinct_values": 7,
+        "top": {
+          "null": 150,
+          "n/a": 5,
+          "medium_internal_consistency": 4,
+          "concept": 2,
+          "medium_internal_consistency_low_precision": 1,
+          "none": 1,
+          "context_only": 1
+        }
+      }
+    }
+  },
+  "packages": {
+    "metrics_per_pkg": {
+      "min": 6,
+      "median": 21,
+      "max": 86,
+      "mean": 22.48
+    }
+  },
+  "coverage": {
+    "top_metric_keys": [
+      {
+        "site_area_sqm": 577
+      },
+      {
+        "green_ratio": 577
+      },
+      {
+        "public_space_ratio": 577
+      },
+      {
+        "key_area_count": 564
+      },
+      {
+        "building_footprint_area_sqm": 562
+      },
+      {
+        "floor_area_ratio": 540
+      },
+      {
+        "public_space_area_sqm": 381
+      },
+      {
+        "green_space_area_sqm": 376
+      },
+      {
+        "persona_count": 202
+      },
+      {
+        "building_density": 199
+      },
+      {
+        "building_height_m": 193
+      },
+      {
+        "total_floor_area_sqm": 158
+      },
+      {
+        "scenario_node_count": 152
+      },
+      {
+        "renewal_project_count": 148
+      },
+      {
+        "scenario_card_count": 131
+      },
+      {
+        "landmark_count": 110
+      },
+      {
+        "phase_1_area_sqm": 109
+      },
+      {
+        "phase_count": 102
+      },
+      {
+        "phase_2_area_sqm": 100
+      },
+      {
+        "phase_3_area_sqm": 100
+      }
+    ],
+    "top_normalized_keys": [
+      {
+        "site_area": 583
+      },
+      {
+        "public_space": 582
+      },
+      {
+        "green": 577
+      },
+      {
+        "key_area": 565
+      },
+      {
+        "building_footprint_area": 563
+      },
+      {
+        "floor_area": 541
+      },
+      {
+        "public_space_area": 383
+      },
+      {
+        "green_space_area": 377
+      },
+      {
+        "building_density": 210
+      },
+      {
+        "persona": 202
+      },
+      {
+        "building_height": 194
+      },
+      {
+        "total_floor_area": 159
+      },
+      {
+        "scenario_node": 152
+      },
+      {
+        "renewal_project": 148
+      },
+      {
+        "road_area": 145
+      },
+      {
+        "scenario_card": 131
+      },
+      {
+        "landmark": 110
+      },
+      {
+        "phase_1_area": 109
+      },
+      {
+        "phase": 102
+      },
+      {
+        "phase_2_area": 100
+      }
+    ],
+    "concept_buckets": {
+      "area": {
+        "count": 6304,
+        "pct": 48.6
+      },
+      "counts": {
+        "count": 2634,
+        "pct": 20.31
+      },
+      "intensity": {
+        "count": 2413,
+        "pct": 18.6
+      },
+      "other": {
+        "count": 799,
+        "pct": 6.16
+      },
+      "mobility": {
+        "count": 678,
+        "pct": 5.23
+      },
+      "green_public": {
+        "count": 144,
+        "pct": 1.11
+      }
+    },
+    "top_key_status_cross": {
+      "site_area_sqm": {
+        "known": 577
+      },
+      "green_ratio": {
+        "known": 577
+      },
+      "public_space_ratio": {
+        "known": 577
+      },
+      "key_area_count": {
+        "known": 564
+      },
+      "building_footprint_area_sqm": {
+        "known": 560,
+        "unknown": 2
+      },
+      "floor_area_ratio": {
+        "known": 14,
+        "unknown": 526
+      },
+      "public_space_area_sqm": {
+        "known": 381
+      },
+      "green_space_area_sqm": {
+        "known": 376
+      },
+      "persona_count": {
+        "known": 202
+      },
+      "building_density": {
+        "known": 104,
+        "unknown": 95
+      },
+      "building_height_m": {
+        "unknown": 193
+      },
+      "total_floor_area_sqm": {
+        "known": 19,
+        "unknown": 139
+      },
+      "scenario_node_count": {
+        "known": 152
+      },
+      "renewal_project_count": {
+        "known": 148
+      },
+      "scenario_card_count": {
+        "known": 131
+      }
+    }
+  },
+  "outlier_counts_only": {
+    "status_not_in_enum": 0,
+    "unit_not_in_enum": 250,
+    "ratio_outside_0_1": 0,
+    "far_above_12": 0,
+    "height_above_300m": 0,
+    "note": "counts only; no package is named or ranked",
+    "sanity_sources": "bounds from brief/site-package/ranges/planning_limits.json schema_sanity_bounds_not_planning_approval; ratio check applies to share/coverage ratios only (FAR, detour and street-wall height/width ratios have their own legitimate ranges and are excluded; percentage-unit entries are excluded); FAR check excludes area-valued keys (e.g. phasing_far_area_sqm is a phase area, not a floor-area-ratio); area deviation threshold: >50% off the official known area value in the same file (known_official_area_values)"
+  },
+  "privacy_boundary": "This summary contains aggregate counts only. It does not contain package paths, authors, slugs, or any ranking. The long-format table with identifying columns is a local artifact and must not be committed."
+}

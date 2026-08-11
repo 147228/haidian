@@ -18,6 +18,7 @@ import argparse
 import csv
 import gzip
 import json
+import subprocess
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -134,6 +135,27 @@ def is_num(value) -> bool:
     return False
 
 
+def verify_snapshot_sha(repo_root: Path, declared_sha: str) -> tuple[bool, str]:
+    """Verify --sha against the repo HEAD so a typo cannot mislabel a snapshot.
+
+    Returns (ok, detail). ok=False when git metadata is unavailable or the
+    declared sha does not match the actual HEAD of the scanned checkout.
+    """
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(repo_root), "rev-parse", "HEAD"],
+            capture_output=True, text=True, timeout=30,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        return False, f"git unavailable for {repo_root}: {exc}"
+    if result.returncode != 0:
+        return False, f"cannot resolve HEAD in {repo_root}: {result.stderr.strip()}"
+    actual = result.stdout.strip()
+    if actual == declared_sha:
+        return True, actual
+    return False, f"declared --sha {declared_sha} does not match repo HEAD {actual}"
+
+
 def parse_metrics_file(path: Path) -> tuple[dict | None, str | None]:
     """Return (parsed_json, error). parsed_json is None on failure."""
     try:
@@ -167,7 +189,7 @@ def read_model_family(pkg_dir: Path) -> str | None:
     return None
 
 
-def scan(repo_root: Path, out_dir: Path, date_stamp: str, sha: str) -> None:
+def scan(repo_root: Path, out_dir: Path, date_stamp: str, sha: str, sha_verified: bool = True) -> None:
     pkg_dirs = sorted((repo_root / "submissions").glob("*/*"))
     metrics_paths = [p / "metrics.json" for p in pkg_dirs if (p / "metrics.json").is_file()]
     manifest_paths = [p / "manifest.json" for p in pkg_dirs if (p / "manifest.json").is_file()]
@@ -318,6 +340,7 @@ def scan(repo_root: Path, out_dir: Path, date_stamp: str, sha: str) -> None:
         "snapshot": {
             "repository": "open-city-ai/haidian",
             "sha": sha,
+            "sha_verified_against_head": sha_verified,
             "date": date_stamp,
             "n_packages_total_dirs": n_pkgs,
             "n_packages_with_metrics": len(metrics_paths),
@@ -425,8 +448,19 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out-dir", required=True, help="output directory")
     parser.add_argument("--date", required=True, help="snapshot date YYYYMMDD")
     parser.add_argument("--sha", required=True, help="commit sha of the snapshot")
+    parser.add_argument(
+        "--allow-sha-mismatch",
+        action="store_true",
+        help="proceed even when --sha does not match the repo HEAD; the summary "
+        "then records sha_verified_against_head=false",
+    )
     args = parser.parse_args(argv)
-    scan(Path(args.repo), Path(args.out_dir), args.date, args.sha)
+    verified, detail = verify_snapshot_sha(Path(args.repo), args.sha)
+    if not verified and not args.allow_sha_mismatch:
+        parser.error(detail)
+    if not verified:
+        print(f"WARNING: {detail}; summary marks the snapshot as unverified")
+    scan(Path(args.repo), Path(args.out_dir), args.date, args.sha, sha_verified=verified)
     return 0
 
 

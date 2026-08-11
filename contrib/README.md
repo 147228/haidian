@@ -28,6 +28,8 @@ git sparse-checkout set --no-cone \
 git checkout
 
 # 2. 扫描
+# --sha 会与 repo HEAD 校验：不一致时拒绝执行（防快照身份错误）；
+# 确认要扫描非 HEAD 提交时显式加 --allow-sha-mismatch，summary 会记录 sha_verified_against_head=false。
 python3 contrib/tools-metrics-scan.py --repo $D --out-dir contrib \
     --date YYYYMMDD --sha <commit-sha>
 

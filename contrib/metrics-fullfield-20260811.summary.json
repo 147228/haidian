@@ -2,6 +2,7 @@
   "snapshot": {
     "repository": "open-city-ai/haidian",
     "sha": "6843ad6709e05b6521f25185d476a967fd928305",
+    "sha_verified_against_head": true,
     "date": "20260811",
     "n_packages_total_dirs": 577,
     "n_packages_with_metrics": 577,

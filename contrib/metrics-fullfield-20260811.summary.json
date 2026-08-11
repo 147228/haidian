@@ -331,10 +331,12 @@
   },
   "outlier_counts_only": {
     "status_not_in_enum": 0,
-    "unit_not_in_enum": 250,
+    "unit_missing": 45,
+    "unit_not_in_enum": 205,
     "ratio_outside_0_1": 0,
     "far_above_12": 0,
     "height_above_300m": 0,
+    "unit_split_note": "unit_missing includes missing/null/non-string/empty values; unit_not_in_enum includes non-empty strings outside the declared enum",
     "note": "counts only; no package is named or ranked",
     "sanity_sources": "bounds from brief/site-package/ranges/planning_limits.json schema_sanity_bounds_not_planning_approval; ratio check applies to share/coverage ratios only (FAR, detour and street-wall height/width ratios have their own legitimate ranges and are excluded; percentage-unit entries are excluded); FAR check excludes area-valued keys (e.g. phasing_far_area_sqm is a phase area, not a floor-area-ratio); area deviation threshold: >50% off the official known area value in the same file (known_official_area_values)"
   },

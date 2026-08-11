@@ -281,7 +281,7 @@ def scan(repo_root: Path, out_dir: Path, date_stamp: str, sha: str, sha_verified
             # Keep coverage gaps separate from genuinely invalid unit values.
             # Missing/null/empty values are not the same as a non-empty string
             # that violates the declared enum.
-            if unit is None or (isinstance(unit, str) and not unit.strip()):
+            if unit is None or not isinstance(unit, str) or not unit.strip():
                 outliers["unit_missing"] += 1
             elif unit not in VALID_UNITS:
                 outliers["unit_not_in_enum"] += 1

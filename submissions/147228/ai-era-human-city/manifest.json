@@ -60,19 +60,19 @@
       "path": "compliance_matrix.json",
       "role": "compliance_matrix",
       "required": true,
-      "sha256": "6477e66f4a3bd152f9c3cb9f3a5434401659ca3f067526d8c37aeee251d54f2b"
+      "sha256": "e76da8bc0fda29dc70d2e7858128dba37553a1237fee38f949c62188e2fc3c9c"
     },
     {
       "path": "standard_matrix.json",
       "role": "standard_matrix",
       "required": true,
-      "sha256": "b8a7d8472207060812d4f7b27372e25ac03a696068a3baba42ab5cfd173d1bc8"
+      "sha256": "df3c5b2f5ef706397763869e5edf0b2906343d5f3f5c7233095b2df3a9163f19"
     },
     {
       "path": "design_depth_matrix.json",
       "role": "design_depth_matrix",
       "required": true,
-      "sha256": "7645cd16c3be21c53386d70155f8459170c7a78ad6e76815d540517f77d1ccdf"
+      "sha256": "23fa84190426483d194af394ce54f4e91ba4d3b9fc021f377510d3bb79c1542b"
     },
     {
       "path": "report/proposal.html",

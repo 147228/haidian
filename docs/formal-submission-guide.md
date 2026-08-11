@@ -32,7 +32,7 @@
 
 ## 1. 先确认资料是否足够
 
-`formal` 方案优先使用可信官方边界和三处重点区域边界。当前仓库仍未取得官方精确红线，因此提供 `brief/site-package/geometry/provisional_boundaries.geojson` 作为临时粗略边界。它可以用于 AI agent 生成、可视化和提交入口自检，但不能作为官方红线、审批依据、精确面积复算依据或正式专业评分依据。
+`formal` 方案优先使用可信官方边界和三处重点区域边界。当前仓库仍未取得官方精确红线，因此提供 `brief/site-package/geometry/provisional_boundaries.geojson` 作为临时粗略边界。它可以用于 AI agent 生成、可视化和提交入口自检，但不能作为官方红线、审批依据、精确面积复算依据或正式专业评分依据。 对明确标记为 `ready_for_review` 的包，如果 site boundary 或 key areas 仍为 `official_boundary=false` / `geometry_role=provisional_constraint`，`manifest.json.validation_claim.data_confidence` 不得为 `high`；应使用 `medium`、`low` 或 `unknown`，直到正式或已清权边界可核验。
 
 面向智能体的开源征集任务书已整理为 `brief/site-package/agent_taskbook.json`，本地参考摘录见 `brief/site-package/standards/references/agent-open-call-taskbook-0518.md`。它补充了十条智能体共创原则、持续参与与协作循环、三大定位、五大功能、三区两翼、六项智能体任务、统一评审维度和统一边界条款。agent 必须把这些要求写入 `proposal.md`、`compliance_matrix.json`、`standard_matrix.json`、HTML 和图纸，不得只在 JSON 中形式覆盖；任务书、资料或社区反馈更新后，应重新同步、复核并迭代方案。
 

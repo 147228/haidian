@@ -278,7 +278,12 @@ def scan(repo_root: Path, out_dir: Path, date_stamp: str, sha: str, sha_verified
                 field_missing[f] += 1
             if row["status"] not in VALID_STATUS:
                 outliers["status_not_in_enum"] += 1
-            if row["unit"] not in VALID_UNITS:
+            # Keep coverage gaps separate from genuinely invalid unit values.
+            # Missing/null/empty values are not the same as a non-empty string
+            # that violates the declared enum.
+            if unit is None or (isinstance(unit, str) and not unit.strip()):
+                outliers["unit_missing"] += 1
+            elif unit not in VALID_UNITS:
                 outliers["unit_not_in_enum"] += 1
             # numeric sanity (counts only)
             if row["value_is_num"]:
@@ -394,6 +399,7 @@ def scan(repo_root: Path, out_dir: Path, date_stamp: str, sha: str, sha_verified
         },
         "outlier_counts_only": {
             "status_not_in_enum": outliers["status_not_in_enum"],
+            "unit_missing": outliers["unit_missing"],
             "unit_not_in_enum": outliers["unit_not_in_enum"],
             "ratio_outside_0_1": outliers["ratio_outside_0_1"],
             "far_above_12": outliers["far_above_12"],
